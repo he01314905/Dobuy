@@ -9,12 +9,12 @@
 </head>
 <body th:style="|background-image: url('@{/images/background.jpg}'); background-size: cover;|">
     <!-- 錯誤表列 -->
-    <div th:if="${not #lists.isEmpty(errorMsgs)}">
-        <font style="color:red">請修正以下錯誤:</font>
-        <ul>
-            <span  th:if="${#fields.hasErrors('managerAccount')}" th:errors="*{managerAccount}" class="error" id="managerAccount.errors"></span>
-        </ul>
-    </div>
+    <div th:if="${error != null}">
+    <font style="color:red">請修正以下錯誤:</font>
+    <ul>
+        <li><span th:text="${error}" class="error" style="color:red"></span></li>
+    </ul>
+</div>
 
     <form method="post" th:action="@{/login/Login}" name="form1">
         <div class="form-group">

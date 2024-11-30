@@ -175,23 +175,33 @@ div.goods_body div.goods_list{
     font-size: 20px;
 }
 
-div.goods_body div.bestsell_goods {
+div.goods_body {
     width: 100%;
     margin-left: 1%;
     border-radius: 15px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);  /* 每行顯示 3 個商品 */
-    gap: 1px;  /* 增加商品之間的間距 */
+   
+    
+   
+}
+div.bestsell_goods {
+	width:100%;
+	display:grid;
+/* 	 border:2px solid purple; */
+grid-template-columns: repeat(3, 1fr);  /* 每行顯示 3 個商品 */
+    gap: px;  /* 增加商品之間的間距 */
     box-sizing: border-box;
     background-color: rgba(229, 199, 177, 0.432);
     padding: 0;
     overflow-y: auto;
     max-height: 80vh;
 }
+
+
+
 div.bestsell_goods::-webkit-scrollbar {
     display: none;
 }
-/* 調整商品圖片大小及排列 */
+
 div.goods {
     display: flex;
      flex-direction: column;  
@@ -203,20 +213,21 @@ div.goods {
     border-radius: 15px;
     background-color: rgba(229, 199, 177, 0.432);
     box-sizing: border-box;
-    margin: 0 10%;  
+    margin: 0 20%;  
     padding:3%;
-  
+/*   border:2px solid red; */
 }
 
 
 div.image-container {
     position: relative;
     width: 100%;
-    height: 100%;
+    height: 200px;
     overflow:hidden;
      display: flex;
     justify-content: center; /* 水平居中 */
     align-items: center; /* 垂直居中 */
+    
 }
 div.image-container:hover {
 	cursor:pointer;

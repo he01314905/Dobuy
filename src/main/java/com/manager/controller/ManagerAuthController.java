@@ -2,6 +2,9 @@ package com.manager.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -48,14 +51,51 @@ public class ManagerAuthController {
 //   	}
     
     @GetMapping("/manager/listAllManager")
-	public String listAllManager(Model model) {
+	public String listAllManager(Model model ,HttpServletRequest request) {
     	List<ManagerAuthVO> allAuth = managerAuthSvc.getAll();
+    	HttpSession session = request.getSession();
+    	 List<ManagerAuthVO> managerAuthList = (List<ManagerAuthVO>) session.getAttribute("auth");
+    	  Integer loggedInManagerNo = (Integer) session.getAttribute("managerNo");
+    	  
+    	    boolean isAdmin = false; // 假設 "1" 表示超級管理員
+    	    for (ManagerAuthVO managerAuth : managerAuthList) {
+    	    	
+    	        if (managerAuth.getManagerNo().getManagerNo().equals(loggedInManagerNo)) {
+    	        
+    	                if ("超級管理員".equals(managerAuth.getAuthNo().getAuthTitle())) { // 假設 "1" 是超級管理員的權限代碼
+    	                    isAdmin = true;
+    	                    
+    	                    break;
+    	                }
+    	            }
+    	            
+    	        }
+    	 
+    	    model.addAttribute("isAdmin", isAdmin);
     	model.addAttribute("allAuth",allAuth);
-    	System.out.println(allAuth);
 		return "back-end/manager/listAllManager";
-	}
+    }
     @GetMapping("/manager/listAllAuth")
-   	public String listAllAuth(Model model) {
+   	public String listAllAuth(Model model,HttpServletRequest request) {
+    	HttpSession session = request.getSession();
+   	 List<ManagerAuthVO> managerAuthList = (List<ManagerAuthVO>) session.getAttribute("auth");
+   	  Integer loggedInManagerNo = (Integer) session.getAttribute("managerNo");
+   	  
+   	    boolean isAdmin = false; // 假設 "1" 表示超級管理員
+   	    for (ManagerAuthVO managerAuth : managerAuthList) {
+   	    	
+   	        if (managerAuth.getManagerNo().getManagerNo().equals(loggedInManagerNo)) {
+   	        
+   	                if ("超級管理員".equals(managerAuth.getAuthNo().getAuthTitle())) { // 假設 "1" 是超級管理員的權限代碼
+   	                    isAdmin = true;
+   	                    
+   	                    break;
+   	                }
+   	            }
+   	            
+   	        }
+   	  System.out.println(isAdmin);
+   	    model.addAttribute("isAdmin", isAdmin);
    		return "back-end/manager/listAllAuth";
    	}
        

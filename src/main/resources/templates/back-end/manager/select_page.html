@@ -113,12 +113,12 @@
     </form>
     </li>
 </ul>
-
+ <span th:each="autha : ${session.auth}"><span th:if=" ${autha.authNo.authTitle==1}" style="font-weight:normal;font-size:16px">
 <h3 id="me">管理員管理</h3>
-
+	
 <ul>
     <li><a th:href="@{addManager}">Add</a> a new Manager.</li>
 </ul>
-
+</span>
 </body>
 </html>

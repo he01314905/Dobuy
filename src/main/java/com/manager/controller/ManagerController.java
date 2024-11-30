@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -148,6 +149,7 @@ public class ManagerController {
 			AuthVO VO = managerAuthVO.getAuthNo();
 			Integer authNo=VO.getAuthNo();
 			authNoList.add(authNo);
+			
 		}
 		
 		/*************************** 3.查詢完成,準備轉交(Send the Success view) **************/

@@ -5,7 +5,7 @@
 
     <style>
         body {
-            background: url(@{/back-end/images/background.jpg});
+            
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -55,39 +55,9 @@
 <script	src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>    
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.jqueryui.min.css" />
 </head>
-<script>
-	$(document).ready(function() {
-		$('#example').DataTable({
-			"lengthMenu": [3 ,5, 10, 20, 50, 100],
-			"pageLength": 5,
-			"searching": true,  //搜尋功能, 預設是開啟
-		    "paging": true,     //分頁功能, 預設是開啟
-		    "ordering": true,   //排序功能, 預設是開啟
-		    "language": {
-		        "processing": "處理中...",
-		        "loadingRecords": "載入中...",
-		        "lengthMenu": "顯示 _MENU_ 筆結果",
-		        "zeroRecords": "沒有符合的結果",
-		        "info": "顯示第 _START_ 至 _END_ 筆結果，共<font color=red> _TOTAL_ </font>筆",
-		        "infoEmpty": "顯示第 0 至 0 筆結果，共 0 筆",
-		        "infoFiltered": "(從 _MAX_ 筆結果中過濾)",
-		        "infoPostFix": "",
-		        "search": "搜尋:",
-		        "paginate": {
-		            "first": "第一頁",
-		            "previous": "上一頁",
-		            "next": "下一頁",
-		            "last": "最後一頁"
-		        },
-		        "aria": {
-		            "sortAscending":  ": 升冪排列",
-		            "sortDescending": ": 降冪排列"
-		        }
-		    }
-		});
-	});
-</script>
-<body bgcolor="white">
+
+<body bgcolor="white" th:style="|background-image: url('@{/images/background.jpg}'); background-size: cover;|">
+
 
 <h4>此頁練習採用 EL 的寫法取值:</h4>
 <table id="table-1">
@@ -108,9 +78,9 @@
         <th>管理員密碼</th>
         <th>管理員狀態</th>
         <th>管理員權限</th>
-        <th>修改</th>
-        <th>刪除</th>
-        <th>修改權限</th>
+        <th th:if="${isAdmin}">修改</th>
+        <th th:if="${isAdmin}">刪除</th>
+        <th th:if="${isAdmin}">修改權限</th>
     </tr>
 </thead>
    
@@ -132,19 +102,23 @@
         <span th:text ="${managerVOA.authNo.authTitle}"></span>
         </th:block>
         </td>
-        <td>
+        
+       
+        
+        
+        <td  th:if="${isAdmin}">
             <form method="post" th:action="@{/manager/getOne_For_Update}" style="margin-bottom: 0px;">
 			     <input type="submit" value="修改">
 			     <input type="hidden" name="managerNo" th:value="${managerVO.managerNo}"></form>
         </td>
 
-        <td>
+        <td   th:if="${isAdmin}">
            <form method="post" th:action="@{/manager/delete}" style="margin-bottom: 0px;">
 			     <input type="submit" value="刪除">
 			     <input type="hidden" name="managerNo" th:value="${managerVO.managerNo}"></form>
         </td>
         
-        <td>
+        <td  th:if="${isAdmin}">
            <form method="post" th:action="@{/manager/getOneAuth}" style="margin-bottom: 0px;">
 			     <input type="submit" value="修改權限">
 			     <input type="hidden" name="managerNo" th:value="${managerVO.managerNo}"></form>
@@ -154,7 +128,48 @@
  
   </th:block>
 </table>
+<script>
 
+$(document).ready(function() {
+	
+	
+    // 初始化 DataTable
+    var table = $('#example').DataTable({
+        "lengthMenu": [3, 5, 10, 20, 50, 100],
+        "pageLength": 5,
+        "searching": true,
+        "paging": true,
+        "ordering": true,
+        "language": {
+            "processing": "處理中...",
+            "loadingRecords": "載入中...",
+            "lengthMenu": "顯示 _MENU_ 筆結果",
+            "zeroRecords": "沒有符合的結果",
+            "info": "顯示第 _START_ 至 _END_ 筆結果，共<font color=red> _TOTAL_ </font>筆",
+            "infoEmpty": "顯示第 0 至 0 筆結果，共 0 筆",
+            "infoFiltered": "(從 _MAX_ 筆結果中過濾)",
+            "infoPostFix": "",
+            "search": "搜尋:",
+            "paginate": {
+                "first": "第一頁",
+                "previous": "上一頁",
+                "next": "下一頁",
+                "last": "最後一頁"
+            },
+            "aria": {
+                "sortAscending": ": 升冪排列",
+                "sortDescending": ": 降冪排列"
+            }
+        }
+    });
+
+    // 隱藏或顯示欄位的邏輯
+ 
+    // 使用 draw 事件來處理分頁後按鈕的顯示邏輯
+
+});
+
+</script>
 
 </body>
 </html>
