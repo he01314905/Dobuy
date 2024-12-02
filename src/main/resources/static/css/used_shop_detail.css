@@ -125,7 +125,7 @@ section.sec1 div.flex_container div.items.-left div.main-img > img{
   width: 236px;
   height: 236px;
   background-color: rgb(250, 251, 216);
-  opacity: 0.3;
+  opacity: 0.5;
 }
 /* 放大鏡大圖 */
 .zoom-div{
@@ -157,7 +157,7 @@ section.sec1 div.flex_container div.items.-right{
   background-color: #ffffff; /* 設置背景顏色為白色 */
   height: 600px;               /* 確保容器占據全部可用高度 */
   box-sizing: border-box;      /* 確保包含邊框和內邊距 */
-  opacity: 0.7;
+
 }
 /* ========== 描述列表 ========== */
 .desc_list{

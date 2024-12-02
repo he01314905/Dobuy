@@ -111,6 +111,17 @@
 				<input type="submit" value="送出">
 			</form><br>
 		</li>
+		
+		<li><form method="post" th:action="@{/used/getOneUsedTest}">
+				選擇二手商品編號頁面測試:
+				<select name="usedNo">
+				     <option th:each="usedVO : ${usedListData}" th:value="${usedVO.usedNo}" th:text="${usedVO.usedNo}" />
+			    </select>
+				<input type="submit" value="送出">
+			</form><br>
+		</li>
+		
+		
       </ul>
     
 

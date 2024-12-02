@@ -68,6 +68,15 @@ public class UsedController {
 		model.addAttribute("usedVO", usedVO);
 		return "front-end/used/listOneUsed";
 	}
+	 
+	
+	@PostMapping("/getOneUsedTest")
+	public String getOneUsedTest( @RequestParam("usedNo") String usedNo, Model model) {
+		
+		UsedVO usedVO = usedSvc.getOneUsed(Integer.valueOf(usedNo));
+		model.addAttribute("usedVO", usedVO);
+		return "front-end/used/shop_detail_used";
+	}
 
 	/*
 	 * This method will be called on addUsed.html form submission, handling POST request It also validates the user input
