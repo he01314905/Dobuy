@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+ 
+<link rel="stylesheet" th:href="@{/css/member.css}">
+<!-- datatable以及slick載入 -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.jqueryui.min.css" /> <!-- ●●css for jquery datatables 用 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" />
+
+</head>
+<body>
+    <header>
+        <div class="header">
+
+            <div class="logo">
+                
+                <img src="images/logo noback.png"   alt="logo" class="logo">
+
+                
+            </div>
+            
+            <div class="header_bar">
+                <div class="search">
+                    
+                    <input type="text" placeholder="Search..." class="search" action="">
+                
+                
+                    <button class="search_button" name="search">
+                    </button>
+                    <img src="images/magnifying-glass-dollar-solid.svg" alt="Search">
+                    
+                
+
+            </div>
+                <div class="nav_bar">
+
+                    <div class="head"> 
+                        <a href="home">Home</a>
+                        <a href="#about">一般商城</a>
+                        <a href="#services">二手商城</a>
+                        <a href="#contact">品牌</a>
+                        <a href="#class">商品分類</a>
+                        <a href="#hot">熱銷商品</a>
+                        <a href="#coupongoods">優惠商品</a>
+                        <a href="#couponget">優惠券領取</a>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="icon_area">    
+                <div class="icons">
+                    
+                    <a class="icons" href="member"><img src="images/會員中心.png" alt="User"></a>
+                    <a class="icons" href="/mem/login"><img src="images/log-in.png" alt="Login"></a>
+                    <a class="icons" href="#"><img src="images/聊天室(FAQ 客服).png" alt="Chat"></a>
+                    <a class="icons" href="#"><img src="images/購物車.png" alt="Cart"></a>
+                    
+                </div>
+                
+              
+                
+            </div>
+            
+            
+            
+        </div>
+    </header>
+     
+  
+
+  
+    
+    <div class="use_body">
+        
+        <div class="use_list">
+            <div class="member_account">
+                <div class="mem_img" ><img src="images/會員中心.png" alt="User"> </div>
+                <div class="mem_acc">
+                    <div class="memac">帳號</div>
+                    <div class="mempro">
+                        <svg width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" style="margin-right: 4px;"><path d="M8.54 0L6.987 1.56l3.46 3.48L12 3.48M0 8.52l.073 3.428L3.46 12l6.21-6.18-3.46-3.48" fill="#9B9B9B" fill-rule="evenodd"></path>
+                        </svg>
+                        編輯個人檔案
+                    </div>
+                </div>
+                
+            </div>
+            <div style="border-top: 1px solid #161515; width: 100%; margin: 2px 0;"></div>
+            
+            <div class="memthings">
+                <div class="pro">
+                    <div class="proac title">我的帳戶</div>
+                    <div class="prothings">
+                        <span id="1" data-id="1">個人檔案</span>
+                        <span id="2"data-id="2">更改密碼</span>
+                        <span id="3"data-id="3">地址</span>
+                        <span id="4"data-id="4">信用卡資訊</span>
+                        <span id="5"data-id="5">隱私設定</span>
+                    </div>
+                </div>
+                <div class="buy aaa">購買清單</div>
+                <div class="twogoods">
+                    <div class="two title">二手商品</div>
+                    <div class="twothings">
+                        <span id="a1">二手商品管理</span>
+                        <span id="2">二手商品訂單</span>
+                     </div>
+                </div>
+                <div class="notice title">通知總覽</div>
+                <div class="coupon title">我的優惠券</div>
+                <div class="store title">櫃位收藏</div>
+                <div class="goodsfollow title">追蹤商品</div>
+
+            </div>
+        </div>
+
+      <div class="member_use">
+            <div class="use" >
+                <div class="nav_bar">
+
+                    <div class="chos"> 
+                        <div class="aaa" id="b1">全部</div>
+                        <div  id="b2">待付款</div>
+                        <div id="b3">待出貨</div>
+                        <div  id="b4">待收貨</div>
+                        <div  id="b5">已完成</div>
+                        <div  id="b6">取消</div>
+                        <div  id="b7">退款/退貨</div>
+                    </div>
+                    <div class="searchtitle">
+                        
+                        <input class="searchtitle" role="search" autocomplete="off" placeholder="您可以透過賣家名稱，訂單編號或商品名稱搜尋" value="">
+                        <img src="images/magnifying-glass-dollar-solid.svg" alt="Search" class="se">
+                    </div>
+
+                </div>
+                    <div class="use_1">
+                        <div class="goods" >
+                            <div style="border-top: 1px solid #161515; width: 100%; margin: 2px 0;"></div>
+
+                             <div class="item" id="1">
+                                <img src="/images/Designer.jpeg" alt="goods"> 
+                                <p>123132132</p>
+                            </div>
+                            <div style="border-top: 1px solid #161515; width: 100%; margin: 2px 0;"></div>
+
+                            <div class="item" id="2">
+                                <img src="/images/Designer.jpeg" alt="goods"> 
+                                <p>123132132</p>
+                            </div>
+                            <div style="border-top: 1px solid #161515; width: 100%; margin: 2px 0;"></div>
+
+                            <div class="item" id="3">
+                                <img src="/images/Designer.jpeg" alt="goods"> 
+                                <p>123132132</p>
+                            </div>
+                            <div style="border-top: 1px solid #161515; width: 100%; margin: 2px 0;"></div>
+
+                            <div class="item" id="4">
+                                <img src="/images/Designer.jpeg" alt="goods"> 
+                                <p>123132132</p>
+                            </div>
+                            <div style="border-top: 1px solid #161515; width: 100%; margin: 2px 0;"></div>
+
+                            <div class="item hide" id="5">
+                                <img src="/images/Designer.jpeg" alt="goods"> 
+                                <p>123132132</p>
+                            </div>
+                            <div style="border-top: 1px solid #161515; width: 100%; margin: 2px 0;"></div>
+
+                            <div class="item  hide" id="6">
+                                <img src="/images/Designer.jpeg" alt="goods"> 
+                                <p>123132132</p>
+                            </div>
+                            <div style="border-top: 1px solid #161515; width: 100%; margin: 2px 0;"></div>
+
+                            <div class="item hide" id="7">
+                                <img src="/images/Designer.jpeg" alt="goods"> 
+                                <p>123132132</p>
+                            </div>
+                            <div style="border-top: 1px solid #161515; width: 100%; margin: 2px 0;"></div>
+
+                            <div class="item hide" id="8">
+                                <img src="/images/Designer.jpeg" alt="goods"> 
+                                <p>123132132</p>
+                            </div>
+                            <div style="border-top: 1px solid #161515; width: 100%; margin: 2px 0;"></div>
+
+                            <div class="item hide" id="9">
+                                <img src="/images/Designer.jpeg" alt="goods"> 
+                                <p>123132132</p>
+                                <div style="border-top: 1px solid #161515; width: 100%; margin: 2px 0;"></div>
+                            </div>
+                            <div class="item hide" id="10">
+                                <img src="/images/Designer.jpeg" alt="goods"> 
+                                <p>123132132</p>
+                            </div>
+                            <div style="border-top: 1px solid #161515; width: 100%; margin: 2px 0;"></div>
+
+                         
+                        
+                        
+                        
+                        
+                        
+                        
+                        </div>
+                    
+                     </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div>© 2024 DO BUY. All Rights Reserved.</div>
+    </footer> 
+
+
+    <script type="text/javascript" th:src="@{/js/jquery3.7.1.js}"></script>
+<!-- datatablejs載入 -->
+<script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.min.js"></script>
+
+    <script th:src="@{/js/member.js}"></script>
+ 
+   
+
+</body>
+</html>
+
+

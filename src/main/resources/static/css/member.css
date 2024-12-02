@@ -448,3 +448,118 @@ span{
 .aaa{
     color: white !important;
 }
+
+
+
+/* UsedListContainer CSS by GARY LEE */
+/* 表格設置 */
+table {
+    width: 100%; /* 表格占滿父容器 */
+    table-layout: fixed; /* 固定表格佈局，讓欄位等寬*/
+    border-collapse: collapse; /* 合併邊框 */
+    background-color: white; /* 可選，表格背景色 */
+    opacity: 0.9;
+}
+
+/* 表頭和內容設置 */
+th, td {
+    border: 1px solid #ddd; /* 表格單元格邊框 */
+    padding: 10px; /* 單元格內邊距 */
+    text-align: center; /* 文字置中 */
+    overflow: hidden; /* 隱藏超出內容 */
+    text-overflow: ellipsis; /* 顯示省略號 */
+    vertical-align: middle; /* 垂直置中對齊 */
+    height: 100px; /* 設定每個欄位的預設高度 */
+}
+
+/* 表頭設置 */
+th {
+    background-color: #f8f8f8; /* 表頭背景色 */
+    font-weight: bold; /* 表頭文字加粗 */
+}
+
+/* 各個欄位的寬度設置 */
+th.col-usedNo, td.col-usedNo {
+    width: 2%; /* 商品編號欄寬度 */
+}
+
+th.col-usedName, td.col-usedName {
+    width: 10%; /* 商品名稱欄寬度 */
+}
+
+th.col-classNo, td.col-classNo {
+    width: 4%; /* 商品類別欄寬度 */
+}
+
+th.col-usedPrice, td.col-usedPrice {
+    width: 2%; /* 價格欄寬度 */
+}
+
+th.col-usedStocks, td.col-usedStocks {
+    width: 2%; /* 庫存量欄寬度 */
+}
+
+th.col-usedPics, td.col-usedPics {
+	text-align: center; /* 確保照片在欄位中水平置中 */
+    vertical-align: middle; /* 垂直置中對齊 */
+    width: 13%; /* 照片欄寬度 */
+}
+
+th.col-usedProDesc, td.col-usedProDesc {
+    width: 15%; /* 二手商品描述欄寬度 */
+}
+
+th.col-usedNewness, td.col-usedNewness {
+    width: 6%; /* 新舊程度欄寬度 */
+}
+
+th.col-usedLaunchedTime, td.col-usedLaunchedTime {
+    width: 8%; /* 上架時間欄寬度 */
+}
+
+th.col-soldTime, td.col-soldTime {
+    width: 8%; /* 下架時間欄寬度 */
+}
+
+th.col-usedState, td.col-usedState {
+    width: 5%; /* 商品狀態欄寬度 */
+}
+
+th.col-modify, td.col-modify {
+    width: 1%; /* 修改欄寬度 */
+}
+
+th.col-delete, td.col-delete {
+    width: 1%; /* 刪除欄寬度 */
+}
+
+/* 限制圖片大小 */
+.photo-slider {
+    display: inline-block; /* 確保內部 div 和圖片在 td 中顯示為 inline-block */
+    text-align: center; /* 如果內部有多張圖片，也會水平置中 */
+}
+
+td img {
+    max-width: 100px; /* 最大寬度限制為 100px */
+    max-height: 100px; /* 最大高度限制為 100px */
+    min-width: 100px;
+    min-height: 100px;
+    width: auto; /* 確保圖片寬高比一致 */
+    height: auto; /* 確保圖片寬高比一致 */
+    margin: 0 auto; /* 確保圖片在父容器中水平置中 */
+    display: block; /* 確保圖片在容器內水平置中 */
+}
+
+/* 按鈕設置 */
+button {
+    width: 90%; /* 按鈕寬度與表格單元格一致，並略小一點以有些間距 */
+    box-sizing: border-box; /* 包含邊框和內邊距 */
+    padding: 5px; /* 增加內邊距 */
+    cursor: pointer; /* 滑鼠移過按鈕時顯示手型 */
+}
+
+button:hover {
+    background-color: #e0e0e0; /* 按鈕 hover 效果 */
+}
+
+

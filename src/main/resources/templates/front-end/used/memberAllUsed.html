@@ -17,111 +17,9 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.jqueryui.min.css" /> <!-- ●●css for jquery datatables 用 -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" />
-<!-- <head th:insert="~{/front-end/used/included-fragment}"></head> -->
-<style type="text/css">
-/* 父容器 */
-/* 表格設置 */
-table {
-    width: 100%; /* 表格占滿父容器 */
-    table-layout: fixed; /* 固定表格佈局，讓欄位等寬 */
-    border-collapse: collapse; /* 合併邊框 */
-    background-color: white; /* 可選，表格背景色 */
-    opacity: 0.9;
-}
+<link rel="stylesheet" th:href="@{/css/member.css}">
+<head th:insert="~{/front-end/used/included-fragment}"></head>
 
-/* 表頭和內容設置 */
-th, td {
-    border: 1px solid #ddd; /* 表格單元格邊框 */
-    padding: 10px; /* 單元格內邊距 */
-    text-align: center; /* 文字置中 */
-    overflow: hidden; /* 隱藏超出內容 */
-    text-overflow: ellipsis; /* 顯示省略號 */
-    vertical-align: middle; /* 垂直置中對齊 */
-    height: 100px; /* 設定每個欄位的預設高度 */
-}
-
-/* 表頭設置 */
-th {
-    background-color: #f8f8f8; /* 表頭背景色 */
-    font-weight: bold; /* 表頭文字加粗 */
-}
-
-/* 各個欄位的寬度設置 */
-th.col-usedNo, td.col-usedNo {
-    width: 5%; /* 商品編號欄寬度 */
-}
-
-th.col-usedName, td.col-usedName {
-    width: 10%; /* 商品名稱欄寬度 */
-}
-
-th.col-classNo, td.col-classNo {
-    width: 8%; /* 商品類別欄寬度 */
-}
-
-th.col-usedPrice, td.col-usedPrice {
-    width: 8%; /* 價格欄寬度 */
-}
-
-th.col-usedStocks, td.col-usedStocks {
-    width: 6%; /* 庫存量欄寬度 */
-}
-
-th.col-usedPics, td.col-usedPics {
-    width: 12%; /* 照片欄寬度 */
-}
-
-th.col-usedProDesc, td.col-usedProDesc {
-    width: 15%; /* 二手商品描述欄寬度 */
-}
-
-th.col-usedNewness, td.col-usedNewness {
-    width: 8%; /* 新舊程度欄寬度 */
-}
-
-th.col-usedLaunchedTime, td.col-usedLaunchedTime {
-    width: 8%; /* 上架時間欄寬度 */
-}
-
-th.col-soldTime, td.col-soldTime {
-    width: 8%; /* 下架時間欄寬度 */
-}
-
-th.col-usedState, td.col-usedState {
-    width: 6%; /* 商品狀態欄寬度 */
-}
-
-th.col-modify, td.col-modify {
-    width: 4%; /* 修改欄寬度 */
-}
-
-th.col-delete, td.col-delete {
-    width: 4%; /* 刪除欄寬度 */
-}
-
-/* 限制圖片大小 */
-td img {
-    max-width: 100px; /* 最大寬度限制為 100px */
-    max-height: 100px; /* 最大高度限制為 100px */
-    min-width: 100px;
-    min-height: 100px;
-    width: auto; /* 確保圖片寬高比一致 */
-    height: auto; /* 確保圖片寬高比一致 */
-}
-
-/* 按鈕設置 */
-button {
-    width: 90%; /* 按鈕寬度與表格單元格一致，並略小一點以有些間距 */
-    box-sizing: border-box; /* 包含邊框和內邊距 */
-    padding: 5px; /* 增加內邊距 */
-    cursor: pointer; /* 滑鼠移過按鈕時顯示手型 */
-}
-
-button:hover {
-    background-color: #e0e0e0; /* 按鈕 hover 效果 */
-}
-
-</style>
 
 
 </head>
@@ -137,16 +35,14 @@ button:hover {
         <table class="UsedList" id="UsedList" style="width: 100%">
             <thead>
                 <tr style="background-color:#CCCCFF">
-                    <th class="col-usedNo">商品編號</th>
-                    <th class="col-usedName">商品名稱</th>
-                    <th class="col-classNo">商品類別</th>
+                    <th class="col-usedNo">編號</th>
+                    <th class="col-usedName">名稱</th>
+                    <th class="col-classNo">類別</th>
                     <th class="col-usedPrice">價格</th>
-                    <th class="col-usedStocks">庫存量</th>
+                    <th class="col-usedStocks">庫存</th>
                     <th class="col-usedPics">照片</th>
-                    <th class="col-usedProDesc">二手商品描述</th>
+                    <th class="col-usedProDesc">商品描述</th>
                     <th class="col-usedNewness">新舊程度</th>
-                    <th class="col-usedLaunchedTime">上架時間</th>
-                    <th class="col-soldTime">下架時間</th>
                     <th class="col-usedState">商品狀態</th>
                     <th class="col-modify">修改</th>
                     <th class="col-delete">刪除</th>
@@ -178,8 +74,6 @@ button:hover {
                             <span th:case="3">5成新</span>
                             <span th:case="4">3成新</span>
                         </td>
-                        <td class="col-usedLaunchedTime" th:text="${#dates.format(usedVO.usedLaunchedTime, 'yyyy-MM-dd')}"></td>
-                        <td class="col-soldTime" th:text="${#dates.format(usedVO.soldTime, 'yyyy-MM-dd')}"></td>
                         <td class="col-usedState" th:switch="${usedVO.usedState}">
                             <span th:case="0">未上架</span>
                             <span th:case="1">上架</span>

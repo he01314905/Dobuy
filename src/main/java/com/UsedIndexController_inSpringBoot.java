@@ -40,6 +40,10 @@ public class UsedIndexController_inSpringBoot {
 	public String select_page(Model model) {
 		return "front-end/used/select_page";
 	}
+    @GetMapping("/used/member")
+	public String member(Model model) {
+		return "front-end/used/member";
+	}
     
     @GetMapping("/used/listAllUsed")
 	public String listAllUsed(Model model) {

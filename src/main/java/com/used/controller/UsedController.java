@@ -1,19 +1,14 @@
 package com.used.controller;
 
 import java.io.IOException;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,15 +17,17 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.spring5.SpringTemplateEngine;
+import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
 import com.used.model.UsedService;
 import com.used.model.UsedVO;
@@ -43,13 +40,15 @@ import com.usedpic.model.UsedPicVO;
 public class UsedController {
 	
 	@Autowired
-	UsedService usedSvc;
+	private UsedService usedSvc;
 
 	@Autowired
-	UsedPicService usedPicSvc;
+	private UsedPicService usedPicSvc;
 	
 	@Autowired
-	EntityManager EntityManager;
+	private EntityManager EntityManager;
+	
+
 	
 	/*
 	 * This method will serve as addUsed.html handler.
@@ -68,15 +67,30 @@ public class UsedController {
 		model.addAttribute("usedVO", usedVO);
 		return "front-end/used/listOneUsed";
 	}
-	 
+
+	@PostMapping("/getSellerUsedListFragment")
+    public String getUsedListFragment(HttpSession session, Model model) {
+        // 從 session 中取得 memNo
+//        Integer memNo = (Integer) session.getAttribute("memNo");
+//
+//        if (memNo == null) {
+//            // 如果沒有 memNo，處理錯誤情況，這裡可以返回空片段或錯誤信息
+//            return "fragments/usedListFragment :: usedListFragment";
+//        }
+
+        // 根據 memNo 從資料庫中查詢二手商品列表
+        List<UsedVO> usedListData = usedSvc.memberSelectBySellerNo(211);//測試使用211
+
+        // 將數據放到模型中
+        model.addAttribute("usedListData", usedListData);
+
+        // 返回Fragment所在的模板，並指定Fragment名稱
+        return "front-end/used/memberAllUsed :: usedListFragment";
+    }
+
+
 	
-	@PostMapping("/getOneUsedTest")
-	public String getOneUsedTest( @RequestParam("usedNo") String usedNo, Model model) {
-		
-		UsedVO usedVO = usedSvc.getOneUsed(Integer.valueOf(usedNo));
-		model.addAttribute("usedVO", usedVO);
-		return "front-end/used/shop_detail_used";
-	}
+	
 
 	/*
 	 * This method will be called on addUsed.html form submission, handling POST request It also validates the user input
