@@ -467,7 +467,7 @@ th, td {
     padding: 10px; /* 單元格內邊距 */
     text-align: center; /* 文字置中 */
     overflow: hidden; /* 隱藏超出內容 */
-    text-overflow: ellipsis; /* 顯示省略號 */
+/*     text-overflow: ellipsis; 顯示省略號 */
     vertical-align: middle; /* 垂直置中對齊 */
     height: 100px; /* 設定每個欄位的預設高度 */
 }
