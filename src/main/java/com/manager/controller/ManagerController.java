@@ -109,6 +109,7 @@ public class ManagerController {
 	public String updateAuth( @RequestParam("authTypes") List<Integer> authNo,
             @RequestParam("managerNo") String managerNo, 
             ModelMap model) {
+	
 		List<ManagerAuthVO> existingAuths = managerAuthSvc.getOne(Integer.valueOf(managerNo));
 	    for (ManagerAuthVO existingAuth : existingAuths) {
 	    	  Integer existingAuthNo = existingAuth.getAuthNo().getAuthNo();
@@ -116,8 +117,10 @@ public class ManagerController {
 	            managerAuthSvc.deleteAuthByManager(Integer.valueOf(managerNo),existingAuthNo);
 	        }
 	    }
+	    ManagerAuthVO managerAuthVO = new ManagerAuthVO();
+	   
 		for(Integer authNos: authNo) {
-			ManagerAuthVO managerAuthVO = new ManagerAuthVO();
+			
 		AuthVO av=authSvc.getOneAuth(authNos);
 		managerAuthVO.setAuthNo(av);
 		ManagerVO mv = managerSvc.getOneManager(Integer.valueOf(managerNo));
@@ -125,8 +128,9 @@ public class ManagerController {
 		 managerAuthSvc.updateAuth(managerAuthVO);
 		}
 		List<ManagerVO> sb= managerSvc.getAll();
-		
 		model.addAttribute("managerListData",sb);
+	    
+	    
 		
 		return "redirect:/manager/listAllManager";
 }

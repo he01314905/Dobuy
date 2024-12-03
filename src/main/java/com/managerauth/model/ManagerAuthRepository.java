@@ -19,6 +19,8 @@ public interface ManagerAuthRepository extends JpaRepository<ManagerAuthVO, Mana
 		@Modifying
 		@Query(value="delete  from managerauth where managerNo =?1 AND authNo = ?2", nativeQuery = true)
 		void deleteAuth(Integer manager ,Integer authNo);
+		
+		
 	}	
 
 

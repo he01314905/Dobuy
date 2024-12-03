@@ -85,7 +85,7 @@
             <ul >
             
       <li th:each="gg : ${glist}">
-    <p  th:attr="data-counterNo=${gg.counterNo}" onclick="filterGoods(this)" th:text="${gg.counterCName}"></p>
+    <p  th:attr="data-goodstNo=${gg.goodstNo}" onclick="filterGoods(this)" th:text="${gg.goodstName}"></p>
     
 	</li>
 
@@ -127,16 +127,16 @@
 
     <script>
     function filterGoods(element) {
-        const counterNo = element.getAttribute('data-counterNo');  
+        const goodstNo = element.getAttribute('data-goodstNo');  
         
 
-        if (!counterNo) {
+        if (!goodstNo) {
             console.error('counterNo is missing or invalid');
             return;  // 防止繼續執行
         }
 
         // 發送 AJAX 請求，並將 `counterNo` 作為參數
-        fetch(`/goods/filter?counterNo=${counterNo}`)
+        fetch(`/goods/filter?goodstNo=${goodstNo}`)
             .then(response => response.json())
             .then(data => {
                 const goodsContainer = document.getElementById('goodsContainer');

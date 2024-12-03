@@ -42,8 +42,79 @@ h2 {
     background-color: #e63900;
 }
 
+      input.card{
+      font-size:18px;
+	height:30px;
+        width: 60px;
+      }
+      .-error{
+        border: 2px solid red;
+      }
+      @keyframes shake {
+        0%{
+            transform: translate(2px,0);
+        }
+        25%{
+            transform: translate(-2px,0);
+        }
+        50%{
+            transform: translate(2px,0);
+        }
+        75%{
+            transform: translate(-2px,0);
+        }
+        100%{
+            transform: translate(0,0);
+        }
+    }
+        .shake{
+            animation: shake 0.3s;
+        }
+    .clicked{
+        box-shadow:inset -3px -3px 3px rgba(0,0,0,0.8),inset 3px 3px 3px rgba(0,0,0,0.8);
+    }
+    .hover{
+        box-shadow: inset -3px -3px 3px rgba(0,0,0,0.8);
+    }
+   
+  	.-on{
+  	display:none;
+  	}
+  	
+  	.D{
+  		width:50%;
+  		height:20%;
+  		 border-radius: 10px;
+  		 display:flex;
+  	}
+  	.b{
+  	margin-left:20%;
+  	margin-top:10%;
+  	border-radius: 10px;
+  	}
+   	.c{ 
+   	padding:0 3%;
+   	margin:3%; 
+ 	} 
+	
 </style>
-
+<form action="#" method="#" id="the_form" class="-on" >
+      
+        <div class="group c">
+          <label>信用卡卡號：</label>
+          <input type="text" class="card" maxlength="4">
+          <input type="text" class="card" maxlength="4">
+          <input type="text" class="card" maxlength="4">
+          <input type="text" class="card" maxlength="4">
+        </div>
+      
+      
+        <div class="group D">
+          <button class="b" type="reset" >清空</button>
+          <button class="b" type="submit">資料送出</button>
+        </div>
+      
+      </form>
 
 
 
@@ -59,3 +130,121 @@ h2 {
         </div>
     </div>
 </div>
+<script src="/js/is.main.js"></script>
+<script src="/js/jquery3.7.1.js"></script>
+<script>
+document.querySelector('.add-card-btn').addEventListener('click', function(event) {
+
+	  const onElement = document.querySelector(".-on");
+	    
+	    // 檢查是否找到該元素，然後移除/切換 "-on" 類別
+	    if (onElement) {
+	        onElement.classList.toggle("-on");
+	    }
+	});
+$(function(){
+    
+    $("input.card").on("keydown",function(e){
+        // console.log(e.which);
+        // e.preventDefault();
+        if(e.which >=48 && e.which<=57 || e.which == 8){
+
+        //     console.log(e.target.value.length);
+        //     console.log(($(this).val()).length);
+
+        if(($(this).val()).length==0 && e.which == 8){
+                console.log("這裡");
+                $(this).prev().focus();
+        }
+        }else{
+            e.preventDefault();
+        }
+    });
+
+    // let str ="adcde";
+    // let str2 = str.replace("c","");
+    $("input.card").on("keyup",function(e){
+        //     console.log(e.target.value.length);
+        //     console.log(($(this).val()).length);
+        let str =($(this).val()).replace(/\D/g,"");
+        // $(this).next().focus();
+        $(this).val(str);
+        if(str.length==4 ){
+            $(this).next().focus();
+        }
+            
+    });
+});
+
+    $("input.product_count").on("input",function(){
+        // console.log($(this).val());
+        $("span.num").html($(this).val());
+    });
+    $("#the_form").on("reset",function(){
+        // console.log("aaa");
+        $("span.num").html($("span.num").attr("data-default"));
+        $("input.card").removeClass("-error shake");
+    });
+       
+    $("button").hover(
+    function(){
+        $(this).addClass("hover");
+    },
+    function(){
+        $(this).removeClass("hover");
+    }).on('mousedown',function(){
+        $(this).addClass("clicked");
+        $(this).removeClass("hover");
+    }).on('mouseup ',function(){
+        $(this).removeClass("clicked");
+        $(this).addClass("hover");
+    }).on('mouseleave',function(){
+        $(this).removeClass("hover");
+    });
+    
+    
+    $("#the_form").on("submit",function(e){
+        
+        let card_str="";
+        $("input.card").each(function(index,item){
+            card_str +=$(this).val();
+        });
+      
+        let send_date = true;
+
+       
+      
+        $("input.card").each(function(i,item){
+           
+        if(is.creditCard(card_str) ){
+            $(this).removeClass("-error shake");
+        }else {
+            $(this).addClass("-error shake") ;
+            
+        }
+        });
+            send_date=false;
+        
+
+        if(!send_date){
+            e.preventDefault();    
+        }
+        
+
+    $("input.card").each(function(i,item){
+    if($(this).hasClass("shake")){
+        $(this).blur(function(){
+            if($(this).val()!="" && $(this).val().length==4){
+                $(this).removeClass("-error shake"); 
+            }
+        })
+    }
+    });
+
+    
+
+
+
+
+});
+</script>

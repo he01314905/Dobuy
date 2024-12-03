@@ -1,8 +1,6 @@
 package com.blob.reader;
 
 import java.io.IOException;
-import java.util.List;
-
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,9 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.used.model.UsedService;
 import com.usedpic.model.UsedPicService;
-import com.usedpic.model.UsedPicVO;
 
 @Controller
 @RequestMapping("/usedpic")

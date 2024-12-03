@@ -227,11 +227,11 @@ document.body.addEventListener('click', function(event) {
             fetch(`/manager/getOneAuth?managerNo=${managerNo}`)
                 .then(response => response.json()) // 解析 JSON
                 .then(data => {
-                    console.log('Received data:', data);
-
+                   
                     // 確保收到的資料有 "auths" 和 "assignedAuths"
                     if (Array.isArray(data.auths) && Array.isArray(data.assignedAuths)) {
-                        const authContainer = document.getElementById('authContainer');
+                    	 
+                    	const authContainer = document.getElementById('authContainer');
                         authContainer.innerHTML = ''; // 清空之前的權限選項
 
                         // 遍歷所有權限資料
@@ -288,17 +288,13 @@ form.addEventListener('submit', function(event) {
         form.appendChild(authTypesInput);
     }
 
-    // 將選中的權限資料轉換為字串，並填充到隱藏欄位中
+   
     authTypesInput.value = selectedAuths.join(',');
 
+  
     // 提交表單
     form.submit();
 });
-
- 
- 
-  
-
 
 </script>
 

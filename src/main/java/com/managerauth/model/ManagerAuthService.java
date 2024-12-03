@@ -35,5 +35,7 @@ import com.manager.model.ManagerVO;
 	return repository.findOneManager(managerNo);
 	    	
 	    }
+	   
+	    
 	}
 

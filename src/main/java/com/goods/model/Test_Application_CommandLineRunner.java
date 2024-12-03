@@ -12,7 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.goods.model.GoodsRepository;
 import com.goods.model.GoodsVO;
 
-@SpringBootApplication
+
 public class Test_Application_CommandLineRunner implements CommandLineRunner {
 
     @Autowired

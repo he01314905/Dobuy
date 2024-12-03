@@ -18,7 +18,7 @@ import com.counterorder.model.CounterOrderVO;
 
 //@PropertySource("classpath:application.properties") // 於https://start.spring.io建立Spring Boot專案時, application.properties文件預設已經放在我們的src/main/resources 目錄中，它會被自動檢測到
 @Controller
-public class IndexController_inSpringBoot {
+public class CounterIndexController {
 	
 	// @Autowired (●自動裝配)(Spring ORM 課程)
 	// 目前自動裝配了EmpService --> 供第66使用

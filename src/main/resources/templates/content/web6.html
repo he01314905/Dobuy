@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    * {
+        box-sizing: border-box;
+      }
+      input.card{
+        width: 42px;
+      }
+      .-error{
+        border: 2px solid red;
+      }
+      @keyframes shake {
+        0%{
+            transform: translate(2px,0);
+        }
+        25%{
+            transform: translate(-2px,0);
+        }
+        50%{
+            transform: translate(2px,0);
+        }
+        75%{
+            transform: translate(-2px,0);
+        }
+        100%{
+            transform: translate(0,0);
+        }
+    }
+        .shake{
+            animation: shake 0.3s;
+        }
+      
+       input:focus{
+        animation: aaa  0.3s ease-in 0s infinite ;
+      }
+        @keyframes aa {
+            0%{
+                outline:2px red solid;
+                border-left: 10px;
+                /* border-radius: 20%; */
+            }
+            10%{
+                outline:2px orange solid;
+            }
+            50%{
+                outline:2px yellow solid;
+                border-right: 10px;
+                /* border-radius: 40%; */
+            }
+            75%{
+                outline:2px green solid;
+                
+            }
+            80%{
+                outline:2px  blue solid;
+                border-top: 10px;
+                /* border-radius: 60%; */
+            }
+            90%{
+                outline:2px rgb(29, 148, 181) solid;
+                
+            }
+            100%{
+                outline:2px purple solid;
+                border-bottom: 10px;
+                /* border-radius: 100%; */
+            }
+            
+        }
+        label{
+            
+            animation: bbb  1s ease-in 0s infinite ;
+        }
+            @keyframes bb {
+            0%{
+                background-color: red ;
+                border-radius: 10%;
+                
+            }
+            10%{
+                outline:2px orange solid;
+                border-radius: 25%;
+            }
+            50%{
+                background-color: yellow ;
+                
+                 border-radius: 50%; 
+            }
+            75%{
+                background-color: green ;
+                border-radius: 75%;
+            }
+            80%{
+                background-color: blue ;
+                
+                 border-radius: 50%; 
+            }
+            90%{
+                background-color: rgb(29, 148, 181) ;
+                border-radius: 25%;
+            }
+            100%{
+                background-color: purple ;
+                
+                border-radius: 10%; 
+            }
+        }
+      div.p p{
+        
+        border: px solid red;
+        width: 130px;
+        animation: cc  1s ease-in-out -1s infinite forwards;
+            margin-left: 50px;
+      
+      }
+      @keyframes cc {
+        0%{
+            transform: rotate(-360deg)
+        }
+    }
+    
+    .clicked{
+        box-shadow:inset -3px -3px 3px rgba(0,0,0,0.8),inset 3px 3px 3px rgba(0,0,0,0.8);
+    }
+    .hover{
+        box-shadow: inset -3px -3px 3px rgba(0,0,0,0.8);
+    }
+   
+      
+      </style>
+      
+</head>
+<body>
+    <div class="p">
+       
+    </div>
+    
+    <form action="#" method="#" id="the_form">
+
+        <div class="group">
+          <label>帳號：</label>
+          <input type="text" id="account">
+        </div>
+      
+        <div class="group">
+          <label>email：</label>
+          <input type="email" id="email">
+        </div>
+      
+        <div class="group">
+          <label>信用卡卡號：</label>
+          <input type="text" class="card" maxlength="4">
+          <input type="text" class="card" maxlength="4">
+          <input type="text" class="card" maxlength="4">
+          <input type="text" class="card" maxlength="4">
+        </div>
+      
+        <div class="group">
+          <label>商品數量：</label>
+          <input type="range" min="1" max="10" value="5" class="product_count">
+          <span class="num" data-default="5">5</span>
+        </div>
+      
+        <div class="group">
+          <button type="reset" >清空</button>
+          <button type="submit">資料送出</button>
+        </div>
+      
+      </form>
+      <script src="./vendors/jquery/jquery-3.7.1.min.js"></script>
+      <script src="./vendors/is/is.main.js"></script>
+      <script>
+        // 一、介面調整：
+        // 1、信用卡介面：keydown、keyup(或change)、focus
+        // 2、商品數量的介面：input 事件
+        // 3、表單：reset 事件
+        
+        // 二、資料送出時(submit)，資料驗證：
+        // 1、帳號必填
+        // 2、email：符合格式
+        // 3、信用卡卡號：符合格式
+        $(function(){
+            
+            $("input.card").on("keydown",function(e){
+                // console.log(e.which);
+                // e.preventDefault();
+                if(e.which >=48 && e.which<=57 || e.which == 8){
+
+                //     console.log(e.target.value.length);
+                //     console.log(($(this).val()).length);
+
+                if(($(this).val()).length==0 && e.which == 8){
+                        console.log("這裡");
+                        $(this).prev().focus();
+                }
+                }else{
+                    e.preventDefault();
+                }
+            });
+
+            // let str ="adcde";
+            // let str2 = str.replace("c","");
+            $("input.card").on("keyup",function(e){
+                //     console.log(e.target.value.length);
+                //     console.log(($(this).val()).length);
+                let str =($(this).val()).replace(/\D/g,"");
+                // $(this).next().focus();
+                $(this).val(str);
+                if(str.length==4 ){
+                    $(this).next().focus();
+                }
+                    
+            });
+        });
+
+            $("input.product_count").on("input",function(){
+                // console.log($(this).val());
+                $("span.num").html($(this).val());
+            });
+            $("#the_form").on("reset",function(){
+                // console.log("aaa");
+                $("span.num").html($("span.num").attr("data-default"));
+                $("#account").removeClass("-error shake");
+                $("#email").removeClass("-error shake");
+                $("input.card").removeClass("-error shake");
+            });
+               
+            $("button").hover(
+            function(){
+                $(this).addClass("hover");
+            },
+            function(){
+                $(this).removeClass("hover");
+            }).on('mousedown',function(){
+                $(this).addClass("clicked");
+                $(this).removeClass("hover");
+            }).on('mouseup ',function(){
+                $(this).removeClass("clicked");
+                $(this).addClass("hover");
+            }).on('mouseleave',function(){
+                $(this).removeClass("hover");
+            });
+            
+            
+            $("#the_form").on("submit",function(e){
+                
+                let card_str="";
+                $("input.card").each(function(index,item){
+                    card_str +=$(this).val();
+                });
+              
+                let send_date = true;
+
+                if($("#account").val() == ""){
+                    $("#account").addClass("-error shake");
+                    send_date=false;
+                }else{
+                    $("#account").removeClass("-error shake");
+                }
+                if($("#email").val() == ""){
+                    $("#email").addClass("-error shake");
+                    send_date=false;
+                }else{
+                    $("#email").removeClass("-error shake");
+                }
+
+                if (is.email($("#email").val()) ){
+                    $("#email").removeClass("-error shake");
+                }else{
+                    $("#email").addClass("-error shake");
+                    send_date =false;
+                }
+                $("input.card").each(function(i,item){
+                   
+                if(is.creditCard(card_str) ){
+                    $(this).removeClass("-error shake");
+                }else {
+                    $(this).addClass("-error shake") ;
+                    
+                }
+                });
+                    send_date=false;
+                
+
+                if(!send_date){
+                    e.preventDefault();    
+                }
+                
+            
+                if($("#account").hasClass("shake")){
+                $("#account").blur(function(){
+                    if($("#account").val()!=""){
+                        $("#account").removeClass("-error shake"); 
+                    }
+                })
+            }
+
+            if($("#email").hasClass("shake")){
+                let c =/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                $("#email").blur(function(){
+                    if($("#email").val()!="" && c.test($("#email").val())){
+                        $("#email").removeClass("-error shake"); 
+                    }
+                })
+            }
+            $("input.card").each(function(i,item){
+            if($(this).hasClass("shake")){
+                $(this).blur(function(){
+                    if($(this).val()!="" && $(this).val().length==4){
+                        $(this).removeClass("-error shake"); 
+                    }
+                })
+            }
+            });
+
+            
+
+
+
+
+        });
+        
+      </script>
+</body>
+</html>

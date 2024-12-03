@@ -30,15 +30,12 @@
                     <button class="search_button" name="search">
                     </button>
                     <img src="images/magnifying-glass-dollar-solid.svg" alt="Search">
-                    
-                
-
             </div>
                 <div class="nav_bar">
 
                     <div class="head"> 
                         <a href="home">Home</a>
-                        <a href="#about">一般商城</a>
+                        <a href="goodspage">一般商城</a>
                         <a href="#services">二手商城</a>
                         <a href="#contact">品牌</a>
                         <a href="#class">商品分類</a>
@@ -46,9 +43,7 @@
                         <a href="#coupongoods">優惠商品</a>
                         <a href="#couponget">優惠券領取</a>
                     </div>
-
                 </div>
-
             </div>
 
             <div class="icon_area">    
@@ -79,8 +74,8 @@
         <div class="use_list">
             <div class="member_account">
                 <div class="mem_img" ><img src="images/會員中心.png" alt="User"> </div>
-                <div class="mem_acc">
-                    <div class="memac">帳號</div>
+                <div class="mem_acc"><span>帳號:<pre> </pre>
+                   <div class="memac" th:text="${session.memAccount}">  </div></span>
                     <div class="mempro">
                         <svg width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" style="margin-right: 4px;"><path d="M8.54 0L6.987 1.56l3.46 3.48L12 3.48M0 8.52l.073 3.428L3.46 12l6.21-6.18-3.46-3.48" fill="#9B9B9B" fill-rule="evenodd"></path>
                         </svg>

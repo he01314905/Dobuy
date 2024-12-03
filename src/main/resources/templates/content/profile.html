@@ -24,7 +24,7 @@ label {
     margin-bottom: 10px;
 }
 
-input[type="text"] {
+input.a{
     padding: 8px;
     width: 100%;
     margin-bottom: 10px;
@@ -62,12 +62,13 @@ input[type="text"] {
     <h2>我的檔案</h2>
     <p>管理你的檔案以保護你的帳戶</p>
 
-    <form class="profile-form">
-        <label>使用者帳號</label>
+    <form class="profile-forma">
+    你的帳號:
+        <label th:text="${session.memAccount}"></label>
         <div class="profile-info"></div>
 
         <label>姓名</label>
-        <input type="text" name="name" placeholder="輸入你的名字">
+        <input  class =a type="text" name="name" placeholder="輸入你的名字">
 
         <label>Email</label>
         <div class="profile-info">
