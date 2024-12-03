@@ -268,64 +268,73 @@ VALUES
 -- 定紘
 
 CREATE TABLE Goods (
-    goodsNo INT NOT NULL PRIMARY KEY AUTO_INCREMENT,                 -- 商品編號，主鍵
-    goodstNo INT NOT NULL,                            -- 商品類別編號，外來鍵
-    counterNo INT NOT NULL,                           -- 櫃位編號，外來鍵
-    goodsName VARCHAR(500) NOT NULL,                  -- 商品名稱
-    goodsContent VARCHAR(500) NOT NULL,               -- 商品內容
-    goodsPrice INT NOT NULL,                          -- 商品單價
-    goodsAmount INT NOT NULL,                         -- 商品庫存
-    goodsStatus TINYINT NOT NULL,                     -- 商品狀態 (0: 未上架, 1: 已上架)
-    goodsDate DATETIME NOT NULL,                      -- 商品上架日期
-    goodsEnddate DATETIME NOT NULL,                   -- 商品下架日期
-    goodsDescription VARCHAR(500) NOT NULL            -- 商品敘述
-    
-
+	goodsNo INT NOT NULL PRIMARY KEY AUTO_INCREMENT, -- 商品編號，自增主鍵
+    goodstNo INT NOT NULL,                           -- 商品類別編號 (外鍵)
+    counterNo INT NOT NULL,                          -- 櫃位編號 (外鍵)
+    goodsName VARCHAR(500) NOT NULL,                -- 商品名稱
+    goodsDescription VARCHAR(500) NOT NULL,         -- 商品敘述
+    goodsPrice INT NOT NULL,                        -- 商品單價
+    goodsAmount INT NOT NULL,                       -- 商品庫存
+    gpPhotos1 LONGBLOB,                     		-- 商品主圖(必填)
+	gpPhotos2 LONGBLOB,                     		-- 商品副圖1(選填)
+	gpPhotos3 LONGBLOB,                     		-- 商品副圖2(選填)
+	gpPhotos4 LONGBLOB,                     		-- 商品副圖3(選填)
+	gpPhotos5 LONGBLOB,                     		-- 商品副圖4(選填)
+    gpPhotos6 LONGBLOB,                     		-- 商品副圖5(選填)
+    gpPhotos7 LONGBLOB,                     		-- 商品副圖6(選填)
+    gpPhotos8 LONGBLOB,                     		-- 商品副圖7(選填)
+    gpPhotos9 LONGBLOB,                     		-- 商品副圖8(選填)
+    gpPhotos10 LONGBLOB,                     		-- 商品副圖9(選填)
+    goodsStatus TINYINT ,                   		-- 商品狀態 (0：下架、 1：上架)
+    checkStatus TINYINT ,                   		-- 審核狀態 (0：審核中、 1：通過、 2：未通過)
+    goodsDate DATETIME,                  			-- 商品上架日期
+    goodsEnddate DATETIME                  			-- 商品下架日期
 );
 
 -- 插入 20 筆假資料
-INSERT INTO Goods (goodsNo, goodstNo, counterNo, goodsName, goodsContent, goodsPrice, goodsAmount, goodsStatus, goodsDate, goodsEnddate, goodsDescription) 
-VALUES 
-(1, 3, 4, '筆記型電腦', '高效能筆記型電腦，適合專業用途', 1500, 10, 1, '2024-01-01 10:00:00', '2025-01-01 10:00:00', '非常適合工作與學習'),
-(2, 3, 4, '智慧型手機', '最新款智慧型手機，搭載高解析螢幕', 800, 25, 1, '2024-02-01 11:00:00', '2025-02-01 11:00:00', '適合追劇與攝影'),
-(3, 3, 4, '耳機', '降噪耳機，提升音質體驗', 200, 50, 1, '2024-03-01 12:00:00', '2025-03-01 12:00:00', '適合旅途與辦公使用'),
-(4, 3, 4, '數位相機', '4K數位相機，拍攝高畫質影片', 1200, 5, 1, '2024-04-01 13:00:00', '2025-04-01 13:00:00', '捕捉美好時光'),
-(5, 3, 4, '平板電腦', '10吋平板，輕便攜帶', 300, 15, 1, '2024-05-01 14:00:00', '2025-05-01 14:00:00', '適合閱讀與娛樂'),
-(6, 3, 4, '智慧手錶', '防水智慧手錶，支援健康追蹤', 150, 30, 0, '2024-06-01 15:00:00', '2025-06-01 15:00:00', '隨時監測身體狀態'),
-(7, 3, 4, '藍牙音箱', '藍牙連接音箱，小巧音量大', 100, 20, 1, '2024-07-01 16:00:00', '2025-07-01 16:00:00', '戶外聚會的最佳伴侶'),
-(8, 3, 4, '顯示器', '27吋4K顯示器，清晰畫質', 500, 8, 1, '2024-08-01 17:00:00', '2025-08-01 17:00:00', '適合設計與遊戲'),
-(9, 3, 4, '機械鍵盤', 'RGB背光機械鍵盤，手感佳', 70, 60, 1, '2024-09-01 18:00:00', '2025-09-01 18:00:00', '遊戲和打字的好選擇'),
-(10, 3, 4, '無線滑鼠', '人體工學設計無線滑鼠', 50, 40, 1, '2024-10-01 19:00:00', '2025-10-01 19:00:00', '使用舒適，適合長時間使用'),
-(11, 3, 4, '智慧家庭音箱', '語音控制智慧音箱', 300, 12, 1, '2024-11-01 08:00:00', '2025-11-01 08:00:00', '智能家居的控制中樞'),
-(12, 3, 3, '電動滑板車', '折疊式電動滑板車，適合短程移動', 400, 7, 1, '2024-11-15 09:00:00', '2025-11-15 09:00:00', '城市通勤的絕佳選擇'),
-(13, 8, 3, '電子書閱讀器', '高解析度電子墨水螢幕', 200, 15, 1, '2024-12-01 10:00:00', '2025-12-01 10:00:00', '保護眼睛，適合長時間閱讀'),
-(14, 3, 4, '空氣清淨機', '高效空氣過濾系統', 250, 20, 1, '2024-12-15 11:00:00', '2025-12-15 11:00:00', '適合居家使用，淨化空氣'),
-(15, 3, 4, '咖啡機', '自動研磨咖啡機，輕鬆沖泡', 350, 10, 1, '2025-01-01 12:00:00', '2026-01-01 12:00:00', '享受新鮮的咖啡'),
-(16, 3, 4, '電視', '50吋智慧型電視，支援4K解析度', 800, 5, 1, '2025-01-15 13:00:00', '2026-01-15 13:00:00', '觀賞影劇的最佳選擇'),
-(17, 6, 2, '健身追蹤器', '運動健康追蹤器', 100, 30, 1, '2025-02-01 14:00:00', '2026-02-01 14:00:00', '記錄運動數據，保持健康'),
-(18, 3, 3, '攝影無人機', '高畫質攝影無人機', 1200, 3, 1, '2025-02-15 15:00:00', '2026-02-15 15:00:00', '適合拍攝壯麗景色'),
-(19, 9, 8, '車用吸塵器', '車內專用小型吸塵器', 80, 50, 1, '2025-03-01 16:00:00', '2026-03-01 16:00:00', '維護車內清潔'),
-(20, 2, 2, '電子磅秤', '體重電子磅秤，精確測量', 60, 40, 1, '2025-03-15 17:00:00', '2026-03-15 17:00:00', '家用健康管理');
+INSERT INTO Goods (
+    goodsNo, goodstNo, counterNo, goodsName, goodsDescription, goodsPrice, goodsAmount, gpPhotos1,gpPhotos2,gpPhotos3,gpPhotos4,gpPhotos5,gpPhotos6,gpPhotos7,gpPhotos8,gpPhotos9,gpPhotos10, goodsStatus, checkStatus, goodsDate, goodsEnddate
+) VALUES
+(1, 1, 1, '路易威登 LOUIS VUITTON Double Zip Pochette Reverse 帆布 多夾層手拿 斜背包 M69203 防塵袋/背帶', '這款Double Zip Pochette完美融合經典Monogram和時尚Monogram Giant Reverse帆布，設計巧妙，擁有可拆式和可調節長度的皮革肩帶，可根據需求靈活變換多種攜帶方式。手袋兩側配有拉鏈口袋，方便隨身物品的分類收納，其中一個口袋還設有三個卡片夾層，中間隔層則方便存放票據等物品。', 32800, 100, NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL, 0, 0,NULL,NULL),
+(2, 1, 1, '路易威登 LOUIS VUITTON Cabas Rivington 托特包 N41108 棋盤格托特', '這款 Cabas Rivington 採用經典 Damier 帆布製成，是日常時尚的完美詮釋。內部空間寬敞，可容納 A4 文件，搭配柔美的皮革手柄與亮眼的金色黃銅金屬件，為這款多功能購物袋增添迷人魅力。', 31800, 50, NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL, 0, 0,NULL,NULL),
+(3, 2, 2, 'KIMHEKIM｜NEO-MALEVICH V領撞色腰帶洋裝', 'KIMHĒKIM 2022年 OBSESSION Nº4 ‘Hair Chronicles’秋冬系列商品。經典商品NEO-MALEVICH再進化，款式經典的撞色領口及排釦設計搭配中長版剪裁，本季在腰間加入撞色的腰帶拼接凸顯腰部線條，增添穿搭設計感。', 24400, 200, NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL, 0, 0,NULL,NULL),
+(4, 2, 2, 'KIMHEKIM｜VENUS 高腰開衩落地喇叭褲', 'KIMHĒKIM 2022年 OBSESSION Nº4 ‘Hair Chronicles’秋冬系列商品。此褲款採用透氣且保暖的羊毛面料，並有著高腰喇叭褲版型，散發復古氛圍。', 17800, 150, NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL, 0, 0,NULL,NULL),
+(5, 3, 2, 'KIMHEKIM｜MONROE 蝴蝶結芭蕾平底鞋', '此鞋款靈感來自瑪麗蓮夢露優雅而別緻的美感， 精緻的高級訂製手工蝴蝶結緞帶是鞋子的特別之處。 夢露芭蕾平底鞋款式浪漫而獨特，非常適合約會時著用。', 19040, 75, NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL, 0, 0,NULL,NULL),
+(6, 3, 2, 'KIMHEKIM｜LACE-UP 真皮繫帶厚底短靴', 'KIMHĒKIM 2024年秋冬 OBSESSION N°11 ‘Puzzle’系列商品。此款短靴採用100%牛皮製成，皮革表面光滑且富有光澤。鞋頭設計為圓形，前側配有細長繫帶，增加經典時尚感。', 26800, 120, NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL, 0, 0,NULL,NULL),
+(7, 4, 1, '路易威登 LOUIS VUITTON Epi 手鍊紅繩 ', '商品如圖實品拍攝🎬 尺碼17cm 紅繩戴起來更加顯色 附：原廠盒、說明書 近全新（戴過兩次而已）', 9800, 30, NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL, 0, 0,NULL,NULL),
+(8, 4, 1, '路易威登 LOUIS VUITTON 金頭 老花+黑 雙面用皮帶', 'LV M0353 Circle 金頭 老花+黑 雙面用皮帶(3.5公分寬) 70cm 188 尺寸 (公分) 70 cm(寬3.5公分)', 18800, 20, NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL, 0, 0,NULL,NULL),
+(9, 5, 3, 'Valentino Garavani 范倫鐵諾-白色VLTN印花漸層彩虹英文字腰包/胸背包', '品牌編號:YB0719ULP 英國精品網站Farfetch網購 商品尺寸:厚度:4cm、高度:13cm、寬度23cm 面料:牛剖層革小牛皮+金屬 MADE IN ITALY', 15000, 15, NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL, 0, 0, NULL,NULL),
+(10, 5, 3,'Valentino VLTN 塗鴉小牛皮 Candystud 包 白色', '這款 Candystud 包以 VLTN 塗鴉設計展現個性，搭配柔軟小牛皮材質和絎縫效果，風格鮮明。可調節肩帶和手柄設計，滿足多種場合需求，內置拉鍊口袋讓收納更有條理。', 53500, 200, NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL, 0, 0,NULL,NULL),
+(11, 6, 3,'Valentino 運動衫', '採用拉絨棉質平紋針織布料，連帽配有抽繩、拉鍊、袋鼠口袋、羅紋邊緣，胸前飾有橡膠字母標誌。舒適貼合。模特兒身高 187 厘米，所穿尺寸為 L。', 22949, 90, NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL, 0, 0,NULL,NULL),
+(12, 6, 3,'Valentino 圓領運動衫', '採用拉絨棉質平紋針織布料製成，飾有同色系凸起標誌字樣印花。羅紋邊緣，常規版型。模特兒身高 187 厘米，所穿尺寸為 L。', 19575, 120, NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL, 0, 0,NULL,NULL),
+(13, 7, 3,'Valentino Garavani 木鞋', '採用光滑和半光皮革製成，側面飾有釕飾面的 VLogo 標誌性細節。絎縫錶帶搭配古董金屬扣環。光滑皮革襯裡，解剖學絨面革鞋墊，鞋跟上飾有徽標嵌件，橡膠鞋底。', 22949, 50, NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL, 0, 0,NULL,NULL),
+(14, 7, 3,'Valentino Open For A Change 運動鞋', '* 顏色 : White, White * 質料 : 生物基材質、再生橡膠 * 尺寸/碼 : 41H * 設計師代碼 : YS0830PUD-0BO * Series : OPEN FOR A CHANGE SNEAKER', 16336, 180, NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL, 0, 0,NULL,NULL),
+(15, 8, 4,'ARMANI手錶,編號AR00043', '編號AR00043,44mm綠金圓形精鋼錶殼,墨綠色中三針顯示, 運動, 水鬼錶面,金銀相間精鋼錶帶款', 17000, 30, NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL, 0, 0,NULL,NULL),
+(16, 8, 4,'ARMANI手錶,編號AR00013', '編號AR00013,42mm墨綠色錶殼,深黑色錶帶款', 13100, 80, NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL, 0, 0,NULL,NULL),
+(17, 9, 5, '雅詩蘭黛 Micro Essence 微分子肌底原生露', '雅詩蘭黛微分子肌底原生露，擁有全新保濕因子，打造最強柔嫩肌膚！使用獨創微酵科技，低溫封存99%活性益生菌，秒速吸收直達肌底，並添加光果甘草精萃與2D強效玻尿酸，退紅抗敏，由內而外鎖水保濕。', 8400, 60, NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL, 0, 0,NULL,NULL),
+(18, 9, 5, '雅詩蘭黛 Revitalizing Supreme+ Moisturizer 年輕無敵膠原霜', '內含新三大配方激升10倍膠原力*，無敵緊緻Q彈*經科學實驗測試，奇蹟辣木、白芙蓉8大精萃與膠原協同激活科技三種配方相互作用下，相較於未使用之對照組，經96小時後幫助肌膚膠原協同作用達10倍', 4980, 150, NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL, 0, 0,NULL,NULL),
+(19, 10, 6, 'Diptyque 聖日爾曼大道34號蠟燭', '這支Sanctuary Road 34號蠟燭，香氣濃郁，非常適合放在室內和室外空間。', 358, 25, NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL, 0, 0,NULL,NULL),
+(20, 10, 6, 'Diptyque 青藤玫瑰多用香氛 200ml', '綠蔭玫瑰多用香氛是一款令人迷醉的香氛，帶來了土耳其玫瑰、常春藤、橙皮調、加蓬、天竺葵、麝香、木材和雪松等芬芳。', 99, 130, NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL, 0, 0,NULL,NULL);
 
 -- 商品類別
 CREATE TABLE GoodsType (
-    goodstNo INT NOT NULL PRIMARY KEY,          -- 商品類別編號，主鍵
-    goodstName VARCHAR(255) NOT NULL            -- 類別名稱
+    goodstNo INT NOT NULL PRIMARY KEY AUTO_INCREMENT,  	-- 商品類別編號，主鍵
+    goodstName VARCHAR(255) NOT NULL            		-- 類別名稱
 );
 
 -- 插入假資料
 INSERT INTO GoodsType (goodstNo, goodstName) 
 VALUES 
-	(1, '珠寶'),
-    (2, '健康與美容'), 
-    (3, '電子產品'),
-    (4 , '家具'),
-    (5, '服飾'),
-    (6, '運動器材'), 
-    (7, '玩具'), 
-    (8, '書籍') ,
-    (9, '雜貨'),
-    (10, '食品');
+(1, '女士包包'),
+(2, '女士服裝'), 
+(3, '女士鞋'),
+(4, '女士配件'),
+(5, '男士包包'),
+(6, '男士服裝'), 
+(7, '男士鞋'),
+(8, '男士配件'),
+(9, '美妝保養'),
+(10, '家居與科技');
    
 
 -- 商品照片
@@ -610,8 +619,8 @@ CREATE TABLE Member (
     memSex TINYINT,                                        -- 會員性別 (0: 未知, 1: 男, 2: 女)
     memBirth DATETIME,                                     -- 會員生日
     memStatus TINYINT DEFAULT 1,                           -- 會員狀態 (0: 停用, 1: 啟用)
-    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,          -- 建立時間
-    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, -- 更新時間
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,          -- 建立時間
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, -- 更新時間
     memPasswordHint VARCHAR(100),                          -- 密碼提示問題
     memPasswordHintAnswer VARCHAR(100),                    -- 密碼提示答案
     memPasswordChangedAt DATETIME,                         -- 密碼修改時間
@@ -685,11 +694,11 @@ CREATE TABLE ManagerAuth (
 CREATE TABLE CounterCarousel (
     counterCarouselNo INT NOT NULL AUTO_INCREMENT PRIMARY KEY,  -- 輪播資訊編號
     counterNo INT NOT NULL,                                     -- 櫃位編號 FK
-    carouselTime DateTime NOT NUll,                             -- 輪播時間
-    carouselPic LongBlob NUll,                                  -- 輪播圖片
+    carouselTime TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,  -- 上傳時間，默認為新增時的當前時間
+    carouselPic LONGBLOB NULL,                                  -- 輪播圖片
     goodsNo INT NOT NULL                                        -- 商品編號 FK
-   --  FOREIGN KEY (counterNo) REFERENCES Counter(counterNo)      -- 櫃位輪播資訊外來鍵
-   --  FOREIGN KEY (goodsNo) REFERENCES Goods(goodsNo)      -- 櫃位輪播資訊外來鍵
+    -- FOREIGN KEY (counterNo) REFERENCES Counter(counterNo)      -- 櫃位輪播資訊外來鍵
+    -- FOREIGN KEY (goodsNo) REFERENCES Goods(goodsNo)           -- 商品外來鍵
 );
 
 CREATE TABLE CounterChat (

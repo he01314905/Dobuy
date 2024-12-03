@@ -8,7 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-//import hibernate.util.CompositeQuery.HibernateUtil_CompositeQuery_MonthSettlement;
+import com.monthsettlement.controller.HibernateUtil_CompositeQuery_MonthSettlement;
 
 @Service("monthSettlementService")
 public class MonthSettlementService {
@@ -47,10 +47,10 @@ public class MonthSettlementService {
         return repository.findAll();
     }
 
-//    // 動態查詢取得所有月結
-//    public List<MonthSettlementVO> getAll(Map<String, String[]> criteriaMap) {
-//        try (Session session = sessionFactory.openSession()) {
-//            return HibernateUtil_CompositeQuery_MonthSettlement.getAllC(criteriaMap, session);
-//        }
-//    }
+    // 動態查詢取得所有月結
+    public List<MonthSettlementVO> getAll(Map<String, String[]> criteriaMap) {
+        try (Session session = sessionFactory.openSession()) {
+            return HibernateUtil_CompositeQuery_MonthSettlement.getAllC(criteriaMap, session);
+        }
+    }
 }

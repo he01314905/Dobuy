@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>抽成月結資料 - listOneMonthSettlement.html</title>
+
+<head th:insert="~{/back-end/monthsettlement/included-fragment}"></head>
+<style type="text/css">
+    span {
+        display: inline-block;
+        width: 150px;
+        text-align: left;
+        font-weight: bold;
+    }
+</style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center">
+    <div align="center"> 
+        <h2>抽成月結資料 - listOneMonthSettlement.html</h2>
+        <h3><a class="navbar-brand" th:href="@{/monthsettlement/select_page}"><img th:src="@{/images/back1.gif}">回查詢頁<label th:text="${success}"></label></a></h3>
+    </div>
+</nav>
+
+<div align="center" th:fragment="listOneMonthSettlement-div"> <!-- 此div被select_page.html第158行insert用 -->
+    <h3><span>查詢結果 :</span></h3>
+    <span>抽成月結編號:</span><span th:text="${monthSettlementVO.monthSettlementNo}"></span><br/>
+    <span>櫃位編號:</span><span th:text="${monthSettlementVO.counterNo}"></span><br/>
+    <span>月份:</span><span th:text="${monthSettlementVO.month}"></span><br/>
+    <span>總金額:</span><span th:text="${monthSettlementVO.comm}"></span><br/>
+</div>
+
+</body>
+</html>

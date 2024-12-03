@@ -48,7 +48,7 @@ public class MonthSettlementVO implements java.io.Serializable {
 
     @Column(name = "month",nullable = false)  // 對應資料庫中的 MONTH 欄位
     @NotEmpty(message = "月份: 請勿空白")
-    @Pattern(regexp = "^\\d{6}$", message = "月份: 格式必須為 YYYY-MM")
+  //  @Pattern(regexp = "^\\d{6}$", message = "月份: 格式必須為 YYYY-MM")
     public String getMonth() {
         return month;
     }

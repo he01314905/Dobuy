@@ -3,7 +3,7 @@
 <head>
 
 <!-- fragment引入 -->
-<th:block th:insert="~{back-end/back-end-home/fraghead.html :: head}"></th:block>
+<th:block th:replace="~{back-end/back-end-home/fraghead :: head}"></th:block>
 
 
 
@@ -11,7 +11,7 @@
 <style>
  .img_block { 
  	width: 800px ; 
- 	height: 800px ; 
+ 	height: 1200px ; 
  } 
  
  
@@ -35,7 +35,7 @@
 	<footer th:block th:replace="~{back-end/back-end-home/fraghead :: footer}"></footer>
 
 	<!-- fragment引入 -->
-	<th:block th:insert="~{back-end/back-end-home/fraghead.html :: js}"></th:block>
+	<th:block th:replace="~{back-end/back-end-home/fraghead :: js}"></th:block>
 
 </body>
 </html>

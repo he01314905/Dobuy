@@ -45,6 +45,7 @@ body {
   ;
   font-family: "helveticaneuemedium";
   background-color: #ffffff;
+  margin-top: 0.5rem; 
 }
 
 h1,
@@ -1249,14 +1250,6 @@ img {
   }
 }
 
-@media only screen and (max-width: 767px) {
-  .original-logo img {
-    max-height: 20%;
-    /* 圖片最大高度為父容器高度 */
-    max-width: 20%;
-    /* 圖片最大寬度為父容器寬度 */
-  }
-}
 
 
 
@@ -1381,4 +1374,17 @@ img {
   height: auto;
   object-fit: contain;
   /* 確保圖片完整顯示 */
+}
+
+@media only screen and (max-width: 767px) {
+  .original-logo img {
+  max-height: 85px;
+  /* 圖片最大高度為父容器高度 */
+  max-width: 85px;
+  /* 圖片最大寬度為父容器寬度 */
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  /* 確保圖片完整顯示 */
+  }
 }

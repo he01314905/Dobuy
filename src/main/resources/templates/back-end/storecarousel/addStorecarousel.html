@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>新增商城輪播資訊</title>
+</head>
+<body>
+
+<form th:action="@{/storecarousel/insert}" method="post" th:object="${storeCarouselVO}" enctype="multipart/form-data">
+    <!-- 輪播資訊編號 (自動生成，隱藏) -->
+    <input type="hidden" th:field="*{storeCarouselNo}" />
+
+    <!-- 櫃位編號 -->
+    <label for="counterNo">櫃位編號:</label>
+    <input type="number" th:field="*{counterNo}" required />
+    <br /><br />
+
+    <!-- 平台優惠編號 -->
+    <label for="disNo">平台優惠編號:</label>
+    <input type="number" th:field="*{disNo}" required />
+    <br /><br />
+
+    <!-- 輪播圖片 -->
+    <label for="upFiles">輪播圖片:</label>
+    <input type="file" th:field="*{upFile}" accept="image/*" required />
+    <br /><br />
+
+    <!-- 輪播時間 (自動生成，隱藏) -->
+    <input type="hidden" th:field="*{carouselTime}" />
+
+    <button type="submit">提交</button>
+    <br /><br />
+
+    <!-- 返回列表 -->
+    <h5>
+        <a th:href="@{/storecarousel/all}">顯示所有輪播資訊</a>
+        <br><br />
+    </h5>
+
+    <!-- 返回首頁 -->
+    <h5>
+        <a th:href="@{/}">返回首頁</a>
+        <br><br />
+    </h5>
+</form>
+
+</body>
+</html>

@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.followers.model.FollowersVO;
 import com.monthsettlement.model.MonthSettlementService;
 import com.monthsettlement.model.MonthSettlementVO;
 
@@ -40,49 +41,68 @@ public class MonthSettlementController {
     MonthSettlementService counterService;
 
     // 進入新增頁面
-    @GetMapping("/monthsettlement/addMonthSettlement")
+    @GetMapping("/vendor-end/monthsettlement/addMonthSettlement")
     public String addMonthSettlement(ModelMap model) {
         MonthSettlementVO monthSettlementVO = new MonthSettlementVO();
+        System.out.println("=====");
         model.addAttribute("monthSettlementVO", monthSettlementVO);
-        return "back-end/monthsettlement/addMonthSettlement";
+        return "vendor-end/monthsettlement/addMonthSettlement";
     }
 
     // 新增資料處理
     @PostMapping("insert")
-    public String insert(@Valid MonthSettlementVO monthsettlementVO, BindingResult result, ModelMap model,
-    		@RequestParam("counterNo") Integer counterNo,
-        	@RequestParam("month") String month,
-        	@RequestParam("monthSettlementNo") Integer monthSettlementNo,
-        	@RequestParam("comm") Integer comm
-    		)
+    public String insert(@Valid MonthSettlementVO monthsettlementVO, BindingResult result, ModelMap model)
      	{
-    	
+    	System.out.println("呼叫");
         /*************************** 1. 接收請求參數 - 格式驗證 ************************/
-    	monthsettlementVO.setCounterNo(counterNo);
-    	monthsettlementVO.setMonth(month);
-    	monthsettlementVO.setMonthSettlementNo(monthSettlementNo);
-    	monthsettlementVO.setComm(comm);
     	
         if (result.hasErrors()) {
-            return "back-end/monthsettlement/update_monthsettlement_input";
+        	System.out.println(monthsettlementVO.getCounterNo());
+            return "vendor-end/monthsettlement/addMonthSettlement";
         }
 
         /*************************** 2. 開始新增資料 **********************************/
         monthSettlementService.addMonthSettlement(monthsettlementVO);
-        
-        /*************************** 3. 新增完成，重導至清單頁 ************************/
+        System.out.println(monthsettlementVO.getComm());
+        /*************************** 3. 新增完成，重導至清單頁 ***********************/
         List<MonthSettlementVO> list = monthSettlementService.getAll();
         model.addAttribute("monthsettlementData", list);
         model.addAttribute("success", "- (新增成功)");
-        return "back-end/monthsettlement/listOneMonthSettlement";
+        System.out.println(monthsettlementVO.getMonth());
+        return "vendor-end/monthsettlement/listAllMonthSettlement";
     }
-
+    
+    @GetMapping("listAllMonthSettlement")
+    public String listAll(@Valid MonthSettlementVO monthsettlementVO, BindingResult result, ModelMap model)
+     	{
+        /*************************** 2. 開始新增資料 **********************************/
+        /*************************** 3. 新增完成，重導至清單頁 ***********************/
+        List<MonthSettlementVO> list = monthSettlementService.getAll();
+        model.addAttribute("monthsettlementData", list);
+        model.addAttribute("success", "- (新增成功)");
+        System.out.println(monthsettlementVO.getMonth());
+        return "vendor-end/monthsettlement/listAllMonthSettlement";
+    }
+    
+    @GetMapping("selectPage")
+    public String selectPage(Model model) {
+        // 取得所有追蹤清單資料供下拉式選單使用
+        List<MonthSettlementVO> list = monthSettlementService.getAll();
+        model.addAttribute("monthsettlementData", list);
+        
+        // 新增一個空的 FollowersVO 物件供表單綁定使用
+        MonthSettlementVO monthsettlementVO = new MonthSettlementVO();
+        model.addAttribute("MonthSettlementVO", monthsettlementVO);
+        
+        return "vendor-end/monthsettlement/selectPage";
+    }
+    
     // 更新資料頁面
     @PostMapping("getOneForUpdate")
     public String getOneForUpdate(@RequestParam("monthsettlementNo") String monthsettlementNo, ModelMap model) {
         MonthSettlementVO monthSettlementVO = monthSettlementService.getOneMonthSettlement(Integer.valueOf(monthsettlementNo));
         model.addAttribute("monthSettlementVO", monthSettlementVO);
-        return "back-end/monthsettlement/update_monthsettlement_input";
+        return "vendor-end/monthsettlement/update-MonthSettlement-Input";
     }
 
     // 更新資料處理
@@ -91,7 +111,7 @@ public class MonthSettlementController {
 
         /*************************** 1. 接收請求參數 - 格式驗證 ************************/
         if (result.hasErrors()) {
-            return "back-end/monthsettlement/update_monthsettlement_input";
+            return "vendor-end/monthsettlement/update-MonthSettlement-Input";
         }
 
         /*************************** 2. 開始更新資料 **********************************/
@@ -101,7 +121,7 @@ public class MonthSettlementController {
         model.addAttribute("success", "- (更新成功)");
         monthsettlementVO = monthSettlementService.getOneMonthSettlement(Integer.valueOf(monthsettlementVO.getMonthSettlementNo()));
         model.addAttribute("monthsettlementVO", monthsettlementVO);
-        return "back-end/monthsettlement/listAllMonthSettlement";
+        return "vendor-end/monthsettlement/listAllMonthSettlement";
     }
 
     // 刪除資料處理
@@ -115,7 +135,7 @@ public class MonthSettlementController {
         List<MonthSettlementVO> list = monthSettlementService.getAll();
         model.addAttribute("listAllMonthSettlement", list);
         model.addAttribute("success", "- (刪除成功)");
-        return "back-end/monthSettlement/listAllMonthSettlement";
+        return "vendor-end/monthsettlement/listAllMonthSettlement";
     }
 
     // 條件查詢
@@ -124,7 +144,7 @@ public class MonthSettlementController {
         Map<String, String[]> map = req.getParameterMap();
         List<MonthSettlementVO> list = monthSettlementService.getAll();
         model.addAttribute("monthSettlementList", list);
-        return "back-end/monthSettlement/listAllMonthSettlements";
+        return "vendor-end/monthsettlement/listAllMonthSettlement";
     }
 
     // 選單資料（櫃位清單）
@@ -161,4 +181,6 @@ public class MonthSettlementController {
         }
         return result;
     }
+    
+   
 }

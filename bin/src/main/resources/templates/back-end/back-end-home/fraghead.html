@@ -10,10 +10,10 @@
     <title>DoBuy - Lifestyle</title>
 
     <!-- Favicon -->
-    <link rel="icon" href="back-end-home/img/core-img/logo noback.png">
+    <link rel="icon" th:href="@{/back-end-home/img/core-img/logo noback.png}">
 
     <!-- Style CSS -->
-    <link rel="stylesheet" href="back-end-home/css/style.css">
+    <link rel="stylesheet" th:href="@{/back-end-home/css/style.css}">
 
 	<!-- 套入fontawesome -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -54,7 +54,7 @@
             <div class="container h-100">
                 <div class="row h-100 align-items-center">
                     <div class="col-12">
-                        <a th:href="@{back-end-homepage}" class="original-logo"><img src="back-end-home/img/core-img/logo noback.png" alt=""></a>
+                        <a th:href="@{back-end-homepage}" class="original-logo"><img th:src="@{/back-end-home/img/core-img/logo noback.png}" alt=""></a>
                     </div>
                 </div>
             </div>
@@ -169,18 +169,30 @@
 	
 	
     <th:block th:fragment="js">	    
-        <!-- jQuery (Necessary for All JavaScript Plugins) -->
-        <script src="back-end-home/js/jquery/jquery-2.2.4.min.js"></script>
-        <!-- Popper js -->
-        <script src="back-end-home/js/popper.min.js"></script>
-        <!-- Bootstrap js -->
-        <script src="back-end-home/js/bootstrap.min.js"></script>
-        <!-- Plugins js -->
-        <script src="back-end-home/js/plugins.js"></script>
-        <!-- Active js -->
-        <script src="back-end-home/js/active.js"></script>        
+<!-- jQuery (Necessary for All JavaScript Plugins) -->
+<script th:src="@{/back-end-home/js/jquery/jquery-2.2.4.min.js}"></script>
+<!-- Popper js -->
+<script th:src="@{/back-end-home/js/popper.min.js}"></script>
+<!-- Bootstrap js -->
+<script th:src="@{/back-end-home/js/bootstrap.min.js}"></script>
+<!-- Plugins js -->
+<script th:src="@{/back-end-home/js/plugins.js}"></script>
+<!-- Active js -->
+<script th:src="@{/back-end-home/js/active.js}"></script>      
    	</th:block>
    	
    	
+   	    <th:block th:fragment="js351">	    
+<!-- jQuery (Necessary for All JavaScript Plugins) -->
+<!-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> -->
+<!-- Popper js -->
+<script th:src="@{/back-end-home/js/popper.min.js}"></script>
+<!-- Bootstrap js -->
+<script th:src="@{/back-end-home/js/bootstrap.min.js}"></script>
+<!-- Plugins js -->
+<script th:src="@{/back-end-home/js/plugins.js}"></script>
+<!-- Active js -->
+<script th:src="@{/back-end-home/js/active.js}"></script>      
+   	</th:block>
    	
  

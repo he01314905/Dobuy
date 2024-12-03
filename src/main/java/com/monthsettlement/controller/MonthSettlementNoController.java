@@ -51,14 +51,14 @@ public class MonthSettlementNoController {
 
         if (monthSettlementVO == null) {
             model.addAttribute("errorMessage", "查無資料");
-            return "back-end/monthsettlement/select_page";
+            return "vendor-end/monthsettlement/listAllMonthSettlement";
         }
 
         /*************************** 3.查詢完成,準備轉交(Send the Success view) *****************/
         model.addAttribute("monthSettlementVO", monthSettlementVO);
         model.addAttribute("getOneForDisplay", "true"); // 旗標getOneForDisplay見select_page.html的第156行
 
-        return "back-end/monthsettlement/select_page"; // 查詢完成後轉交select_page.html由其第158行insert listOneMonthSettlement.html內的th:fragment="listOneMonthSettlement-div"
+        return "vendor-end/monthsettlement/selectPage"; // 查詢完成後轉交select_page.html由其第158行insert listOneMonthSettlement.html內的th:fragment="listOneMonthSettlement-div"
     }
 
     @ExceptionHandler(value = { ConstraintViolationException.class })
@@ -72,6 +72,6 @@ public class MonthSettlementNoController {
         List<MonthSettlementVO> list = monthSettlementService.getAll();
         model.addAttribute("monthSettlementListData", list);     // for select_page.html 第97 109行用
         String message = strBuilder.toString();
-        return new ModelAndView("back-end/monthsettlement/select_page", "errorMessage", "請修正以下錯誤:<br>" + message);
+        return new ModelAndView("vendor-end/monthsettlement/selectPage", "errorMessage", "請修正以下錯誤:<br>" + message);
     }
 }

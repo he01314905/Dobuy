@@ -4,12 +4,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-//import hibernate.util.CompositeQuery.HibernateUtil_CompositeQuery_Followers;
+import com.followers.controller.HibernateUtil_CompositeQuery_Followers;
+
 
 @Service("followersService")
 public class FollowersService {
@@ -47,8 +47,8 @@ public class FollowersService {
         return repository.findAll();
     }
 
-//    // 動態查詢取得所有櫃位追蹤清單
-//    public List<FollowersVO> getAll(Map<Integer, Integer[]> map) {
-//        return HibernateUtil_CompositeQuery_Followers.getAllC(map, sessionFactory.openSession());
-//    }
+    // 動態查詢取得所有櫃位追蹤清單
+    public List<FollowersVO> getAll(Map<Integer, Integer[]> map) {
+        return HibernateUtil_CompositeQuery_Followers.getAllC(map, sessionFactory.openSession());
+    }
 }

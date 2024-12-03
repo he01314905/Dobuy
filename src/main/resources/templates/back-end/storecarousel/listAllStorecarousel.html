@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>全部輪播資訊 - StoreCarousel</title>
+</head>
+<body>
+	<h3>全部輪播資訊</h3>
+	<table>
+		<thead>
+			<tr>
+				<th>輪播資訊編號</th>
+                <th>櫃位編號</th>
+                <th>平台優惠編號</th>
+                <th>輪播時間</th>
+                <th>輪播圖片</th>
+                <th>商品編號</th>
+			</tr>
+		</thead>
+		<tbody>
+			<!-- 循環 carouselList 中的每個 carouselVO -->
+			<th:block th:each="storeCarouselVO : ${storeCarouselList}">
+				<tr>
+					<td th:text="${storeCarouselVO.storeCarouselNo}"></td>
+					<td th:text="${storeCarouselVO.counterNo}"></td>
+					<td th:text="${storeCarouselVO.disNo}"></td>
+					<td th:text="${#dates.format(storeCarouselVO.carouselTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+					<td>
+                        <!-- 顯示 Base64 圖片 -->
+                        <img th:src="${'data:image/jpeg;base64,' + storeCarouselVO.base64Image}" alt="輪播圖片" width="150px" />
+                    </td>
+                    <td th:text="${storeCarouselVO.storeCarouselNo}"></td>
+					
+				</tr>
+			</th:block>
+		</tbody>
+	</table>
+</body>
+</html>

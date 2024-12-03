@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>櫃位追蹤清單新增 - addFollowers.html</title>
+
+<head th:insert="~{/vendor-end/followers/included-fragment}"></head>
+<style type="text/css">
+    button {
+        padding: 5px;
+    }
+    form {
+        display: table;
+    }
+    form div {
+        display: table-row;
+    }
+    label, input, span, select {
+        display: table-cell;
+        margin: 5px;
+        text-align: left;       
+    }
+    input[type=text], input[type=password], select, textarea {
+        width: 200px;
+        margin: 5px;
+    }
+    form div div {
+        display: table-cell;
+    }
+    .center {
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>
+</head>
+<body>
+<br>
+<br>
+<br>
+
+<br>
+<br>
+<br>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center">
+    <div align="center"> 
+        <h2>櫃位追蹤清單新增 - addFollowers.html</h2>
+        <h3>
+            <a class="navbar-brand" th:href="@{/followers/selectPage}">
+                <img th:src="@{/images/back1.gif}">回查詢頁
+            </a>
+        </h3>
+    </div>
+</nav>
+
+<div align="center">
+    <h3><b>所有欄位皆為必填欄位</b></h3>
+    <form th:action="@{/followers/insert}" method="post" th:object="${followersVO}" enctype="multipart/form-data">
+        
+        <div>
+            <label>櫃位追蹤清單編號:</label>
+            <input type="text" th:field="*{trackListNo}" onclick="hideContent('trackListNo.errors');" /><br/>
+            <span th:if="${#fields.hasErrors('trackListNo')}" th:errors="*{trackListNo}" class="error" id="trackListNo.errors"></span>
+        </div>
+        
+        <div>
+            <label>會員編號:</label>
+            <input type="text" th:field="*{followersNo}" onclick="hideContent('followersNo.errors');" /><br/>
+            <span th:if="${#fields.hasErrors('followersNo')}" th:errors="*{followersNo}" class="error" id="followersNo.errors"></span>
+        </div>
+        
+        <div>
+            <label>櫃位編號:</label>
+            <input type="text" th:field="*{counterNo}" onclick="hideContent('counterNo.errors');" /><br/>
+            <span th:if="${#fields.hasErrors('counterNo')}" th:errors="*{counterNo}" class="error" id="counterNo.errors"></span>
+        </div>
+        
+        <div>
+            <div></div>
+            <div><button type="submit" id="submit">送出新增</button></div>
+            <div></div>
+        </div>      
+    </form>
+</div>
+
+<!-- JavaScript part -->
+<script type="text/javascript">
+// 清除提示信息
+function hideContent(d) {
+     document.getElementById(d).style.display = "none";
+}
+</script>
+
+</body>
+</html>

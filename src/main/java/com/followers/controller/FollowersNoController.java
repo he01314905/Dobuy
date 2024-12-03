@@ -35,7 +35,7 @@ public class FollowersNoController {
      * This method will be called on select_page.html form submission, handling POST
      * request It also validates the user input
      */
-    @PostMapping("getOneForDisplay")
+    @PostMapping("/getOneForDisplay")
     public String getOneForDisplay(
             /*************************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
             @NotEmpty(message = "櫃位追蹤清單編號: 請勿空白")
@@ -51,14 +51,14 @@ public class FollowersNoController {
 
         if (followersVO == null) {
             model.addAttribute("errorMessage", "查無資料");
-            return "back-end/followers/select_page";
+            return "vendor-end/followers/selectPage";
         }
 
         /*************************** 3.查詢完成,準備轉交(Send the Success view) *****************/
         model.addAttribute("followersVO", followersVO);
         model.addAttribute("getOneForDisplay", "true"); // 旗標getOneForDisplay見select_page.html的第156行
 
-        return "back-end/followers/select_page"; // 查詢完成後轉交select_page.html由其第158行insert listOneFollowers.html內的th:fragment="listOneFollowers-div"
+        return "vendor-end/followers/selectPage"; // 查詢完成後轉交select_page.html由其第158行insert listOneFollowers.html內的th:fragment="listOneFollowers-div"
     }
 
     @ExceptionHandler(value = { ConstraintViolationException.class })
@@ -72,6 +72,6 @@ public class FollowersNoController {
         List<FollowersVO> list = followersService.getAll();
         model.addAttribute("followersListData", list);     // for select_page.html 第97 109行用
         String message = strBuilder.toString();
-        return new ModelAndView("back-end/followers/select_page", "errorMessage", "請修正以下錯誤:<br>" + message);
+        return new ModelAndView("vendor-end/followers/selectPage", "errorMessage", "請修正以下錯誤:<br>" + message);
     }
 }
