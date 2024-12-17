@@ -9,9 +9,9 @@ class CountercarouselPhotoWrite {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		InputStream fin = null;
-		String url = "jdbc:mysql://localhost:3306/dobuytest?serverTimezone=Asia/Taipei";
+		String url = "jdbc:mysql://localhost:3306/dobuy?serverTimezone=Asia/Taipei";
 		String userid = "root";
-		String passwd = "poikl2003";
+		String passwd = "123456789";
 		String photos = "src/main/resources/static/counter/counterCarousel"; 
 		String update = "update countercarousel set carouselPic =? where counterCarouselNo=?";
 

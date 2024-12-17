@@ -146,6 +146,13 @@
                 <span th:if="${#fields.hasErrors('descLimit')}" th:errors="*{descLimit}" class="error"></span>
             </div>
 
+
+<!--             <div class="form-group"> -->
+<!--                 <label for="disStatus">優惠狀態:</label> -->
+<!--                 <input type="text" id="disStatus" th:field="disStatus" required/> -->
+<!--                 <span th:if="${#fields.hasErrors('disStatus')}" th:errors="disStatus" class="error"></span> -->
+<!--             </div> -->
+
             <div class="form-group">
                 <label for="disStart">優惠起始日:</label>
                 <input type="date" id="disStart" th:field="*{disStart}" required/>

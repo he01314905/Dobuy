@@ -103,7 +103,8 @@
 			<label for="female" class="form-label-inline">女</label> 
 			<br> 
 			<label for="memBirth" class="form-label">生日:</label> 
-			<input type="date" id="memBirth" th:field="*{memBirth}" class="form-input" /> 
+			<input type="date" id="memBirth" th:field="*{memBirth}" class="form-input" />
+			<span th:if="${#fields.hasErrors('memBirth')}" th:errors="*{memBirth}" class="error"></span> 
 			<br> 
 			<label for="memPasswordHint" class="form-label">密碼提示問題:</label> 
 			<input type="text" id="memPasswordHint" th:field="*{memPasswordHint}" class="form-input" /> 

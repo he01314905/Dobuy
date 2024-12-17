@@ -14,7 +14,7 @@ public class DiscountVO implements java.io.Serializable {
     private String disTitle;       
     private String disContext;     
     private Double disRate;        
-    private Integer disStatus;     
+    private Integer disStatus = 1;     
     private String descLimit;      
     private Date createdAt;        
     private Date updatedAt;        

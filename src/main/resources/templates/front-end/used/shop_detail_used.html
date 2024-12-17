@@ -44,23 +44,23 @@
 
         <div class="icon_area"> 
           <div class="icons">
-          <a class="icons login-only" href="/mem/login" th:if="${session.memNo == null}">
-        <img th:src="@{/images/login.png}" alt="Login">
-    </a>
-
-    <!-- 當 session.memNo 不為 null，顯示其他按鈕 -->
-    <a class="icons" href="member" th:if="${session.memNo != null}">
-        <img th:src="@{/images/會員中心.png}" alt="User">
-    </a>
-    <a class="icons" href="/mem/logout" th:if="${session.memNo != null}">
-        <img th:src="@{/images/log-out.png}" alt="Logout">
-    </a>
-    <a class="icons" href="/shoppingcartlist/listAllShoppingCartList" th:if="${session.memNo != null}">
-        <img th:src="@{/images/購物車.png}" alt="Cart">
-    </a>
-    <a class="icons" href="#" th:if="${session.memNo != null}">
-        <img th:src="@{/images/report.png}" alt="Report">
-    </a>
+          <a class="icons login-only" th:href="@{/mem/login}" th:if="${session.memNo == null}">
+				    <img th:src="@{/images/login.png}" alt="Login">
+				</a>
+				
+				<!-- 當 session.memNo 不為 null，顯示其他按鈕 -->
+				<a class="icons" th:href="@{/member}" th:if="${session.memNo != null}">
+				    <img th:src="@{/images/會員中心.png}" alt="User">
+				</a>
+				<a class="icons" th:href="@{/mem/logout}" th:if="${session.memNo != null}">
+				    <img th:src="@{/images/log-out.png}" alt="Logout">
+				</a>
+				<a class="icons" th:href="@{/shoppingcartlist/listAllShoppingCartList}" th:if="${session.memNo != null}">
+				    <img th:src="@{/images/購物車.png}" alt="Cart">
+				</a>
+				<a class="icons" th:href="@{/customerservice/addComplaint}" th:if="${session.memNo != null}">
+			        <img th:src="@{/images/report.png}" alt="Report">
+			    </a>
           </div>
           <div class="coupon_area">
            	<a class="coupon" th:href="@{/front-end/coupon/list}"><img src="/images/優惠卷領取頁面圖示.png"

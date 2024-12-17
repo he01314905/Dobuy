@@ -96,3 +96,22 @@ ul.list>li.-on>a.link_title button.switch_btn span.-minus {
 	display: inline-block
 }
 
+.btn-container {
+    display: flex;
+    justify-content: center; /* 水平置中 */
+    align-items: center;     /* 垂直置中 */
+    height: 100px;           /* 设置容器高度为视口高度，以便垂直居中 */
+}
+
+.btn {
+    padding: 10px 20px;      /* 设置按钮内边距 */
+    background-color: #4CAF50; /* 按钮背景颜色 */
+    color: white;            /* 按钮文字颜色 */
+    text-decoration: none;   /* 去掉链接的下划线 */
+    border-radius: 5px;      /* 按钮圆角 */
+    font-size: 16px;         /* 按钮文字大小 */
+}
+
+.btn:hover {
+    background-color: #45a049; /* 鼠标悬停时的背景颜色 */
+}
