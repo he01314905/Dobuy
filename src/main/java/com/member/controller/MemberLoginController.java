@@ -71,7 +71,7 @@ public class MemberLoginController {
 		
 		
 	    // 如果沒有原始請求，跳轉到默認頁面
-		return "redirect:/member"; // 重定向到成功页面
+		return "redirect:/home"; // 重定向到成功页面
 
 	}
 

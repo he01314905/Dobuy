@@ -177,6 +177,18 @@ td select {
 .dataTables_wrapper .dataTables_paginate .paginate_button.current {
     background: rgba(173, 129, 85, 0.7);
 }
+
+#example td select[name="memStatus"] {
+    width: 58px;  /* 設定固定寬度 */
+    padding: 0px;
+    margin: 0px 0;
+}
+
+/* 確保容器有足夠空間 */
+#example td:nth-child(11) {
+    min-width: 100px;  /* 給按鈕和select留些空間 */
+}
+
 </style>
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.jqueryui.min.css" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">

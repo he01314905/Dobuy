@@ -190,7 +190,9 @@ body {
                 <a th:href="@{/mem/logout}" class="coupon_49_btn" style="margin-left: 15px;">登出</a>
             </div>
         </div>
-
+            <div class="coupon_49_button_group">
+                <a th:href="@{/front-end/coupon/list}" class="coupon_49_btn">優惠券列表</a>
+            </div>
         <div id="coupon_49_section">
             <div th:if="${message}" class="coupon_49_alert coupon_49_alert_success" th:text="${message}"></div>
             <div th:if="${error}" class="coupon_49_alert coupon_49_alert_danger" th:text="${error}"></div>
@@ -227,9 +229,7 @@ body {
 
             <div id="coupon_49_pagination" class="coupon_49_pagination"></div>
 
-            <div class="coupon_49_button_group">
-                <a th:href="@{/front-end/coupon/list}" class="coupon_49_btn">優惠券列表</a>
-            </div>
+
         </div>
     </div>
 

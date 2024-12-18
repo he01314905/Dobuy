@@ -76,6 +76,27 @@ h4 {
 	color: red;
 	font-size: 0.9rem;
 }
+
+.button-group {
+	display: flex;
+	gap: 15px;
+	margin-top: 20px;
+}
+
+.btn-secondary {
+	background-color: #6c757d;
+	color: white;
+	border: none;
+	padding: 12px 20px;
+	border-radius: 8px;
+	font-size: 1.1rem;
+	font-weight: bold;
+	width: 100%;
+}
+
+.btn-secondary:hover {
+	background-color: #5a6268;
+}
 </style>
 </head>
 <body>
@@ -215,15 +236,18 @@ h4 {
 				<hr class="my-4">
 
 
-				<button class="w-100 btn btn-primary btn-lg" type="submit">結帳</button>
+				<div class="button-group">
+					<button type="button" class="btn btn-secondary" onclick="goBack()">返回購物車</button>
+					<button class="btn btn-primary" type="submit">前往結帳</button>
+				</div>
 			</div>
 		</form>
 
-	<!-- 除錯區域 -->
-	<div id="debug-info" style="display: none;">
-		<pre></pre>
+		<!-- 除錯區域 -->
+		<div id="debug-info" style="display: none;">
+			<pre></pre>
+		</div>
 	</div>
-</div>
 
 
 </body>
@@ -522,7 +546,9 @@ const previewResponse = await fetch('/shoppingcartlist/calculateDiscount', {
         }
     }
 });
-    
+function goBack() {
+    window.location.href = '/shoppingcartlist/listAllShoppingCartList'; // 修改為你的購物車頁面路徑
+}
     
   </script>
 </html>

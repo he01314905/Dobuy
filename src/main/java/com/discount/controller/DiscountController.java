@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -38,52 +39,51 @@ public class DiscountController {
     
 
     @GetMapping("addDiscount")
-    public String addDiscount(ModelMap model, HttpSession session) {
-        // 檢查是否登入
-        if (!isManagerLoggedIn(session)) {
-            return "redirect:/login/Login"; // 導向登入頁
-        }
-
-        DiscountVO discountVO = new DiscountVO();
-        model.addAttribute("discountVO", discountVO);
+    public String addDiscount(ModelMap model) {
+        model.addAttribute("discountVO", new DiscountVO()); // 初始化空物件
         return "back-end/discount/addDiscount";
     }
 
     
     
     
-    @PostMapping("insert")  
-    public String insert(@Valid DiscountVO discountVO, BindingResult result, 
-                        ModelMap model, HttpSession session) {
+    @PostMapping("insert")
+    public String insert(@Valid DiscountVO discountVO, 
+                        BindingResult result, 
+                        ModelMap model) {
+        // 先處理基本驗證錯誤
+        if (result.hasErrors()) {
+            model.addAttribute("discountVO", discountVO);
+            return "back-end/discount/addDiscount";
+        }
+
         try {
-            System.out.println("收到表單資料: " + discountVO.getDisTitle());
-            System.out.println("Result has errors: " + result.hasErrors());
-            if(result.hasErrors()) {
-                result.getAllErrors().forEach(error -> {
-                    System.out.println("Error: " + error.getDefaultMessage());
-                });
-                return "back-end/discount/addDiscount";
+            // 額外的業務邏輯驗證
+            if (discountVO.getDisStart() != null && discountVO.getDisEnd() != null) {
+                if (discountVO.getDisStart().after(discountVO.getDisEnd())) {
+                    result.rejectValue("disEnd", "error.date", 
+                                     "結束日期必須晚於開始日期");
+                    model.addAttribute("discountVO", discountVO);
+                    return "back-end/discount/addDiscount";
+                }
             }
 
-            // 設置時間和狀態
-            Date now = new Date();
-            discountVO.setCreatedAt(now);
-            discountVO.setUpdatedAt(now);
+            // 設置預設值
             discountVO.setDisStatus(0);
-            
+            discountVO.setCreatedAt(new Date());
+            discountVO.setUpdatedAt(new Date());
+
+            // 保存數據
             discountService.addDiscount(discountVO);
-            model.addAttribute("success", "新增成功");
             return "redirect:/discount/listAllDiscount";
-            
+
         } catch (Exception e) {
-            e.printStackTrace();
+            // 添加錯誤訊息到 model
             model.addAttribute("error", "新增失敗: " + e.getMessage());
+            model.addAttribute("discountVO", discountVO);
             return "back-end/discount/addDiscount";
         }
     }
-    
-
-
 
     // 前往修改頁面
     @PostMapping("getOne_For_Update")
@@ -119,18 +119,64 @@ public class DiscountController {
     public String update(@Valid DiscountVO discountVO, 
                         BindingResult result, 
                         ModelMap model,
-                        HttpSession session) {
-        // 檢查登入狀態                    
+                        HttpSession session,
+                        RedirectAttributes redirectAttributes) {
+        
         if (!isManagerLoggedIn(session)) {
             return "redirect:/login";
         }
 
         try {
-            // 驗證輸入資料
+            // 1. 基本驗證
             if (result.hasErrors()) {
+                model.addAttribute("discountVO", discountVO);
                 return "back-end/discount/update_discount_input";
             }
-            
+
+            // 2. 日期邏輯驗證
+            Date currentDate = new Date();
+            if (discountVO.getDisStart() != null && discountVO.getDisEnd() != null) {
+                // 開始日期不能早於當前日期
+                if (discountVO.getDisStart().before(currentDate)) {
+                    result.rejectValue("disStart", "error.disStart", "開始日期不能早於當前日期");
+                }
+                // 結束日期必須晚於開始日期
+                if (discountVO.getDisStart().after(discountVO.getDisEnd())) {
+                    result.rejectValue("disEnd", "error.disEnd", "結束日期必須晚於開始日期");
+                }
+            }
+
+            // 3. 折扣率驗證
+            if (discountVO.getDisRate() != null) {
+                if (discountVO.getDisRate() < 0.01 || discountVO.getDisRate() > 1.00) {
+                    result.rejectValue("disRate", "error.disRate", "折扣率必須在0.01到1.00之間");
+                }
+            }
+
+            // 4. 名稱和內容長度驗證
+            if (discountVO.getDisTitle() != null && discountVO.getDisTitle().length() > 255) {
+                result.rejectValue("disTitle", "error.disTitle", "優惠名稱長度不能超過255個字元");
+            }
+            if (discountVO.getDisContext() != null && discountVO.getDisContext().length() > 255) {
+                result.rejectValue("disContext", "error.disContext", "優惠內容長度不能超過255個字元");
+            }
+
+            // 5. 使用條件描述驗證
+            if (discountVO.getDescLimit() != null && discountVO.getDescLimit().length() > 255) {
+                result.rejectValue("descLimit", "error.descLimit", "使用條件描述長度不能超過255個字元");
+            }
+
+            // 如果有任何驗證錯誤，返回表單
+            if (result.hasErrors()) {
+                model.addAttribute("discountVO", discountVO);
+                // 收集所有錯誤訊息
+                List<String> errorMessages = result.getAllErrors().stream()
+                    .map(error -> error.getDefaultMessage())
+                    .collect(Collectors.toList());
+                model.addAttribute("errorMessages", errorMessages);
+                return "back-end/discount/update_discount_input";
+            }
+
             // 保存原有的創建時間
             DiscountVO originalDiscount = discountService.getOneDiscount(discountVO.getDisNo());
             if (originalDiscount != null) {
@@ -143,20 +189,16 @@ public class DiscountController {
             // 更新資料
             discountService.updateDiscount(discountVO);
             
-            // 查詢更新後的資料
-            discountVO = discountService.getOneDiscount(discountVO.getDisNo());
-            model.addAttribute("discountVO", discountVO);
-            model.addAttribute("success", "修改成功");
-            
+            // 設置成功訊息
+            redirectAttributes.addFlashAttribute("success", "修改成功");
             return "redirect:/discount/listAllDiscount";
             
         } catch (Exception e) {
-            e.printStackTrace();
             model.addAttribute("error", "修改資料時發生錯誤: " + e.getMessage());
+            model.addAttribute("discountVO", discountVO);
             return "back-end/discount/update_discount_input";
         }
     }
-
     
     @PostMapping("delete")
     public String delete(@RequestParam("disNo") String disNo, ModelMap model) {

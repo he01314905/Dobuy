@@ -120,6 +120,33 @@ table#example button:disabled {
 	background-color: #D3D3D3;
 	cursor: not-allowed;
 }
+
+/* 禁用按鈕的樣式 */
+table#example button:disabled {
+    background-color: #D3D3D3;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* 添加滑鼠懸停提示的樣式 */
+table#example button[disabled]:hover {
+    position: relative;
+}
+
+table#example button[disabled][title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 5px 10px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 1000;
+}
 </style>
 
 </head>
@@ -185,13 +212,16 @@ table#example button:disabled {
 							</form>
 						</td>
 
-						<td>
-							<form method="post" th:action="@{/coupon/pushNotification}">
-								<input type="hidden" name="couponNo"
-									th:value="${couponVO.couponNo}" />
-								<button type="submit" class="btn btn-warning">推送通知</button>
-							</form>
-						</td>
+<td>
+    <form method="post" th:action="@{/coupon/pushNotification}">
+        <input type="hidden" name="couponNo" th:value="${couponVO.couponNo}" />
+        <button type="submit" class="btn btn-warning" 
+                th:disabled="${couponVO.checkStatus == 0}"
+                th:title="${couponVO.checkStatus == 0 ? '請先完成審核' : ''}">
+            推送通知
+        </button>
+    </form>
+</td>
 
 					</tr>
 				</th:block>
