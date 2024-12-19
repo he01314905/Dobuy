@@ -20,8 +20,8 @@ public class MailSender {
         properties.put("mail.smtp.starttls.enable", "true"); // TLS 加密
 
         // 認證信息
-        String username = "cia103g2.dobuy@gmail.com"; // 替換為你的 Gmail 地址
-        String password = "rdvr ffgw xkot dzwm"; // 替換為你的應用專用密碼
+        String username = "cia103g2.dobuy@gmail.com"; 
+        String password = "rdvr ffgw xkot dzwm"; 
 
         // 創建一個會話對象
         Session session = Session.getInstance(properties, new javax.mail.Authenticator() {

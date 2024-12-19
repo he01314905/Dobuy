@@ -113,7 +113,7 @@ $(".pro span#1").on("click", function() {
 		success: function(response) {
 			// 成功後更新 use_1 區塊
 			$(".use_1").html(response);
-			
+
 		},
 		error: function(xhr, status, error) {
 			console.error("發生錯誤:", error);
@@ -161,7 +161,7 @@ $("span#4").on("click", function() {
 		success: function(response) {
 			// 成功後更新 use_1 區塊
 			$(".use_1").html(response);
-			
+
 		},
 		error: function(xhr, status, error) {
 			console.error("發生錯誤:", error);
@@ -184,7 +184,7 @@ $("span#2").on("click", function() {
 		success: function(response) {
 			// 成功後更新 use_1 區塊
 			$(".use_1").html(response);
-			
+
 		},
 		error: function(xhr, status, error) {
 			console.error("發生錯誤:", error);
@@ -207,7 +207,7 @@ $("span#5").on("click", function() {
 		success: function(response) {
 			// 成功後更新 use_1 區塊
 			$(".use_1").html(response);
-			
+
 		},
 		error: function(xhr, status, error) {
 			console.error("發生錯誤:", error);
@@ -230,7 +230,7 @@ $("span#3").on("click", function() {
 		success: function(response) {
 			// 成功後更新 use_1 區塊
 			$(".use_1").html(response);
-			
+
 		},
 		error: function(xhr, status, error) {
 			console.error("發生錯誤:", error);
@@ -385,17 +385,17 @@ document.addEventListener("DOMContentLoaded", function() {
 
 $(document).ready(function() {
 	$('#a2').click(function() {
-		// 使用AJAX從後端以POST方式获取数据
+		// 使用ajax從後端從POST方法獲取數據
 		$.ajax({
 			url: '/usedorder/getBuyerUsedOrderListFragment',
 			type: 'POST',
 			success: function(response) {
 				console.log("Fragment HTML:", response); // 打印返回的 HTML，便于调试
 
-				// 使用 fragment 替换 <div class="use_1">
+				// 使用 fragment 替換 <div class="use_1">
 				$('.use_1').html(response);
 
-				// 检查并销毁已有 DataTables 实例
+				// 檢查並銷毀已有 DataTables 實例
 				if ($.fn.DataTable.isDataTable('#example')) {
 					$('#example').DataTable().destroy();
 				}
@@ -499,57 +499,25 @@ function sendComplaintEmail() {
 	});
 }
 
-function showReceiverOrderDetails(element) {
-	var buyerNo = element.getAttribute('data-buyerNo');
-	var orderNo = element.getAttribute('data-orderNo');
-	var usedNo = element.getAttribute('data-usedNo');
-	var usedPrice = element.getAttribute('data-usedPrice');
-	var usedCount = element.getAttribute('data-usedCount');
-	var usedTotalPrice = element.getAttribute('data-usedTotalPrice');
-	var receiverName = element.getAttribute('data-receiverName');
-	var receiverPhone = element.getAttribute('data-receiverPhone');
-	var receiverAdr = element.getAttribute('data-receiverAdr');
-	var sellerSatisfication = element.getAttribute('data-sellerSatisfication');
-	var sellerCommentContent = element.getAttribute('data-sellerCommentContent');
-	var sellerCommentDate = element.getAttribute('data-sellerCommentDate');
-
-	$('#orderDetailModal').find('#buyerNo').text(buyerNo);
-	$('#orderDetailModal').find('#orderNo').text(orderNo);
-	$('#orderDetailModal').find('#usedNo').text(usedNo);
-	$('#orderDetailModal').find('#usedPrice').text(usedPrice);
-	$('#orderDetailModal').find('#usedCount').text(usedCount);
-	$('#orderDetailModal').find('#receiverName').text(receiverName);
-	$('#orderDetailModal').find('#receiverPhone').text(receiverPhone);
-	$('#orderDetailModal').find('#receiverAdr').text(receiverAdr);
-	$('#orderDetailModal').find('#usedTotalPrice').text(usedTotalPrice);
-	$('#orderDetailModal').find('#sellerCommentDate').text(sellerCommentDate);
-	$('#orderDetailModal').find('#sellerCommentContent').text(sellerCommentContent);
-
-	// 設置下拉選單的值
-	$('#orderDetailModal').find('#sellerSatisfication').val(sellerSatisfication);
-
-	// 顯示模態框
-	$('#orderDetailModal').modal('show');
-}
 
 
 
 //=========================二手訂單事件(我是賣家)==============================================
 
 
-// 当 span id 为 a1 的元素被点击时，触发 AJAX 事件
+//當span id為a1的標籤被點擊時，觸發ajax事件
 $('#a3').click(function() {
-	// 使用AJAX从后端以POST方式获取数据
+	// 使用ajax從後端POST方式獲取數據
 	$.ajax({
 		url: '/usedorder/getSellerUsedOrderListFragment', // 服务器端 API，返回 Thymeleaf 片段
 		type: 'POST',
 		success: function(response) {
 			console.log("Fragment HTML:", response); // 打印返回的 HTML，便于调试
 
-			// 使用 fragment 替换 <div class="use_1">
+			// 使用 fragment 替換<div class="use_1">
 			$('.use_1').html(response);
 
-			// 检查并销毁已有 DataTables 实例
+			// 檢查並銷毀 DataTables 實例
 			if ($.fn.DataTable.isDataTable('#exampleSeller')) {
 				$('#exampleSeller').DataTable().destroy();
 			}
@@ -577,7 +545,7 @@ $('#a3').click(function() {
 				}
 			});
 
-			// 监听 DataTables 分页切换事件，重新初始化 Slick
+			// 監聽 DataTables 分頁切換事件，重新初始化 Slick
 			$('#exampleSeller').on('draw.dt', function() {
 
 			});
@@ -603,14 +571,14 @@ function updateDeliveryStatus(usedOrderNo) {
 		success: function(response) {
 			if (response.success) {
 				alert('更新成功');
-				// 向 counterInform 表新增数据
+				// 向 counterInform 表新增數據
 				addCounterInform(usedOrderNo, "訂單狀態更新");
 			} else {
-				alert('更新失败: ' + response.error);
+				alert('更新失敗: ' + response.error);
 			}
 		},
 		error: function(xhr, status, error) {
-			alert('更新过程中出现错误: ' + error);
+			alert('更新過程中出現失誤: ' + error);
 		}
 	});
 }
@@ -632,7 +600,7 @@ function addNotice(usedOrderNo, message) {
 			}
 		},
 		error: function(xhr, status, error) {
-			console.log('通知新增过程中出现错误: ' + error);
+			console.log('通知新增過程中出現錯誤: ' + error);
 		}
 	});
 }
@@ -729,7 +697,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 	// 顯示訂單詳細資訊
-	window.showOrderDetails = function(element) {
+	window.showReceiverOrderDetails = function(element) {
 		const orderNo = element.getAttribute('data-orderNo');
 		const usedNo = element.getAttribute('data-usedNo');
 		const usedName = element.getAttribute('data-usedName');
@@ -1015,87 +983,87 @@ $(document).ready(function() {
 
 //=========================通知總覽===========================
 $(document).ready(function() {
-    // 點擊通知標題加載通知列表
-    $('.notice.title').click(function() {
-        $.ajax({
-            url: '/notice/listAllNoticeFragment', // 服务器端 API，返回 Thymeleaf 片段
-            type: 'POST',
-            success: function(response) {
-                console.log("Fragment HTML:", response); // 打印返回的 HTML，便于调试
+	// 點擊通知標題加載通知列表
+	$('.notice.title').click(function() {
+		$.ajax({
+			url: '/notice/listAllNoticeFragment', // 服务器端 API，返回 Thymeleaf 片段
+			type: 'POST',
+			success: function(response) {
+				console.log("Fragment HTML:", response); // 打印返回的 HTML，便于调试
 
-                // 使用 fragment 替换 <div class="use_1">
-                $('.use_1').html(response);
+				// 使用 fragment 替换 <div class="use_1">
+				$('.use_1').html(response);
 
-                // 检查并销毁已有 DataTables 实例
-                if ($.fn.DataTable.isDataTable('#notice')) {
-                    $('#notice').DataTable().destroy();
-                }
+				// 檢查並銷毀已有 DataTables 實例
+				if ($.fn.DataTable.isDataTable('#notice')) {
+					$('#notice').DataTable().destroy();
+				}
 
-                // 初始化 DataTables
-                var table = $('#notice').DataTable({
-                    "lengthMenu": [10, 20, 50, 100],
-                    "searching": true,
-                    "paging": true,
-                    "ordering": true,
-                    "language": {
-                        "processing": "處理中...",
-                        "loadingRecords": "載入中...",
-                        "lengthMenu": "顯示 _MENU_ 筆結果",
-                        "zeroRecords": "沒有符合的結果",
-                        "info": "顯示第 _START_ 至 _END_ 筆結果，共<font color=red> _TOTAL_ </font>筆",
-                        "infoEmpty": "顯示第 0 至 0 筆結果，共 0 筆",
-                        "infoFiltered": "(從 _MAX_ 筆結果中過濾)",
-                        "search": "搜尋:",
-                        "paginate": {
-                            "first": "第一頁",
-                            "previous": "上一頁",
-                            "next": "下一頁",
-                            "last": "最後一頁"
-                        },
-                        "aria": {
-                            "sortAscending": ": 升冪排列",
-                            "sortDescending": ": 降冪排列"
-                        }
-                    },
-                    "drawCallback": function(settings) {
-                        $('#notice tbody tr').each(function() {
-                            var noticeRead = $(this).find('td').eq(2).text(); // 確認 noticeRead 是在第幾個 td
-                            if (noticeRead == '1') {
-                                $(this).css('background-color', '#dff1f7');
-                            }
-                        });
-                    }
-                });
-
-                // 在lengthMenu旁新增清空通知和標記所有為已讀按鈕
-                $('#notice_length').append('<button id="clearAllBtn" class="btn btn-danger ml-2">清空通知</button>');
-                $('#notice_length').append('<button id="markAllReadBtn" class="btn btn-primary ml-2">標記所有為已讀</button>');
-                 
-				// 清空通知按鈕事件
-				$('#clearAllBtn').on('click', function() {
-				    if (confirm('確定要清空所有通知嗎？')) {
-				        $.post('/notice/clearAll', function(response) {
-				            // 清空通知列表
-				            $('#notice tbody').empty();
-				        });
-				    }
+				// 初始化 DataTables
+				var table = $('#notice').DataTable({
+					"lengthMenu": [10, 20, 50, 100],
+					"searching": true,
+					"paging": true,
+					"ordering": true,
+					"language": {
+						"processing": "處理中...",
+						"loadingRecords": "載入中...",
+						"lengthMenu": "顯示 _MENU_ 筆結果",
+						"zeroRecords": "沒有符合的結果",
+						"info": "顯示第 _START_ 至 _END_ 筆結果，共<font color=red> _TOTAL_ </font>筆",
+						"infoEmpty": "顯示第 0 至 0 筆結果，共 0 筆",
+						"infoFiltered": "(從 _MAX_ 筆結果中過濾)",
+						"search": "搜尋:",
+						"paginate": {
+							"first": "第一頁",
+							"previous": "上一頁",
+							"next": "下一頁",
+							"last": "最後一頁"
+						},
+						"aria": {
+							"sortAscending": ": 升冪排列",
+							"sortDescending": ": 降冪排列"
+						}
+					},
+					"drawCallback": function(settings) {
+						$('#notice tbody tr').each(function() {
+							var noticeRead = $(this).find('td').eq(2).text(); // 確認 noticeRead 是在第幾個 td
+							if (noticeRead == '1') {
+								$(this).css('background-color', '#dff1f7');
+							}
+						});
+					}
 				});
 
-                // 標記所有為已讀按鈕事件
-                $('#markAllReadBtn').on('click', function() {
-                    $.post('/notice/markAllRead', function(response) {
-                        // 即時變更所有通知行的背景顏色為淺藍色
-                        $('#notice tbody tr').each(function() {
-                            $(this).css('background-color', '#dff1f7');
-                        });
-                    });
-                });
+				// 在lengthMenu旁新增清空通知和標記所有為已讀按鈕
+				$('#notice_length').append('<button id="clearAllBtn" class="btn btn-danger ml-2">清空通知</button>');
+				$('#notice_length').append('<button id="markAllReadBtn" class="btn btn-primary ml-2">標記所有為已讀</button>');
 
-                
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.log("AJAX request failed: " + textStatus + ', ' + errorThrown);
-            }
-        });
-    });
+				// 清空通知按鈕事件
+				$('#clearAllBtn').on('click', function() {
+					if (confirm('確定要清空所有通知嗎？')) {
+						$.post('/notice/clearAll', function(response) {
+							// 清空通知列表
+							$('#notice tbody').empty();
+						});
+					}
+				});
+
+				// 標記所有為已讀按鈕事件
+				$('#markAllReadBtn').on('click', function() {
+					$.post('/notice/markAllRead', function(response) {
+						// 即時變更所有通知行的背景顏色為淺藍色
+						$('#notice tbody tr').each(function() {
+							$(this).css('background-color', '#dff1f7');
+						});
+					});
+				});
+
+
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+				console.log("AJAX request failed: " + textStatus + ', ' + errorThrown);
+			}
+		});
+	});
 });

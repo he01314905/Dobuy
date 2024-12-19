@@ -41,72 +41,7 @@ public class UsedOrderController {
 	@Autowired
 	NoticeService noticeSvc;
 	
-	@PostMapping("updateDeliveryStatus")
-	@ResponseBody
-	public Map<String, Object> updateDeliveryStatus(@RequestParam("usedOrderNo") Integer usedOrderNo,
-	                                                @RequestParam("deliveryStatus") Byte deliveryStatus) {
-	    Map<String, Object> response = new HashMap<>();
-	    try {
-	        System.out.println("Received usedOrderNo: " + usedOrderNo);
-	        System.out.println("Received deliveryStatus: " + deliveryStatus);
-
-	        UsedOrderVO usedOrderVO = usedOrderSvc.getOneUsedOrder(usedOrderNo);
-	        if (usedOrderVO == null) {
-	            response.put("success", false);
-	            response.put("error", "訂單不存在");
-	            return response;
-	        }
-
-	        System.out.println("Order before update: " + usedOrderVO);
-
-	        usedOrderVO.setDeliveryStatus(deliveryStatus);
-	        usedOrderSvc.updateUsedOrder(usedOrderVO);
-
-	        // 發送通知消息
-	        String deliveryStatusText = getDeliveryStatusText(deliveryStatus);
-	        NoticeVO noticeVO = new NoticeVO();
-	        noticeVO.setNoticeContent("訂單號 " + usedOrderNo + " 訂單狀態更新為" + deliveryStatusText);
-	        noticeVO.setNoticeDate(new Timestamp(System.currentTimeMillis()));
-	        
-	        // 獲取 buyerNo 並設置到 noticeVO 的 memNo
-	        Integer buyerNo = usedOrderVO.getBuyerNo();
-	        noticeVO.setMemNo(buyerNo);
-
-	        noticeSvc.save(noticeVO);
-
-	        response.put("success", true);
-	        System.out.println("Update successful");
-	        return response;
-	    } catch (Exception e) {
-	        e.printStackTrace(); // 這樣可以在日誌中查看具體的異常堆棧信息
-	        response.put("success", false);
-	        response.put("error", "發生錯誤: " + e.getMessage());
-	        return response;
-	    }
-	}
-	private String getDeliveryStatusText(Byte deliveryStatus) {
-		switch (deliveryStatus) {
-		case 0: return "未出貨"; 
-		case 1: return "已出貨"; 
-		case 2: return "待領件"; 
-		case 3: return "已領貨"; 
-		case 4: return "已取消"; 
-		case 5: return "已付款";
-		case 6: return "未付款";
-		default: return "已付款"; } }
-
-	// 去除BindingResult中某個欄位的FieldError紀錄
-	public BindingResult removeFieldError(UsedOrderVO usedOrderVO, BindingResult result, String removedFieldname) {
-	    List<FieldError> errorsListToKeep = result.getFieldErrors().stream()
-	            .filter(fieldname -> !fieldname.getField().equals(removedFieldname))
-	            .collect(Collectors.toList());
-	    result = new BeanPropertyBindingResult(usedOrderVO, "usedOrderVO");
-	    for (FieldError fieldError : errorsListToKeep) {
-	        result.addError(fieldError);
-	    }
-	    return result;
-	}
-
+	
 	@GetMapping("listAllUsedOrder")
 	public String getAllOrder(ModelMap model) {
 	    List<UsedOrderVO> list = usedOrderSvc.getAll(); 
@@ -133,26 +68,7 @@ public class UsedOrderController {
 
    
 	
-    @PostMapping("sendComplaintEmail")
-    @ResponseBody
-    public Map<String, Object> sendComplaintEmail(@RequestParam("orderNo") Integer orderNo,
-                                                  @RequestParam("subject") String subject,
-                                                  @RequestParam("content") String content) {
-        Map<String, Object> response = new HashMap<>();
-        try {
-            // 發送郵件的邏輯
-            // 這裡你可以使用之前分享的 JavaMail API 代碼來發送郵件
-
-            // 假設這是你的發送郵件邏輯
-            MailSender.sendEmail("cia103g2.dobuy@gmail.com", subject, content);
-
-            response.put("success", true);
-        } catch (Exception e) {
-            response.put("success", false);
-            response.put("error", "發生錯誤: " + e.getMessage());
-        }
-        return response;
-    }
+    
 
 	
 

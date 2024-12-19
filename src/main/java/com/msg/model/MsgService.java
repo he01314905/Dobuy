@@ -44,7 +44,7 @@ public class MsgService {
         repository.save(msgVO);
     }
     
-  //任國抓櫃位通知
+  //抓櫃位通知
     public List<MsgVO> getOneCounterMsg(Integer counterNo) {
         return repository.findByCounterNo(counterNo); // 如果不存在，返回 null
     }
