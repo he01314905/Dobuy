@@ -74,45 +74,6 @@ public class CustomerServiceController {
     }
     
     
-//    @PostMapping("/insert")
-//    public String insert(HttpSession session, 
-//                         @Valid @ModelAttribute("customerServiceVO") CustomerServiceVO customerServiceVO, 
-//                         BindingResult result, ModelMap model,
-//                         @RequestParam("complaintReason") String complaintReason, 
-//                         @RequestParam("counterNo") Integer counterNo, 
-//                         @RequestParam("counterOrderNo") Integer counterOrderNo) {
-//    	
-//    	
-//    	
-//
-//        Object memNoObj = session.getAttribute("memNo");
-//        if (memNoObj == null) {
-//            return "redirect:/mem/login";
-//        }
-//        
-//        Integer memNo = (memNoObj instanceof Integer) ? 
-//            (Integer) memNoObj : Integer.parseInt((String) memNoObj);
-//
-//        // 設置表單提交的數據
-//        customerServiceVO.setMemNo(memNo);  // 設置會員編號
-//        customerServiceVO.setCounterNo(counterNo);
-//        customerServiceVO.setComplaintReason(complaintReason);
-//        customerServiceVO.setCounterOrderNo(counterOrderNo);
-//
-//        // 處理驗證錯誤
-//        if (result.hasErrors()) {
-//            model.addAttribute("counterList", counterSvc.getAll());
-//            return "redirect:/member";
-//        }
-//
-//        // 新增資料
-//        customerServiceSvc.addComplaint(customerServiceVO);
-//
-//        // 新增完成，返回顯示所有客訴的視圖
-//        model.addAttribute("success", "新增成功");
-//        return "redirect:/member";  // 重定向到已登錄的會員頁面
-//    }
-    
     @PostMapping("/insert")
     public String insert(HttpSession session, 
     		@Valid CustomerServiceVO customerServiceVO,

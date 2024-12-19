@@ -101,7 +101,7 @@
 
                 <!-- 櫃位編號 -->
                 <div class="form-group">
-                    <label for="counterNo">櫃位編號:</label>
+                    <label for="counterNo">櫃位名稱:</label>
                     <select class="form-control" id="counterNo" th:field="*{counterNo}">
                         <option th:each="counter : ${counterList}" th:value="${counter.counterNo}" th:text="${counter.counterCName}"></option>
                     </select>
