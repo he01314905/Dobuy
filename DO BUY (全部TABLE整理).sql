@@ -453,9 +453,6 @@ CREATE TABLE StoreCarousel (
 );
 
 -- 插入 20 筆假資料
-INSERT INTO StoreCarousel (storeCarouselNo, counterNo, disNo, carouselTime, carouselPic) 
-VALUES 
-SELECT * FROM dobuytest.countercarousel;
 
 INSERT INTO CounterCarousel (CounterNo, CarouselTime, CarouselPic, GoodsNo) VALUES
 (1, '2024-12-17 10:00:00', NULL, 1),
