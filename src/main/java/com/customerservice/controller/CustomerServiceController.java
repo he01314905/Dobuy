@@ -1,6 +1,7 @@
 package com.customerservice.controller;
 
 import java.io.IOException;
+import java.net.http.HttpRequest;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -75,33 +76,40 @@ public class CustomerServiceController {
     
     @PostMapping("/insert")
     public String insert(HttpSession session, 
-                         @Valid @ModelAttribute("customerServiceVO") CustomerServiceVO customerServiceVO, 
-                         BindingResult result, ModelMap model,
-                         @RequestParam("complaintReason") String complaintReason, 
-                         @RequestParam("counterNo") Integer counterNo, 
-                         @RequestParam("counterOrderNo") Integer counterOrderNo) {
+    		@Valid CustomerServiceVO customerServiceVO,
+    		BindingResult result, ModelMap model) {
 
+        /*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
+    	System.out.println(result.getErrorCount());
+    	System.out.println(result.getFieldError("complaintReason"));
+    	System.out.println(result.getFieldError("counterOrderNo"));
+    	// 處理驗證錯誤
+    	if (result.hasErrors()) {
+    		model.addAttribute("counter", counterSvc.getOneCounter(customerServiceVO.getCounterNo()));
+    		model.addAttribute("customerServiceSvc", customerServiceSvc);
+    		model.addAttribute("counterList", counterRepository.findAll());
+    		return "front-end/complaint/addcomplaint";
+    	}
+        // 設置表單提交的數據
+    	
+//        customerServiceVO.setComplaintReason(complaintReason); // 設置訊息內文
+//        customerServiceVO.setCounterNo(counterNo); // 設置櫃位編號
+//        customerServiceVO.setCounterOrderNo(counterOrderNo); // 設置櫃位訂單編號
+
+
+        /*************************** 2.檢查會員登入狀態 ************************/
         Object memNoObj = session.getAttribute("memNo");
         if (memNoObj == null) {
             return "redirect:/mem/login";
         }
-        
+
         Integer memNo = (memNoObj instanceof Integer) ? 
             (Integer) memNoObj : Integer.parseInt((String) memNoObj);
 
-        // 設置表單提交的數據
-        customerServiceVO.setMemNo(memNo);  // 設置會員編號
-        customerServiceVO.setCounterNo(counterNo);
-        customerServiceVO.setComplaintReason(complaintReason);
-        customerServiceVO.setCounterOrderNo(counterOrderNo);
+        // 設置會員編號
+        customerServiceVO.setMemNo(memNo);
 
-        // 處理驗證錯誤
-        if (result.hasErrors()) {
-            model.addAttribute("counterList", counterSvc.getAll());
-            return "redirect:/member";
-        }
-
-        // 新增資料
+        /*************************** 3.新增資料 ************************/
         customerServiceSvc.addComplaint(customerServiceVO);
 
         // 新增完成，返回顯示所有客訴的視圖
@@ -109,6 +117,9 @@ public class CustomerServiceController {
         return "redirect:/member";  // 重定向到已登錄的會員頁面
     }
 
+    
+   
+
 
     
     
@@ -117,45 +128,7 @@ public class CustomerServiceController {
     
 
     
-//    @PostMapping("/submitReply")
-//    @ResponseBody
-//    public Map<String, Object> submitReply(@RequestParam("counterComplaintNo") Integer counterComplaintNo,
-//                                           @RequestParam("complaintReply") String complaintReply) {
-//        Map<String, Object> response = new HashMap<>();
-//        try {
-//            System.out.println("Received counterComplaintNo: " + counterComplaintNo);
-//            System.out.println("Received complaintReply: " + complaintReply);
-//
-//            CustomerServiceVO customerServiceVO = customerServiceSvc.getOneComplaint(counterComplaintNo);
-//            if (customerServiceVO == null) {
-//                response.put("success", false);
-//                response.put("error", "客訴不存在");
-//                return response;
-//            }
-//
-//            System.out.println("Complaint before reply: " + customerServiceVO);
-//
-//            // 保存回覆到 Notice 表
-//            NoticeVO noticeVO = new NoticeVO();
-//            noticeVO.setNoticeContent(complaintReply);
-//            noticeVO.setNoticeDate(new Timestamp(System.currentTimeMillis()));
-//            noticeVO.setMemNo(customerServiceVO.getMemNo()); // 設置會員編號
-//
-//            noticeSvc.save(noticeVO);
-//
-//            // 更新客訴狀態為處理完畢
-//            customerServiceVO.setComplaintStatus((byte) 1); // 1 表示處理完畢
-//            customerServiceSvc.updateComplaint(customerServiceVO);
-//
-//            response.put("success", true);
-//            System.out.println("Reply submitted and status updated successfully");
-//        } catch (Exception e) {
-//            e.printStackTrace(); // 這樣可以在日誌中查看具體的異常堆棧信息
-//            response.put("success", false);
-//            response.put("error", "發生錯誤: " + e.getMessage());
-//        }
-//        return response;
-//    }
+
     
     
     @PostMapping("/submitReply")
@@ -199,31 +172,6 @@ public class CustomerServiceController {
     }
 
 
-
-
-
-   
-    
-
-    
-    
-    
-//    @GetMapping("listAllComplaint")
-//    public String getAllComplaint(ModelMap model) {
-//        try {
-//            List<CustomerServiceVO> list = customerServiceSvc.getAll(); 
-//            if (list == null) {
-//                list = new ArrayList<>();
-//            }
-//            model.addAttribute("customerserviceListData", list);
-//            return "vendor-end/customerservice/listAllComplaint";
-//        } catch (Exception e) {
-//            // 處理例外狀況並記錄錯誤
-//            model.addAttribute("error", "無法獲取客訴資料");
-//            e.printStackTrace();  // 或者使用日誌框架記錄錯誤信息
-//            return "error";
-//        }
-//    }
     
     @GetMapping("listCounterComplaint")
     public String listAllCustomerService(HttpSession session, Model model) {
@@ -240,32 +188,7 @@ public class CustomerServiceController {
             return "vendor-end/customerService/listAllComplaint";
         }
     }
-//
-//    
-//
-//    @ModelAttribute("counterCustomerServiceListData")
-//    protected List<CustomerServiceVO> CounterCustomerServiceListData(HttpSession session, Model model) {
-//        CounterVO counter = (CounterVO) session.getAttribute("counter");
-//        if (counter != null) {
-//            List<CustomerServiceVO> list = customerServiceSvc.getOneCounterCustomerService(counter.getCounterNo());
-//            return list;
-//        } else {
-//            // 如果counter為null，返回一個空列表或處理錯誤
-//            model.addAttribute("error", "未登錄或Session信息遺失");
-//            return new ArrayList<>(); // 或者其他適當的錯誤處理
-//        }
-//    }
-//
-//    @PostMapping("listCounterCustomerService_ByCompositeQuery")
-//    public String listCounterCustomerService(HttpSession session, HttpServletRequest req, Model model) {
-//        CounterVO counter = (CounterVO) session.getAttribute("counter");
-//        if (counter == null) {
-//            return "redirect:/counter/login";
-//        }
-//        List<CustomerServiceVO> list = customerServiceSvc.getOneCounterCustomerService(counter.getCounterNo());
-//        model.addAttribute("counterCustomerServiceListData", list); 
-//        return "vendor-end/customerService/listAllCustomerService";
-//    }
+
 
 
 }

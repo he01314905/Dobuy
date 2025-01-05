@@ -106,8 +106,9 @@ goodsService.updateGoodsAmount(cartItem.getGoodsNo(), goods.getGoodsAmount());
 if (!insufficientStockItems.isEmpty()) {
 for(GoodsVO a:insufficientStockItems) {
 model.addAttribute("error", "以下商品庫存不足："+a.getGoodsName());
-}
 
+}
+model.addAttribute("shoppingCartListListData",cartItems);
 return "front-end/shoppingcartlist/listAllShoppingCartList";
 }
 session.setAttribute("cartItems", cartItems);

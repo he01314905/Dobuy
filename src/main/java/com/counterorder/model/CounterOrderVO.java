@@ -158,8 +158,10 @@ public class CounterOrderVO implements java.io.Serializable {
 				return "作廢";
 			case 5:
 				return "未付款";
+			case 6:
+				return "已通知發貨";
+			
 			}
-
 		}
 		return "訂單未成立";
 	}

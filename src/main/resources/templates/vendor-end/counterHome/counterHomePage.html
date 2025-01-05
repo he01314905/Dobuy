@@ -27,6 +27,16 @@
 	th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css}"
 	rel="stylesheet">
 
+<style type="text/css">
+.rounded-image {
+	position: absolute;
+	left:-10px;
+    border-radius: 50%;
+    object-fit: cover; /* 使圖片填滿容器而不變形 */
+    height: 100px; /* 確保圖片高度與寬度相同，形成正圓 */
+}
+
+</style>
 
 </head>
 
@@ -113,6 +123,7 @@
 				<!-- 左侧图片或文字 -->
 				<div class="col-4 text-left">
 				    <div class="text-box">
+				    	<img th:src="@{/counter/DBGifReader} + '?counterNo=' + ${counterVO.counterNo}" width="100px" class="rounded-image">
 				        <span th:text="${counterVO.counterCName}"></span>
 				    </div>
 				</div>

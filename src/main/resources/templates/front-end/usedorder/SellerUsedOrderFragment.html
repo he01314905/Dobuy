@@ -33,23 +33,23 @@ body {
 <table id="exampleSeller" class="display" style="width: 100%">
   <thead >
     <tr style="background-color:rgb(224, 166, 86)">
-        <th>訂單編號</th>
+        <th class="usedOrderNo">訂單編號</th>
         <th>成立時間</th>
         <th>訂單狀態</th>
-        <th>買家編號</th>
-        <th>金額</th>
+        <th class="buyerNo">買家編號</th>
+        <th class="price">金額</th>
         <th>收件人</th>
-        <th>電話</th>
+        <th class="receiverPhone">電話</th>
         <th>地址</th>
-        <th>訂單詳情</th>
-        <th>更新狀態</th>
+        <th class="detail">訂單詳情</th>
+        <th class="update">更新狀態</th>
     </tr>
   </thead>
     
   <tbody>
         <th:block th:each="usedOrderVO : ${usedorderListData}">
             <tr>
-                <td th:text="${usedOrderVO.usedOrderNo}"></td>
+                <td class="usedOrderNo" th:text="${usedOrderVO.usedOrderNo}"></td>
                 <td th:text="${usedOrderVO.usedOrderTime}"></td>
                 <td>
                     <select th:id="'deliveryStatus-' + ${usedOrderVO.usedOrderNo}" th:name="deliveryStatus">
@@ -62,12 +62,12 @@ body {
                         <option value="6" th:selected="${usedOrderVO.deliveryStatus == 6}">未付款</option>
                     </select>
                 </td>
-                <td th:text="${usedOrderVO.buyerNo}"></td>
+                <td class="buyerNo" th:text="${usedOrderVO.buyerNo}"></td>
                 <td th:text="${usedOrderVO.usedTotalPrice}"></td>
-                <td th:text="${usedOrderVO.receiverName}"></td>
-                <td th:text="${usedOrderVO.receiverPhone}"></td>
+                <td class="price" th:text="${usedOrderVO.receiverName}"></td>
+                <td class="receiverPhone" th:text="${usedOrderVO.receiverPhone}"></td>
                 <td th:text="${usedOrderVO.receiverAdr}"></td>
-                <td>
+                <td class="detail">
                 <a href="javascript:void(0);" 
                    th:attr=" data-buyerNo=${usedOrderVO.buyerNo},
                              data-orderNo=${usedOrderVO.usedOrderNo}, 
@@ -83,7 +83,7 @@ body {
                 </a>
             
                 </td>
-                <td>
+                <td class="update">
                     <button type="button" th:onclick="'updateDeliveryStatus(' + ${usedOrderVO.usedOrderNo} + ')'">更新</button>
                 </td>
             </tr>

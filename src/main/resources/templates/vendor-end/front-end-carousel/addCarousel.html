@@ -2,98 +2,111 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
 <title>新增櫃位輪播資訊</title>
 
 <!-- fragment引入 -->
-<th:block th:replace="~{/vendor-end/counter/Counterincldue :: head}"></th:block>
-
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.jqueryui.min.css" />
-<link rel="stylesheet" href="/counter/style.css">
+<th:block th:replace="~{back-end/back-end-home/fraghead :: head}"></th:block>
 
 <style type="text/css">
     .contain {
-        padding: 1rem 2rem;	
-        text-align: center;
+        padding: 2rem;
+        background-color: #FAF3E0; /* 設定背景顏色 */
+        text-align: center; /* 文字置中 */
+        margin: 10px auto;
+        width: 45%; /* 調整容器寬度 */
+        box-sizing: border-box;
+        border-radius: 20px; /* 加上圓角效果 */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-left:25%;
     }
-
+    
     label, input, span, select {
-        display: block;
-        margin: 10px 500px;
-        text-align: center;        
+        display: block; 
+        margin: 5px 0; 
+        text-align: center;
+        width: 100%; /* 確保label與input占滿行 */
+        margin-left: 0;
     }
 
     input[type=text], input[type=number], input[type=password], select, textarea {
-        width: 20%;
-        padding: 5px;
+        width: 70%;
+        padding: 10px;
         margin: 5px auto;
         display: inline-block;
         border: 1px solid #ccc;
         border-radius: 4px;
         box-sizing: border-box;
+        text-align: center;
+        margin-left: 0;
     }
 
     button {
-        width: 10%;
-        background-color: #4CAF50;
+        width: 30%;
+        background-color: #5bc5ff; /* 按鈕背景色 */
         color: white;
         padding: 10px;
         margin: 10px auto;
         border: none;
-        border-radius: 4px;
+        border-radius: 5px;
         cursor: pointer;
+        font-size: 16px;
     }
 
     button:hover {
-        background-color: #45a049;
+        background-color: #4141ff;  /* 當滑鼠懸停時改變背景色 */
     }
 
     .link {
-        display: block;
+        display: flex;
         margin: 10px 0;
         text-align: center;
         color: blue;
+        text-decoration: none;
+    }
+
+    /* 錯誤訊息 */
+    .error {
+        color: red;
+        font-size: 12px;
+        margin-top: 5px;
     }
 </style>
 </head>
 <body>
-    <!-- fragment引入 -->
-<!--     <div th:insert="vendor-end/counter/Counterincldue :: header"></div> -->
-    
-    <div align="center"> 
-        <h2>新增櫃位輪播資訊</h2> 
-    </div>
 
-    <div class="contain">
-        <form th:action="@{/front-end-carousel/insert}" method="post" th:object="${countercarouselVO}" enctype="multipart/form-data">
-            <!-- 櫃位編號 -->
-            <label for="counterNo">櫃位編號:</label>
-            <input type="number" th:field="*{counterNo}" readonly />
-            <br /><br>
-            <label for="counterNo">櫃位名稱:</label>
-            <input type="text" th:field="${counterVO.counterCName}" readonly />
-            <br /><br>
+		<header th:block th:replace="~{back-end/back-end-home/fraghead :: header}"></header>
+<div align="center">
+    <h2>新增櫃位輪播資訊</h2>
+</div>
 
-            <!-- 輪播圖片 -->
-            <label for="upFiles">輪播圖片:</label>
-            <input type="file" th:field="*{upFile}" multiple="multiple"/>
-            <br /><br>
+<div class="contain">
+    <form th:action="@{/front-end-carousel/insert}" method="post" th:object="${countercarouselVO}" enctype="multipart/form-data">
+        <!-- 櫃位編號 -->
+        <label for="counterNo">櫃位編號:</label>
+        <input type="number" th:field="*{counterNo}" readonly />
 
-            <!-- 商品編號 -->
-            <label for="goodsNo">商品編號:</label>
-            <input type="number" th:field="*{goodsNo}" />
-            <br /><br>
+        <label for="counterNo">櫃位名稱:</label>
+        <input type="text" th:field="${counterVO.counterCName}" readonly />
 
-            <button type="submit">提交</button>
-            <br /><br>
-            
-<!--             <a class="link" th:href="@{/front-end-carousel/ALLCarousel}">List all</a> -->
-<!--             <a class="link" href='/'>HomePage</a> -->
-        </form>
-    </div>
+        <!-- 輪播圖片 -->
+        <label for="upFiles">輪播圖片:</label>
+        <input type="file" th:field="*{upFile}" multiple="multiple"/>
 
-    <!-- fragment引入 -->
-    <footer th:block th:replace="~{back-end/back-end-home/fraghead :: footer}"></footer>
+        <!-- 商品編號 -->
+        <label for="goodsNo">商品編號:</label>
+        <input type="number" th:field="*{goodsNo}" />
+
+        <button type="submit">提交</button>
+    </form>
+</div>
+
+<!-- fragment引入 -->
+<footer th:block th:replace="~{back-end/back-end-home/fraghead :: footer}"></footer>
+<th:block th:replace="~{back-end/back-end-home/fraghead :: js}"></th:block>
+
 </body>
 </html>

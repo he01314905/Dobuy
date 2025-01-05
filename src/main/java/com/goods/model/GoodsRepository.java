@@ -26,7 +26,9 @@ public interface GoodsRepository extends JpaRepository<GoodsVO, Integer> {
     @Query(value = "from GoodsVO where goodsNo = ?1 and goodsName like %?2% and goodsPrice= ?3 order by goodsNo")
 	List<GoodsVO> findByOthers(int goodsNo, String goodsName, int goodsPrice);
     
-    
+    @Query(value = "SELECT * FROM goods WHERE counterNo = ?1 ", nativeQuery = true)
+    List<GoodsVO> getOneCounter1(Integer counterNo);
+
     //=============以下昱夆新增===============//
     
     @Query(value = "SELECT * FROM goods WHERE counterNo = ?1 && goodsStatus=1 ORDER BY goodsDate DESC", nativeQuery = true)

@@ -45,28 +45,36 @@ public class BackendCounterController {
     @Qualifier("primaryMailSender")
     private JavaMailSender mailSender;
     
-    private void sendEmailtoC(String emailTo , CounterVO counter) {
-  	  try {
-  		  	
-  	        MimeMessage message = mailSender.createMimeMessage();
-  	        MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-  	        helper.setFrom("sendforC5566@gmail.com");
-  	        helper.setTo(emailTo);
-  	        helper.setSubject("停權通知");
-  	        helper.setText("<html><body>"
-  	                + "<h1>您好，" + counter.getCounterName() + "：</h1>"
-  	                + "<p>我們非常遺憾地通知您，您的櫃位 " + counter.getCounterCName() + " 已被停權。</p>"
-  	                + "<p>如有任何問題或疑問，請您盡速與我們的客服聯繫。</p>"
-  	                + "<p>感謝您的理解。</p>"
-  	                + "<p>您的客服團隊</p>"
-  	                + "</body></html>", true);
-  	        
-  	        mailSender.send(message);
-  	    } catch (MessagingException e) {
-  	        e.printStackTrace();
-  	        // 你可能想要在這裡添加更多的錯誤處理
-  	    }
-  	}
+    private void sendEmailtoC(String emailTo, CounterVO counter, boolean isEnable) {
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+            helper.setFrom("sendforC5566@gmail.com");
+            helper.setTo(emailTo);
+            
+            if (isEnable) {
+                helper.setSubject("櫃位啟用通知");
+                helper.setText("<html><body>"
+                        + "<h1>您好，" + counter.getCounterName() + "：</h1>"
+                        + "<p>您的櫃位 " + counter.getCounterCName() + " 已審核成功，您現在可以正常使用所有功能，祝您生意欣隆！</p>"
+                        + "</body></html>", true);
+            } else {
+                helper.setSubject("停權通知");
+                helper.setText("<html><body>"
+                        + "<h1>您好，" + counter.getCounterName() + "：</h1>"
+                        + "<p>我們非常遺憾地通知您，您的櫃位 " + counter.getCounterCName() + " 已被停權。</p>"
+                        + "<p>如有任何問題或疑問，請您盡速與我們的客服聯繫。</p>"
+                        + "<p>感謝您的理解。</p>"
+                        + "<p>您的客服團隊</p>"
+                        + "</body></html>", true);
+            }
+            
+            mailSender.send(message);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+            // 你可能想要在這裡添加更多的錯誤處理
+        }
+    }
 	
 	@GetMapping("counter/test") //ch2 P65 ch3 P77 ch8 p139
 	public String myMethod() {
@@ -102,7 +110,7 @@ public class BackendCounterController {
 	        redirectAttributes.addFlashAttribute("message", "櫃位狀態修改成功！");
 	        //櫃位停權
             if (counterStatus == 0) {
-            	sendEmailtoC (counterVO.getCounterEmail(),counterVO);
+            	sendEmailtoC(counterVO.getCounterEmail(), counterVO, false);
             }else if (counterStatus == 2) { 
 	        	String informMsg = counterVO.getCounterCName() + " 您的櫃位有違規行為，如有疑問請聯繫客服";
 	            Integer counterNo1 = counterVO.getCounterNo();
@@ -111,6 +119,7 @@ public class BackendCounterController {
 	        	String informMsg = counterVO.getCounterCName() + " 您現在可以正常使用所有功能，祝您生意欣隆";
 	            Integer counterNo1 = counterVO.getCounterNo();
 	            msgSvc.addCounterInform(counterNo1, informMsg); // 新增通知
+	            sendEmailtoC(counterVO.getCounterEmail(), counterVO, true); // 發送審核通知郵件
 	        }
 	    } catch (Exception e) {
 	        // 這裡處理異常，例如記錄錯誤或添加錯誤消息

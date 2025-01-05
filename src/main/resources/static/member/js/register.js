@@ -157,3 +157,12 @@ document.addEventListener('DOMContentLoaded', () => {
         confirmToggleIcon.classList.toggle('fa-eye-slash');
     });
 });
+
+
+// 計算今天滿 18 歲的日期
+ const today = new Date();
+ const eighteenYearsAgo = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+ const maxDate = eighteenYearsAgo.toISOString().split('T')[0]; // 格式化成 YYYY-MM-DD
+
+ // 設定 max 屬性，限制日期輸入
+ document.getElementById('memBirth').setAttribute('max', maxDate);

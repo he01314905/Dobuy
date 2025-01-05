@@ -262,7 +262,7 @@ public class HybridCheckoutController {
             .sum();
 
         order.setOrderTotalAfter(finalTotal);
-        order.setMemCouponNo(memCoupon.getMemCouponNo());
+//        order.setMemCouponNo(memCoupon.getMemCouponNo());
         counterOrderService.updateCounterOrder49(order);
     }
 

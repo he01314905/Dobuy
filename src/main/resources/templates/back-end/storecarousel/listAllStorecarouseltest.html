@@ -184,7 +184,7 @@
                             </td>
                             <td>
                                 <form th:action="@{/storecarousel/delete}" method="post">
-                                    <input type="submit" value="刪除">
+                                    <input type="submit" value="刪除" class="btn btn-danger" onclick="return confirm('確定要刪除這條資訊嗎？')">
                                     <input type="hidden" name="storeCarouselNo" th:value="${storeCarouselVO.id}">
                                 </form>
                             </td>

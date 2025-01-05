@@ -2,6 +2,7 @@ package com.member.model;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,14 +15,12 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.List;
-import java.util.ArrayList;
 import com.memcoupon.model.MemCouponVO;
 
 @Entity
@@ -72,6 +71,7 @@ public class MemberVO {
     @Column(name = "memBirth")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd") // 指定日期格式
+    @NotNull(message="生日: 請勿空白" , groups = {RegisterGroup.class})
     private Date memBirth;
 
     @Column(name = "memStatus")

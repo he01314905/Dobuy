@@ -465,6 +465,7 @@ span{
 
 /* UsedListContainer CSS by GARY LEE */
 /* 表格設置 */
+
 table {
     width:90%; /* 表格占滿父容器 */
     table-layout: fixed; /* 固定表格佈局，讓欄位等寬*/
@@ -492,7 +493,39 @@ th {
 
 
 
+
+
 /* 各個欄位的寬度設置 */
+th.receiverPhone, td.receiverPhone {
+	white-space: wrap; /* 換行 */
+	width: 10%; /* 電話號碼寬度 */
+}
+
+th.usedOrderNo, td.usedOrderNo {
+	white-space: wrap; /* 換行 */
+	width: 3%; /* 訂單編號 */
+}
+
+th.buyerNo, td.buyerNo {
+	white-space: wrap; /* 換行 */
+	width: 3%; /* 買家編號 */
+}
+
+th.detail, td.detail {
+	white-space: wrap; /* 換行 */
+	width: 3%; /* 二手詳情 */
+}
+
+th.update, td.update {
+	white-space: wrap; /* 換行 */
+	width: 3%; /* 更新 */
+}
+
+th.price, td.price {
+	white-space: wrap; /* 換行 */
+	width: 6%; /* 金額 */
+}
+
 th.col-col-sellerNo, td.col-sellerNo {
     width: 5%; /* 商品編號欄寬度 */
 }
@@ -1087,3 +1120,4 @@ header .dropdown {
         margin: 10px 0;
     }
 }
+

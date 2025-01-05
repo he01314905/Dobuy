@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.counter.model.CounterService;
 import com.counter.model.CounterVO;
 import com.counter.model.CounterVO.LoginGroup;
+import com.counterorder.model.CounterOrderService;
 import com.customerservice.model.CustomerServiceService;
 import com.msg.model.MsgService;
 
@@ -33,6 +34,9 @@ public class CounterLoginController {
     
     @Autowired
     CustomerServiceService customerServiceSvc; 
+    
+	@Autowired
+	CounterOrderService counterOrderSvc;
     
     
     @PostMapping("/loginERO")
@@ -81,6 +85,7 @@ public class CounterLoginController {
             model.addAttribute("counter", counter);
             model.addAttribute("msgSvc", msgSvc);
             model.addAttribute("customerServiceSvc", customerServiceSvc);
+            model.addAttribute("counterOrderSvc", counterOrderSvc);
         }else {
         	// 處理未登入的情況
             return "redirect:/counter/login";

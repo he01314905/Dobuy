@@ -180,7 +180,11 @@ body {
 				<a th:href="@{/mem/logout49}" class="btn">登出</a>
 			</div>
 		</div>
+		<div style="margin-top: 20px; text-align: center;">
+			<a th:href="@{/memcoupon/memListAllCoupon}" class="btn">查看我的優惠券</a> <a
+				th:href="@{/home}" class="btn">回首頁</a>
 
+		</div>
 		<h2>可領取的優惠券</h2>
 
 		<div th:if="${message}" class="alert" th:text="${message}"></div>
@@ -220,11 +224,7 @@ body {
 		<!-- 分頁控制器 -->
 		<div id="pagination" class="pagination"></div>
 
-		<div style="margin-top: 20px; text-align: center;">
-			<a th:href="@{/memcoupon/memListAllCoupon}" class="btn">查看我的優惠券</a> <a
-				th:href="@{/home}" class="btn">回首頁</a>
 
-		</div>
 
 
 	</div>

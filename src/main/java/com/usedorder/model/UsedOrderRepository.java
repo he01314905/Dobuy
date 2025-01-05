@@ -24,5 +24,8 @@ public interface UsedOrderRepository extends JpaRepository<UsedOrderVO, Integer>
 	  @Query(value = "SELECT * FROM usedorder where usedNo = ?1 AND deliveryStatus != 6", nativeQuery = true)
 	  List<UsedOrderVO> selectSellerOrderBySellerUsedNo(Integer usedNo);
 	  
+	  @Query(value = "SELECT uo.*, u.usedName FROM usedorder uo JOIN Used u ON uo.usedNo = u.usedNo WHERE uo.buyerNo = ?1 AND uo.deliveryStatus != 6", nativeQuery = true)
+	  List<Object[]> findBuyerOrdersWithUsedNameByBuyerNo(Integer buyerNo);
+	  
 	  
 }

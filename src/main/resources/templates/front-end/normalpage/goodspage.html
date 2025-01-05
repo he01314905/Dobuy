@@ -101,7 +101,7 @@
 			        <i class="fa-solid fa-plus" 
 			        th:attr="data-id=${goodsVO.goodsNo}, data-name=${goodsVO.goodsName},
                 	data-price=${goodsVO.goodsPrice}, data-counterNo=${goodsVO.counterVO.counterNo},
-                	data-base64Image=${goodsVO.base64Image}" onclick="addToCart(this)"
+                	data-base64Image=${goodsVO.base64Image}, data-memAccount=${session.memAccount}" onclick="addToCart(this)"
 			        style="font-size: 24px;"></i>
 			    </div>  
                 <!-- 單個商品的表單 -->
@@ -473,7 +473,12 @@ function addToCart(button) {
         const goodsNo = button.getAttribute('data-id');
         const counterNo = button.getAttribute('data-counterNo');
         const base64Image = button.getAttribute('data-base64Image');
+        const memAccount = button.getAttribute('data-memAccount');
         
+    	if (!memAccount) { // 判斷 null, undefined, 空字串
+    		alert("請先登入!!");
+    		return;
+    	}
         fetch('/cart/add', {
             method: 'POST',
             headers: {

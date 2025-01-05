@@ -11,7 +11,7 @@ class CounterPhotoWrite {
 		InputStream fin = null;
 		String url = "jdbc:mysql://localhost:3306/dobuy?serverTimezone=Asia/Taipei";
 		String userid = "root";
-		String passwd = "rin020255";
+		String passwd = "123456789";
 		String photos = "src/main/resources/static/counter/img"; 
 		String update = "update counter set counterPic =? where counterNo=?";
 

@@ -35,11 +35,7 @@ public class UsedOrderService {
     public List<UsedOrderVO> getAll() {
         return repository.findAll();
     }
-
-    // public List<UsedOrder> getAll(Map<String, String[]> map) {
-    //     return HibernateUtil_CompositeQuery_Emp3.getAllC(map, sessionFactory.openSession());
-    // }
-    
+   
     public UsedOrderVO getOrderById(Integer orderNo) {
         return repository.findById(orderNo).orElse(null);
     }
@@ -52,7 +48,7 @@ public class UsedOrderService {
         repository.save(usedOrderVO);
     }
 //===================        garylee添加方法forUsedOrder display        ============  
-    //訂單更改狀態用   gary lee
+    //訂單更改狀態用gary lee
     public int changeStatusByUsedOrderNo(Byte deliveryStatus,Integer usedOrderNo) {
     	try {
     	repository.changeStatusByUsedOrderNo(deliveryStatus, usedOrderNo);
@@ -88,6 +84,9 @@ public class UsedOrderService {
     	
 		return result;
     }
+    
+    public List<Object[]> getBuyerOrdersWithUsedNameByMemNo(Integer memNo) { 
+    	return repository.findBuyerOrdersWithUsedNameByBuyerNo(memNo); }
 
     
     

@@ -89,9 +89,10 @@
                             <div class="classynav">
                                 <ul>
                                     <li><a  class="dropdown-font" th:href="@{/counter/Counterindex}">首頁</a></li>
-                                    <li><a href="#">商城系統</a>
+                                    <li><a href="#" th:classappend="${counterOrderSvc.countNewOrder(counter.counterNo) > 0} ? 'unread-dot'">商城系統</a>
                                         <ul  class="dropdown">
-                                            <li><a href="/counter/listOneCounter">櫃位訂單管理</a></li>
+                                            <li><a href="/counter/listOneCounter" 
+                                            th:classappend="${counterOrderSvc.countNewOrder(counter.counterNo) > 0} ? 'unread-dot'">櫃位訂單管理</a></li>
                                             <li><a id="check" th:href="@{/goods/listAllCounterGoods}">商品管理</a></li>
                                             <li><a th:href="@{'/counter/getOneCounter_For_Display?counterNo=' + ${counter.counterNo}}">櫃位商城首頁</a></li>
                                         </ul>

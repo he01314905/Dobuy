@@ -431,7 +431,7 @@ public class GoodsController {
     public String listCounterGoods(HttpSession session ,HttpServletRequest req, Model model) {
 //        Map<String, String[]> map = req.getParameterMap();
         CounterVO counter = (CounterVO) session.getAttribute("counter");
-        List<GoodsVO> list = goodsSvc.getOneCounter35(counter.getCounterNo());
+        List<GoodsVO> list = goodsSvc.getOneCounter1(counter.getCounterNo());
         model.addAttribute("CountergoodsListData", list); // for listAllEmp.html 第85行用
         return "vendor-end/goods/listAllCounterGoods";
     }

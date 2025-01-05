@@ -49,7 +49,7 @@ public class OrderService {
                     .orElse("DO BUY商品");  // 預設商品名稱
             
             // 建立購物參數
-            AioCheckOutALL obj = new AioCheckOutALL();
+            AioCheckOutOneTime obj = new AioCheckOutOneTime();
             obj.setMerchantID("3002607");
             obj.setMerchantTradeNo(uuId);
             obj.setMerchantTradeDate(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date()));
@@ -60,7 +60,7 @@ public class OrderService {
 //            obj.setCustomField1(String.valueOf(counterOrderNo));
 
             // 設定付款結果通知參數
-            obj.setReturnURL("https://34b2-175-181-189-53.ngrok-free.app/ecpay/callback");
+            obj.setReturnURL("https://dc5b-111-243-143-5.ngrok-free.app/ecpay/callback");
 
             obj.setOrderResultURL("http://localhost:8080/member");
             obj.setClientBackURL("http://localhost:8080/member");

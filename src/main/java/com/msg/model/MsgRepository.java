@@ -25,7 +25,7 @@ public interface MsgRepository extends JpaRepository<MsgVO, Integer> {
     
     
     
-    //任國抓櫃位通知
+    //抓櫃位通知
     @Query(value = "SELECT * FROM counterInform WHERE counterNo = ?1 ", nativeQuery = true)
 	List<MsgVO> findByCounterNo(Integer counterNo);
     //任國確認已讀未讀

@@ -253,8 +253,8 @@ img {
 	.unread-dot::after {
 	    content: '\2605'; /* 星星Unicode字符 */
 	    position: absolute;
-	    top: -5px;
-	    right: -10px;
+	    top: 0px;
+	    left: 0px;
 	    font-size: 25px;
 	    color: #FFD700; /* 金色 */
 	    animation: twinkle 1s infinite;

@@ -1,10 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>客訴表單 - addComplaint.html</title>
-
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -12,27 +9,39 @@
 
     <style>
         body {
-            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-image: url("/images/ruben-bagues-vPQfc4niDh0-unsplash.jpg");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
         }
 
         .container {
-            margin-top: 50px;
             max-width: 500px;
-        }
-
-        .card {
-            border: 1px solid #ddd;
+            background: rgba(255, 255, 255, 0.9);
             border-radius: 15px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            background-color: #ffffff;
+            padding: 20px;
         }
 
-        .card-header {
-            background-color: #007bff;
-            color: #fff;
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: normal;
+            text-align: center;
+        }
+
+        .header-text {
             text-align: center;
             font-size: 1.25rem;
             padding: 10px;
+            font-weight: bold;
+            color: #343a40;
         }
 
         .form-control {
@@ -52,30 +61,47 @@
             width: 120px;
         }
 
-        .error {
-            color: red;
+        .btn-primary {
+            background-color: #8b4513;
+            border-color: #8b4513;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #9c5631;
+            border-color: #9c5631;
+        }
+
+        .btn-secondary {
+            background-color: #d2b48c;
+            border-color: #d2b48c;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #c4a77b;
+            border-color: #c4a77b;
         }
     </style>
 </head>
 <body>
-
 <div class="container">
     <div class="card">
-        <div class="card-header">
-            <h5 class="modal-title">客訴表單</h5>
+        <div class="header-text">
+            客訴表單
         </div>
         <div class="card-body">
             <form th:action="@{/customerservice/insert}" method="post" th:object="${customerServiceVO}">
                 <!-- 客訴內容 -->
                 <div class="form-group">
                     <label for="complaintReason">客訴內容:</label>
-                    <input type="text" class="form-control" id="complaintReason" th:field="*{complaintReason}" placeholder="請輸入客訴內容" />
-                    <span class="error" th:if="${#fields.hasErrors('complaintReason')}" th:errors="*{complaintReason}"></span>
+                    <input type="text" class="form-control" id="complaintReason" th:field="*{complaintReason}" placeholder="請輸入客訴內容" onclick="hideContent('complaintReason.errors');" />
+                    <span th:if="${#fields.hasErrors('complaintReason')}" th:errors="*{complaintReason}" class="error" id="complaintReason.errors"></span>
                 </div>
 
                 <!-- 櫃位編號 -->
                 <div class="form-group">
-                    <label for="counterNo">櫃位編號:</label>
+                    <label for="counterNo">櫃位名稱:</label>
                     <select class="form-control" id="counterNo" th:field="*{counterNo}">
                         <option th:each="counter : ${counterList}" th:value="${counter.counterNo}" th:text="${counter.counterCName}"></option>
                     </select>
@@ -84,7 +110,10 @@
                 <!-- 櫃位訂單編號 -->
                 <div class="form-group">
                     <label for="counterOrderNo">櫃位訂單編號:</label>
+                
                     <input type="text" class="form-control" id="counterOrderNo" th:field="*{counterOrderNo}" placeholder="請輸入訂單編號" />
+                                    <span th:if="${#fields.hasErrors('counterOrderNo')}" th:errors="*{counterOrderNo}" class="error" id="counterOrderNo.errors"></span>
+                
                 </div>
 
                 <!-- 按鈕 -->
@@ -93,21 +122,24 @@
                     <button type="submit" class="btn btn-primary">送出新增</button>
                 </div>
             </form>
-            <div id="successMessage" class="alert alert-success" style="display: none;">新增成功！</div>
-            <div id="errorMessage" class="alert alert-danger" style="display: none;"></div>
         </div>
     </div>
 </div>
 
 <!-- JavaScript -->
 <script>
+    function hideContent(id) {
+        document.getElementById(id).style.display = "none";
+    }
+
     function cancelAdd() {
         window.location.href = "/member";
     }
 </script>
-
 </body>
 </html>
+
+
 
 
 

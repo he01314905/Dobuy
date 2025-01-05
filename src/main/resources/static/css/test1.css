@@ -164,6 +164,7 @@ div.slider {
 }
 
 div.slider a img {
+	margin-left:5%;
     max-width: 900px;                 /* 圖片寬度設為 100%，自動適應容器 */
     max-height: 500px;
     width:100%;                /* 圖片高度設為 100%，保持容器的高度 */

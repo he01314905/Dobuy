@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.counterorder.model.CounterOrderService;
 import com.counterorder.model.CounterOrderVO;
@@ -20,6 +21,7 @@ import com.manager.model.ManagerService;
 import com.manager.model.ManagerVO;
 import com.member.model.MemberService;
 import com.member.model.MemberVO;
+import com.msg.model.MsgService;
 
 @Controller
 @RequestMapping("/back-end")
@@ -30,7 +32,8 @@ public class BackEndController {
 	CounterOrderService counterOrderSvc;
 	@Autowired
 	ManagerService managerService;
-	
+	@Autowired
+	MsgService msgSvc;
 	@GetMapping("member")
 	public String member(ModelMap model,HttpSession session) {
 		List<MemberVO> memlist = memberSvc.getAll();
@@ -54,6 +57,13 @@ public class BackEndController {
 	    return "redirect:/back-end/member"; 
 	}
 	
-	
+	@PostMapping("msgCounter")
+	public String msgCounter(@RequestParam("counterNo") Integer counterNo,@RequestParam("counterOrderNo") Integer counterOrderNo,RedirectAttributes redirectAttributes) {
+		
+		String msg="會員訂單編號"+counterOrderNo+"號"+"已成功付款趕緊出貨";
+		msgSvc.addCounterInform(counterNo, msg);
+		counterOrderSvc.updateCounterStatus(counterOrderNo,6);
+		return "redirect:/back-end/memberorder"; 
+	}
 
 }

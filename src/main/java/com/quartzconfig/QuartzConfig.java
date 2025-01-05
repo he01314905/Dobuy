@@ -23,7 +23,7 @@ public class QuartzConfig {
                 .forJob(cancelUnpaidOrdersJobDetail())
                 .withIdentity("cancelUnpaidOrdersTrigger")
                 .withSchedule(SimpleScheduleBuilder.simpleSchedule()
-                        .withIntervalInMinutes(5)  // 每 5 分鐘執行一次
+                        .withIntervalInMinutes(3)  // 每 3 分鐘執行一次
                         .repeatForever())
                 .build();
     }

@@ -185,7 +185,22 @@ button:hover, .btn:hover, .dataTables_wrapper .dataTables_paginate .paginate_but
 .preload-content {
     text-align: center;
 }
+.commit{
+  color: black; /* 設置文字顏色為黑色 */
+    background-color: orange;
+    padding: 5px;
+    border-radius: 10%;
+    margin-left: 10%;
+}
+.commit:hover{
+  background-color: rgba(255, 165, 0, 0.5);
+   cursor: pointer;
 
+}
+.commit:disabled {
+    background-color: #d3d3d3; /* 按鈕禁用時的顏色（灰色） */
+    cursor: not-allowed; /* 禁止點擊指標 */
+}
 #original-load {
     width: 50px;
     height: 50px;
@@ -231,16 +246,17 @@ button:hover, .btn:hover, .dataTables_wrapper .dataTables_paginate .paginate_but
         <th>折扣券編號</th>
         <th>訂單狀態</th>
         <th>下單時間</th>
-        
+        <th> 通知櫃位出貨</th>
   
     </tr>
 </thead>
 
 
   <th:block th:each="order : ${alist}">
+ 
     <tr>
-        <td th:text="${order.counterOrderNo}"></td> <!-- 顯示會員編號 -->
-        <td th:text="${order.counterNo}"></td> <!-- 顯示會員帳號 -->
+        <td th:text="${order.counterOrderNo}"></td> 
+        <td th:text="${order.counterNo}"></td> 
         <td th:text="${order.memNo}"></td> <!-- 顯示會員密碼 -->
         <td th:text="${order.orderTotalBefore}"></td> <!-- 顯示會員地址 -->
         <td th:text="${order.orderTotalAfter}"></td> <!-- 顯示會員手機 -->
@@ -250,7 +266,29 @@ button:hover, .btn:hover, .dataTables_wrapper .dataTables_paginate .paginate_but
         <td th:text="${order.memCouponNo}"></td>
         <td th:text="${order.getOrderDisplay}"></td>
         <td th:text="${#dates.format(order.ordertime, 'yyyy-MM-dd')}"></td>  
-  
+   
+<td>
+    <span th:if="${order.orderStatus == 0}">
+        <!-- 使用唯一的 id 標識每個表單 -->
+        <form  action="msgCounter" method="post" onsubmit="notifySuccess(event)">
+            <!-- 通知櫃位出貨的按鈕，根據 notifySuccess 屬性動態禁用 -->
+            <input class="commit" type="submit" value="通知櫃位出貨" >         
+            <input type="hidden" name="counterNo" th:value="${order.counterNo}">
+            <input type="hidden" name="counterOrderNo" th:value="${order.counterOrderNo}">
+        </form>
+    </span>
+</td>
+
+
+
+
+
+
+
+
+
+
+		
 </th:block>
 
 </table>
@@ -263,7 +301,11 @@ button:hover, .btn:hover, .dataTables_wrapper .dataTables_paginate .paginate_but
         <script src="/back-end-home/js/plugins.js"></script>
         <script src="/back-end-home/js/active.js"></script>
 <script>
-
+function notifySuccess(event) {
+	   event.preventDefault();  // 阻止表單的默認提交行為
+       alert('通知成功');  // 顯示通知成功的提示
+       event.target.submit();  
+}
 
 $(document).ready(function() {
 	
@@ -299,13 +341,14 @@ $(document).ready(function() {
     });
 
 });
-   
-  
 
 
 
 
 </script>
+
+
+
 	<!-- fragment引入 -->
 	<footer th:block th:replace="~{back-end/back-end-home/fraghead :: footer}"></footer>
 

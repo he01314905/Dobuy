@@ -53,8 +53,8 @@ public class CounterOrderService {
 //		    repository.deleteById(empno);
 	}
 
-	public void updateCounterStatus(Integer memno,Integer orderStatus) {
-		repository.updateCounterStatus(orderStatus,memno);
+	public void updateCounterStatus(Integer counterOrderNo,Integer orderStatus) {
+		repository.updateCounterStatus(orderStatus,counterOrderNo);
 	}
 	
 	
@@ -191,6 +191,25 @@ public class CounterOrderService {
     public Integer getTotalOrderAmount(Integer counterNo, Integer orderStatus, String orderTime) {
         return repository.findmoney(counterNo, orderStatus, orderTime);
     }
+
+//  柏翔
+
+public CounterOrderVO findById(Integer orderNo) {
+    // 使用 repository 的 findById 方法查詢
+    return repository.findById(orderNo).orElse(null);
+}
+    
+    
+
+
+    
+
+    
+    public int countNewOrder(Integer counterNo) {
+        return repository.counterReader(counterNo, 6);
+    }
+
+    
 }
     
     

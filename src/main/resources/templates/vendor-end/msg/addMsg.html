@@ -59,25 +59,24 @@
         }
         
         .btn-primary {
-        background-color: #8b4513; /* 深棕色 */
-        border-color: #8b4513;
-        color: white;
-    }
-    .btn-primary:hover {
-        background-color: #9c5631; /* 略淺的深棕色 */
-        border-color: #9c5631;
-    }
-    
-    .btn-secondary {
-        background-color: #d2b48c; /* 淺棕色 */
-        border-color: #d2b48c;
-        color: white;
-       
-    }
-    .btn-secondary:hover {
-        background-color: #c4a77b; /* 略深的淺棕色 */
-        border-color: #c4a77b;
-    }
+            background-color: #8b4513; /* 深棕色 */
+            border-color: #8b4513;
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #9c5631; /* 略淺的深棕色 */
+            border-color: #9c5631;
+        }
+        
+        .btn-secondary {
+            background-color: #d2b48c; /* 淺棕色 */
+            border-color: #d2b48c;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background-color: #c4a77b; /* 略深的淺棕色 */
+            border-color: #c4a77b;
+        }
     </style>
 </head>
 <body>
@@ -96,8 +95,17 @@
                     <span th:if="${#fields.hasErrors('informMsg')}" th:errors="*{informMsg}" class="error" id="informMsg.errors"></span>
                 </div>
 
-                <!-- 會員 -->
+                <!-- 發送對象 -->
                 <div class="form-group">
+                    <label>發送對象:</label>
+                    <div>
+                        <label><input type="radio" name="sendTo" value="single" checked> 單個會員</label>
+                        <label><input type="radio" name="sendTo" value="all"> 所有會員</label>
+                    </div>
+                </div>
+
+                <!-- 會員 -->
+                <div class="form-group" id="singleMemberSection">
                     <label for="memNo">會員:</label>
                     <select class="form-control" id="memNo" th:field="*{memNo}">
                         <option th:each="member : ${memberList}" th:value="${member.memNo}" th:text="${member.memNo}"></option>
@@ -114,9 +122,8 @@
     </div>
 </div>
 
-	<!-- fragment引入 -->
-	<footer th:block
-		th:replace="~{back-end/back-end-home/fraghead :: footer}"></footer>
+<!-- fragment引入 -->
+<footer th:block th:replace="~{back-end/back-end-home/fraghead :: footer}"></footer>
 
 <!-- JavaScript -->
 <script>
@@ -129,6 +136,17 @@
     function cancelAdd() {
         window.location.href = "/msg/listAllMsg"; // 導回訊息列表頁面
     }
+
+    // 切換發送對象選項
+    $(document).ready(function() {
+        $('input[name="sendTo"]').change(function() {
+            if ($(this).val() === 'all') {
+                $('#singleMemberSection').hide();
+            } else {
+                $('#singleMemberSection').show();
+            }
+        });
+    });
 </script>
 
 </body>

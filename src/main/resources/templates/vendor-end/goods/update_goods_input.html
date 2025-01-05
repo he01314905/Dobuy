@@ -115,7 +115,9 @@ form div {
 <div align="center">
 	<section class="update_goods">
 	<h3><b>商品修改</b></h3>
-	<form th:action="@{update}" method="post" th:object="${goodsVO}" enctype="multipart/form-data">
+	<form th:action="@{update}" method="post" th:object="${goodsVO}" enctype="multipart/form-data" onsubmit="validateForm(event);">
+	
+	
 		<div>
 			<label>商品編號:</label>
 			<input type="text" th:field="*{goodsNo}" style="border:0px; font-weight: bold;" readonly /><br/>
@@ -140,25 +142,25 @@ form div {
 		<div>
 			<label>商品名稱:</label>
 			<input type="text" th:field="*{goodsName}" onclick="hideContent('goodsName.errors');" /><br/>
-			<span th:if="${#fields.hasErrors('goodsName')}" th:errors="*{goodsName}" class="error" id="goodsName.errors"></span>
+			<span class="error" id="goodsName.errors"></span>
 		</div>
 		
 		<div>
 			<label>商品敘述:</label>
 			<textarea th:field="*{goodsDescription}" onclick="hideContent('goodsDescription.errors');"></textarea><br/>
-			<span th:if="${#fields.hasErrors('goodsDescription')}" th:errors="*{goodsDescription}" class="error" id="goodsDescription.errors"></span>
+			<span class="error" id="goodsDescription.errors"></span>
 		</div>
 		
 		<div>
 			<label>商品單價:</label>
 			<input type="number" th:field="*{goodsPrice}" onclick="hideContent('goodsPrice.errors');" /><br/>
-			<span th:if="${#fields.hasErrors('goodsPrice')}" th:errors="*{goodsPrice}" class="error" id="goodsPrice.errors"></span>
+			<span class="error" id="goodsPrice.errors"></span>
 		</div>
 		
 		<div>
 			<label>商品庫存:</label>
 			<input type="number" th:field="*{goodsAmount}" onclick="hideContent('goodsAmount.errors');" /><br/>
-			<span th:if="${#fields.hasErrors('goodsAmount')}" th:errors="*{goodsAmount}" class="error" id="goodsAmount.errors"></span>
+			<span class="error" id="goodsAmount.errors"></span>
 		</div>
 		
 		<div>
@@ -266,6 +268,43 @@ form div {
 <footer th:block th:replace="~{back-end/back-end-home/fraghead :: footer}"></footer>
 
 <script type="text/javascript">
+//表單驗證函數
+function validateForm(event) {
+    let valid = true;
+
+    // 欄位清單，包含名稱、錯誤訊息ID與錯誤提示
+    const fields = [
+        { name: 'goodsName', errorId: 'goodsName.errors', message: '商品名稱: 請勿空白' },
+        { name: 'goodsDescription', errorId: 'goodsDescription.errors', message: '商品描述: 請勿空白' },
+        { name: 'goodsPrice', errorId: 'goodsPrice.errors', message: '商品單價: 請勿空白' },
+        { name: 'goodsAmount', errorId: 'goodsAmount.errors', message: '商品庫存: 請勿空白' },
+    ];
+
+    // 遍歷欄位進行驗證
+    fields.forEach(field => {
+        const input = document.querySelector(`[name="${field.name}"]`);
+        const errorElement = document.getElementById(field.errorId);
+
+        if (!input.value.trim()) {
+            errorElement.innerText = field.message;
+            valid = false;
+        } else {
+            errorElement.innerText = '';
+        }
+    });
+
+    // 若驗證失敗，阻止表單送出
+    if (!valid) {
+        event.preventDefault(); // 阻止表單提交
+    }
+}
+
+
+
+// 隱藏錯誤訊息
+function hideContent(errorId) {
+    document.getElementById(errorId).innerText = '';  // 清除錯誤訊息
+}
 function previewImage(event, blobHolderId) {
     var files = event.target.files;
     var blobHolder = document.getElementById(blobHolderId);  // 使用傳入的 blobHolderId 參數

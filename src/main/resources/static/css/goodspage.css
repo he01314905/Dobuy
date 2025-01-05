@@ -408,7 +408,7 @@ header .dropdown {
   top:  10px;
   right:  20px;
   cursor: pointer;
-  z-index: 9999; /* 確保它顯示在圖片上方 */
+  z-index: 1; /* 確保它顯示在圖片上方 */
 }
 
 .heart-icon-container .fas.fa-heart {
@@ -437,7 +437,7 @@ header .dropdown {
     cursor: pointer; /* 鼠標懸停時變為手指 */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* 添加陰影效果 */
     font-size: 24px; /* 圖標大小 */
-    z-index: 1000; /* 保證圖標位於最上層 */
+    z-index: 1; /* 保證圖標位於最上層 */
     transition: background-color 0.3s ease;
 }
 
@@ -451,7 +451,7 @@ header .dropdown {
     left: 5px; /* 距離右邊 5px */
     color: #ff5722; /* 圖標顏色 */
     font-size: 24px; /* 圖標大小 */
-    z-index: 10; /* 確保圖標位於最上層 */
+    z-index: 1; /* 確保圖標位於最上層 */
     color: rgba(0, 0, 0, 0.3); /* 淡化顏色 */
 }
 

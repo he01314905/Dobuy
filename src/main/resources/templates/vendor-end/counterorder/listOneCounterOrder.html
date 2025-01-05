@@ -88,7 +88,8 @@
                      <option th:value="2" th:selected="${order.orderStatus == 2}" th:text="已完成"></option>
             <option th:value="3" th:selected="${order.orderStatus == 3}" th:text="退貨"></option>
             <option th:value="4" th:selected="${order.orderStatus == 4}" th:text="作廢"></option>
-            <option th:if="${order.orderStatus == 5}" th:text="未付款"></option>
+            <option h:value="5" th:selected="${order.orderStatus == 5}" th:text="未付款"></option>
+            <option th:value="6" th:selected="${order.orderStatus == 6}" th:text="已被催發貨"></option>
         </select>
          <input type="hidden" name="counterOrderNo" th:value="${order.counterOrderNo}" /> <!-- 會員編號，用於識別要更新的會員 -->
         <button type="submit" class="btn btn-primary">修改</button>

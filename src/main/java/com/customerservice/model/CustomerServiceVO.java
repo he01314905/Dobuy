@@ -1,15 +1,19 @@
 package com.customerservice.model;
 
 import java.sql.Timestamp;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -23,13 +27,16 @@ public class CustomerServiceVO {
 
     @Column(name = "counterNo")
     private Integer counterNo;
-
-    @NotNull
-    @Column(name = "counterOrderNo", nullable = false)
-    private Integer counterOrderNo;  // 修正拼寫
-
+    
     @Column(name = "memNo")
     private Integer memNo;
+
+    @NotNull(message = "訂單編號請勿空白")
+    @Digits(integer = 10, fraction = 0, message = "訂單編號:必須要是個數字")
+    @Column(name = "counterOrderNo")
+    private Integer counterOrderNo;  // 修正拼寫
+
+   
 
     @NotNull
     @NotEmpty(message = "客訴內容請勿空白。")

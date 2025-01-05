@@ -13,17 +13,38 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
 
     <style type="text/css">
-        .container {
-            padding: 1rem 12rem 2rem 12rem;
-        }
-        /* 表格外框圓角 */
-    table {
-        border-collapse: separate; /* 讓單元格邊框分離，才能實現圓角效果 */
-        border-spacing: 0;         /* 移除分隔間距 */
-        border-radius: 10px;       /* 設定表格整體圓角 */
-        overflow: hidden;          /* 確保內容不會溢出圓角範圍 */
+       /* 父容器設定，讓表格置中 */
+.container {
+    width: 100%;         /* 父容器寬度佔滿視窗 */
+    display: flex;       /* 使用 Flexbox */
+    justify-content: center; /* 內容水平置中 */
+}
+
+/* 表格設置：始終佔視窗的 90% */
+.container table.display {
+    width: 90vw;          /* 90% 的視窗寬度 */
+    border-collapse: separate; /* 適用圓角 */
+    border-spacing: 0;    /* 移除間距 */
+    border-radius: 10px;  /* 整體圓角 */
+    overflow: hidden;     /* 確保內容不溢出圓角 */
+}
+       
+
+/* 表格標題和內容 */
+table.display th, table.display td {
+    text-align: center;   /* 文字置中 */
+    padding: 8px;         /* 適當的內邊距 */
+    white-space: nowrap;  /* 禁止換行 */
+    word-break: break-word; /* 若內容過長，允許單詞內斷行 */
+}
         
-    }
+
+/* 表格圓角設置 */
+table.display {
+    border-radius: 10px; /* 整體圓角 */
+    overflow: hidden;    /* 確保內容不溢出圓角 */
+}
+        
         
 
         /* 通用按鈕樣式 */
@@ -143,13 +164,13 @@
 
 
 <div class="container">
-    <table id="example" class="display" style="width: 100%">
+    <table id="example" class="display">
     <thead>
         <tr style="background-color:#c99249">
             <th>櫃位編號</th>
             <th>時間</th>
             <th>內文</th>
-            <th>修改</th>
+            
             <th>刪除</th>
         </tr>
     </thead>
@@ -159,12 +180,7 @@
                 <td th:text="${msgVO.counterNo}"></td>
                 <td th:text="${msgVO.informDate}"></td>
                 <td th:text="${msgVO.informMsg}"></td>
-                <td>
-                    <form method="post" th:action="@{/msg/getOne_For_Update}" style="margin-bottom: 0px;">
-                        <input type="submit" class="btn btn-brown" value="修改">
-                        <input type="hidden" name="counterInformNo" th:value="${msgVO.counterInformNo}">
-                    </form>
-                </td>
+                
                 <td>
                     <form method="post" th:action="@{/msg/delete}" style="margin-bottom: 0px;">
                         <input type="submit" class="btn btn-brown" value="刪除">

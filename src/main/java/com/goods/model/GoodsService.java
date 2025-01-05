@@ -101,7 +101,10 @@ public class GoodsService {
             repository.save(goodsVO);
         }
     }
-
+    //  據櫃位編號取得全部商品
+    public List<GoodsVO> getOneCounter1(Integer counterNo) {
+        return repository.getOneCounter1(counterNo); // 如果不存在，返回 null
+    }
     //==================以下昱夆新增=====================//
     //  據櫃位編號取得全部商品
     public List<GoodsVO> getOneCounter35(Integer counterNo) {

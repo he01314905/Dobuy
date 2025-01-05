@@ -10,7 +10,14 @@
     
 <body>
 
-<img th:src="@{/counterPage/img/core-img/logo-noback.png}" alt="Logo" class="logo">
+<!-- Logo -->
+	<a th:href="@{/home}" title="點擊跳轉">
+    	<img th:src="@{/counterPage/img/core-img/logo-noback.png}" alt="Logo" class="logo">
+	</a>
+
+<div class="btn-container">
+    <a href="javascript:void(0);" onclick="history.back();" class="btn">返回上一頁</a>
+</div>
 <div class="container">
     <ul class="list">
     

@@ -103,6 +103,53 @@
             margin-left: 120px;
             margin-top: 0.25rem;
         }
+        
+        .form-control {
+    display: block;
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid rgba(173, 129, 85, 0.3);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.is-invalid {
+    border-color: #dc3545 !important;
+    padding-right: calc(1.5em + 0.75rem);
+    background-repeat: no-repeat;
+    background-position: right calc(0.375em + 0.1875rem) center;
+    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+}
+
+.invalid-feedback {
+    display: block;
+    width: 100%;
+    margin-top: 0.25rem;
+    margin-left: 120px;
+    font-size: 0.875em;
+    color: #dc3545;
+}
+
+/* 調整 form-group 的樣式以適應新的錯誤顯示方式 */
+.form-group {
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+.is-invalid {
+    border-color: #dc3545;
+    padding-right: calc(1.5em + 0.75rem);
+    background-repeat: no-repeat;
+    background-position: right calc(0.375em + 0.1875rem) center;
+    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+}
+.invalid-feedback {
+    color: #dc3545;
+    font-size: 0.875em;
+}
     </style>
 </head>
 
@@ -121,48 +168,87 @@
             <p th:text="${error}"></p>
         </div>
 
-        <form th:action="@{/discount/insert}" method="post" th:object="${discountVO}">
-            <div class="form-group">
-                <label for="disTitle">優惠名稱:</label>
-                <input type="text" id="disTitle" th:field="*{disTitle}" required/>
-                <span th:if="${#fields.hasErrors('disTitle')}" th:errors="*{disTitle}" class="error"></span>
-            </div>
+<form th:action="@{/discount/insert}" method="post" th:object="${discountVO}">
+    <!-- 優惠名稱 -->
+<div class="form-group">
+    <label for="disTitle">優惠名稱:</label>
+    <input type="text" id="disTitle" 
+           th:field="*{disTitle}" 
+           class="form-control"
+           th:classappend="${#fields.hasErrors('disTitle')} ? 'is-invalid'" 
+           required/>
+    <div class="invalid-feedback" th:if="${#fields.hasErrors('disTitle')}" 
+         th:errors="*{disTitle}"></div>
+</div>
 
-            <div class="form-group">
-                <label for="disContext">優惠內容:</label>
-                <input type="text" id="disContext" th:field="*{disContext}" required/>
-                <span th:if="${#fields.hasErrors('disContext')}" th:errors="*{disContext}" class="error"></span>
-            </div>
+    <!-- 優惠內容 -->
+    <div class="form-group">
+        <label for="disContext">優惠內容:</label>
+        <input type="text" id="disContext" 
+               th:field="*{disContext}" 
+               th:class="${#fields.hasErrors('disContext')} ? 'form-control is-invalid' : 'form-control'"
+               required/>
+        <div class="invalid-feedback" th:if="${#fields.hasErrors('disContext')}" th:errors="*{disContext}"></div>
+    </div>
 
-            <div class="form-group">
-                <label for="disRate">折扣率:</label>
-                <input type="number" id="disRate" th:field="*{disRate}" step="0.01" min="0.01" max="1.00" required/>
-                <span th:if="${#fields.hasErrors('disRate')}" th:errors="*{disRate}" class="error"></span>
-            </div>
+    <!-- 折扣率 -->
+    <div class="form-group">
+        <label for="disRate">折扣率:</label>
+        <input type="number" id="disRate" 
+               th:field="*{disRate}" 
+               step="0.01" min="0.01" max="1.00"
+               th:class="${#fields.hasErrors('disRate')} ? 'form-control is-invalid' : 'form-control'"
+               required/>
+        <div class="invalid-feedback" th:if="${#fields.hasErrors('disRate')}" th:errors="*{disRate}"></div>
+    </div>
 
-            <div class="form-group">
-                <label for="descLimit">使用敘述:</label>
-                <input type="text" id="descLimit" th:field="*{descLimit}" required/>
-                <span th:if="${#fields.hasErrors('descLimit')}" th:errors="*{descLimit}" class="error"></span>
-            </div>
+    <!-- 使用敘述 -->
+    <div class="form-group">
+        <label for="descLimit">使用敘述:</label>
+        <input type="text" id="descLimit" 
+               th:field="*{descLimit}" 
+               th:class="${#fields.hasErrors('descLimit')} ? 'form-control is-invalid' : 'form-control'"
+               required/>
+        <div class="invalid-feedback" th:if="${#fields.hasErrors('descLimit')}" th:errors="*{descLimit}"></div>
+    </div>
 
-            <div class="form-group">
-                <label for="disStart">優惠起始日:</label>
-                <input type="date" id="disStart" th:field="*{disStart}" required/>
-                <span th:if="${#fields.hasErrors('disStart')}" th:errors="*{disStart}" class="error"></span>
-            </div>
+    <!-- 優惠起始日 -->
+    <div class="form-group">
+        <label for="disStart">優惠起始日:</label>
+        <input type="date" id="disStart" 
+               th:field="*{disStart}" 
+               th:class="${#fields.hasErrors('disStart')} ? 'form-control is-invalid' : 'form-control'"
+               required/>
+        <div class="invalid-feedback" th:if="${#fields.hasErrors('disStart')}" th:errors="*{disStart}"></div>
+    </div>
 
-            <div class="form-group">
-                <label for="disEnd">優惠到期日:</label>
-                <input type="date" id="disEnd" th:field="*{disEnd}" required/>
-                <span th:if="${#fields.hasErrors('disEnd')}" th:errors="*{disEnd}" class="error"></span>
-            </div>
+    <!-- 優惠到期日 -->
+    <div class="form-group">
+        <label for="disEnd">優惠到期日:</label>
+        <input type="date" id="disEnd" 
+               th:field="*{disEnd}" 
+               th:class="${#fields.hasErrors('disEnd')} ? 'form-control is-invalid' : 'form-control'"
+               required/>
+        <div class="invalid-feedback" th:if="${#fields.hasErrors('disEnd')}" th:errors="*{disEnd}"></div>
+    </div>
 
-            <div class="btn-container">
-                <button type="submit" class="btn-submit">送出新增</button>
-                <a th:href="@{/discount/listAllDiscount}" class="btn-submit btn-cancel">返回列表</a>
-            </div>
-        </form>
+<!-- <div class="form-group"> -->
+<!--     <label for="disStatus">優惠狀態:</label> -->
+<!--     <select id="disStatus" th:field="*{disStatus}" class="form-control" -->
+<!--             th:classappend="${#fields.hasErrors('disStatus')} ? 'is-invalid' : ''"> -->
+<!--         <option value="" disabled>請選擇優惠狀態</option> -->
+<!--         <option value="0">未生效</option> -->
+<!--         <option value="1">生效中</option> -->
+<!--         <option value="2">已結束</option> -->
+<!--     </select> -->
+<!--     <div class="invalid-feedback" th:if="${#fields.hasErrors('disStatus')}" th:errors="*{disStatus}"></div> -->
+<!-- </div> -->
+
+    <div class="btn-container">
+        <button type="submit" class="btn-submit">送出新增</button>
+        <a th:href="@{/discount/listAllDiscount}" class="btn-submit btn-cancel">返回列表</a>
+    </div>
+</form>
     </div>
 
     <!-- fragment引入 -->

@@ -109,7 +109,7 @@ public class IndexController2_inSpringBoot {
 	protected List<GoodsVO> CounterreferenceListData(HttpSession session, Model model) {
 	    CounterVO counter = (CounterVO) session.getAttribute("counter");
 	    if (counter != null) {
-	        List<GoodsVO> list = goodsSvc.getOneCounter35(counter.getCounterNo());
+	        List<GoodsVO> list = goodsSvc.getOneCounter1(counter.getCounterNo());
 	        return list;
 	    } else {
 	        // 如果counter為null，返回一個空列表或處理錯誤

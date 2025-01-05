@@ -5,26 +5,27 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <title>抽成月結</title>
+
 <th:block th:replace="~{back-end/back-end-home/fraghead :: head}"></th:block>
-
-
-
 
 <style type="text/css">
     
     button {
         padding: 5px;
+        
     }
     form {
         display: table;
+        
     }
     form div {
         display: table-row;
+        
     }
     label, input, span, select {
         display: table-cell;
         margin: 5px;
-        text-align: left;       
+        text-align: center;       
     }
     input[type=text], input[type=password], select, textarea {
         width: 200px;
@@ -36,11 +37,13 @@
     .center {
         margin-left: auto;
         margin-right: auto;
+        text-align: center;
     }
     
 	.mode {
-	  background-color: #ffffff; /* 設置背景顏色 */
-	  border-radius: 15px; /* 設置圓角 */
+	  font-family: 'Microsoft JhengHei', 'PingFang TC', Arial, sans-serif; /* 首選微軟正黑體，後備PingFang TC和Arial */
+	  background-color: #FAF3E0; /* 設置背景顏色 */
+	  border-radius: 15px; /* 設置圓角 */	
 	  padding: 20px; /* 內邊距讓內容不會貼邊 */
 	  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1); /* 添加輕微陰影讓區塊更立體 */
 	  max-width: 800px; /* 設置最大寬度 */
@@ -90,18 +93,19 @@
 	form {
 	  display: flex;
 	  flex-direction: column;
-	  align-items: flex-start;
+	  align-items: center;
 	  margin-top: 10px;
 	}
 	
 	form div {
-	  width: 100%;
+	  width: 50%;
+	  
 	}
 	
 	form div label {
 	  display: block;
 	  margin-bottom: 5px;
-	  text-align: left; /* 讓所有的 label 文字靠左 */
+	  text-align: center; /* 讓所有的 label 文字置中 */
 	}
 	
 	form div input, form div select, form div textarea {
@@ -111,12 +115,12 @@
 	/* 讓form內的元素保持一致的間距 */
 	form div {
 	  margin-bottom: 20px;
+	  
 	}
 </style>
 </head>
 <body>
-<br>
-<br>
+
 	<header th:block th:replace="~{back-end/back-end-home/fraghead :: header}"></header>
 
          
@@ -142,14 +146,21 @@
                 </select>
                 <span th:if="${#fields.hasErrors('month')}" th:errors="*{month}" class="error" id="month.errors"></span>
             </div>
-            
-			<div id="totalAmountDisplay">總金額: <span id="totalAmount">0</span></div>
+           			
+			<div>
+    			<!-- 平台抽成欄位 -->
+    			<label>平台抽成:</label>
+    			<input type="text" value="20%" id="platformCut" readonly/><br/>
+			</div>
 
 			<div>
 			    <label>抽成後:</label>
 			    <input type="text" th:field="*{comm}" id="commInput" onclick="hideContent('comm.errors');" readonly/><br/>
 			    <span th:if="${#fields.hasErrors('comm')}" th:errors="*{comm}" class="error" id="comm.errors"></span>
 			</div>
+			
+						<div id="totalAmountDisplay">總金額: <span id="totalAmount">0</span></div>
+			
       
                 <div><button type="submit" id="submit">送出新增</button></div>
      

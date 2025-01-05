@@ -87,12 +87,56 @@ dataTablesJQ(document).ready(function() {
 
 
 <style type="text/css">
-/* body { */
-/*     margin: 1rem 12rem 2rem 12rem; */
-/* } */
-.display {
-	padding: 1rem 12rem 2rem 12rem;
+.container {
+            padding: 1rem 12rem 2rem 12rem;
+        }
+        /* 表格外框圓角 */
+    table {
+        border-collapse: separate; /* 讓單元格邊框分離，才能實現圓角效果 */
+        border-spacing: 0;         /* 移除分隔間距 */
+        border-radius: 10px;       /* 設定表格整體圓角 */
+        overflow: hidden;          /* 確保內容不會溢出圓角範圍 */
+        
+        
+    }
+    
+    table.display {
+    max-width: 90%; /* 最大寬度設置為視窗的 90% */
+    margin: 0 auto; /* 水平置中 */
+    width: auto; /* 根據內容自動調整寬度 */
 }
+
+
+
+@media (max-width: 768px) {
+    table.display {
+        max-width: 100%; /* 小螢幕下填滿整個寬度 */
+        font-size: 12px; /* 縮小字體 */
+    }
+
+    table.display thead th, table.display tbody td {
+        padding: 4px; /* 減少內邊距 */
+    }
+}
+    
+    
+    /* 通用按鈕樣式 */
+        .btn {
+            padding: 6px 12px;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+.btn-primary {
+            background-color: #8b4513; /* 咖啡色 */
+            color: white;
+        }
+
+
+
 </style>
 </head>
 <body>
@@ -101,7 +145,7 @@ dataTablesJQ(document).ready(function() {
 
 <table id="example" class="display" style="width: 100%">
   <thead>
-    <tr style="background-color:rgb(224, 166, 86)">
+    <tr style="background-color:#c99249">
         <th>客訴編號</th>
         <th>客訴時間</th>
         <th>訂單編號</th>
@@ -157,5 +201,6 @@ dataTablesJQ(document).ready(function() {
     </div>
   </div>
 </div>
+
 <footer th:block th:replace="~{back-end/back-end-home/fraghead :: footer}"></footer>
 
