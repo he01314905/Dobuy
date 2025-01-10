@@ -36,9 +36,8 @@ public class MsgVO implements java.io.Serializable {
     @Column(name = "informMsg")
     private String informMsg;
 
-//    @NotNull(message = "發佈日期請勿空白。")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "informDate") // 移除 insertable 和 updatable 限制
+    
+    @Column(name = "informDate") 
     private Timestamp informDate;
     
     

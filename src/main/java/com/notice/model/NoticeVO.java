@@ -31,8 +31,8 @@ public class NoticeVO implements java.io.Serializable {
     private String noticeContent;
 
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "noticeDate") // 移除 insertable 和 updatable 限制
+    
+    @Column(name = "noticeDate") 
     private Timestamp NoticeDate;
     
     

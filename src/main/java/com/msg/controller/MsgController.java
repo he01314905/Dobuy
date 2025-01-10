@@ -73,45 +73,7 @@ public class MsgController {
     }
     
     
-//    @PostMapping("insert")
-//    public String insert(HttpSession session, @Valid MsgVO msgVO, BindingResult result, ModelMap model,
-//                         @RequestParam("informMsg") String informMsg) {
-//    	
-//        /*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
-//        // 從 session 中獲取 CounterVO
-//        CounterVO counter = (CounterVO) session.getAttribute("counter");
-//        
-//        if (counter == null) {
-//            // 處理沒有 CounterVO 的情況
-//            return "redirect:/counter/login"; // 假設有一個登錄頁面
-//        }
-//        msgVO.setCounterNo(counter.getCounterNo()); // 設置 counterNo 到 msgVO 中
-//        msgVO.setInformMsg(informMsg); // 設置訊息內文
-//
-//        if (result.hasErrors()) {
-//            model.addAttribute("counter", counterSvc.getOneCounter(counter.getCounterNo()));
-//            model.addAttribute("msgSvc", msgSvc);
-//            model.addAttribute("memberList", memberRepository.findAll());
-//            return "vendor-end/msg/addMsg";
-//        }
-//
-//        /*************************** 2.開始新增資料 *****************************************/
-//        msgSvc.addMsg(msgVO);
-//
-//        // 同步新增通知信息到 Notice 表
-//        NoticeVO noticeVO = new NoticeVO();
-//        noticeVO.setNoticeContent(informMsg);
-//        noticeVO.setNoticeDate(new Timestamp(System.currentTimeMillis()));
-//        noticeVO.setMemNo(msgVO.getMemNo()); // 設置 memNo
-//
-//        noticeSvc.save(noticeVO); // 使用注入的 NoticeService 保存通知信息
-//
-//        /*************************** 3.新增完成,準備轉交(Send the Success view) **************/
-//        model.addAttribute("success", "- (新增成功)");
-//        return "redirect:/msg/listAllMsg"; // 新增成功後重導至顯示所有訊息的頁面
-//    }
-    
-    
+   
     @PostMapping("/insert")
     public String insert(HttpSession session, 
                          @Valid @ModelAttribute("msgVO") MsgVO msgVO, 
@@ -165,9 +127,7 @@ public class MsgController {
     }
     
 
-
-
-    
+   
     @PostMapping("getOne_For_Update")
     public String getOne_For_Update(HttpSession session,@RequestParam("counterInformNo") String counterInformNo, ModelMap model) {
     	CounterVO counter = (CounterVO) session.getAttribute("counter");
@@ -289,22 +249,7 @@ public class MsgController {
         model.addAttribute("success", "- (刪除成功)");
         return "redirect:/msg/listAllMsg"; // 刪除完成後轉交listAllMsg.html
     }
-   
-    
-//	櫃位通知管理(任國)
-//    @GetMapping("listAllMsg")
-//    public String listAllmsg(HttpSession session, Model model) {
-//    	//櫃位優惠券登錄確認
-//        CounterVO counter = (CounterVO) session.getAttribute("counter");
-//        if (counter == null) {
-//            return "redirect:/counter/login";
-//        } else {
-//            // 其他邏輯
-//            model.addAttribute("counter", counterSvc.getOneCounter(counter.getCounterNo()));
-//            model.addAttribute("counterMsgListData", msgSvc.getOneCounterMsg(counter.getCounterNo()));
-//            return "vendor-end/msg/listAllMsg";
-//        }
-//    }
+ 
     
     @GetMapping("listAllMsg")
     public String listAllmsg(HttpSession session, Model model) {
@@ -324,12 +269,7 @@ public class MsgController {
             return "vendor-end/msg/listAllMsg";
         }
     }
-   
-
-    
-    
-    
-    
+      
     @ModelAttribute("counterMsgListData")
     protected List<MsgVO> CounterReferenceListData(HttpSession session, Model model) {
         CounterVO counter = (CounterVO) session.getAttribute("counter");
