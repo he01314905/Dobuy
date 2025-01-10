@@ -159,12 +159,10 @@
 					<!-- 結帳按鈕 -->
 					<div style="margin-top: 10px;">
 						<form action="/cart/test/toConfirm" method="POST">
-							<input type="hidden" name="counterCname" class="counterCname"
-								th:value="${entry.key}"> <input type="hidden"
-								name="totalAmountBefore" class="counterPrice" value="">
-							<input type="hidden" name="totalAmountAfter" class="afterPrice"
-								value=""> <input type="hidden" name="couponNo"
-								class="coupon" value="">
+							<input type="hidden" name="counterCname" class="counterCname"th:value="${entry.key}"> 
+							<input type="hidden" name="totalAmountBefore" class="counterPrice" value="">
+							<input type="hidden" name="totalAmountAfter" class="afterPrice" value=""> 
+							<input type="hidden" name="couponNo" class="coupon" value="">
 							<button type="submit" onclick="checkout(this, event)"
 								style="background-color: #007bff; color: white; padding: 5px 15px; border: none; cursor: pointer;">結帳</button>
 						</form>

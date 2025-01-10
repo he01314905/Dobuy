@@ -150,31 +150,9 @@ a:hover, a:focus {
 
 /* 100 */
 
-
-
-
 /* % */
 /* { */
 /* -webkit-transform */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ul, ol {
 	margin: 0;
 }
@@ -915,7 +893,6 @@ img {
 	animation: cross-2-out 0.25s linear 0.2s forwards;
 }
 
-
 /* Footer Area CSS */
 .footer-area {
 	padding: 60px 0;
@@ -1257,7 +1234,7 @@ img {
 	object-fit: contain;
 	/* 允許圖片變形以填滿容器 */
 	background-color: #cb936e; /* 添加淡灰色背景 */
-    transition: background-color 0.3s ease;
+	transition: background-color 0.3s ease;
 }
 
 /* ===============輪播圖樣式============= */
@@ -1475,17 +1452,173 @@ img {
 /* ===============我的收藏愛心============= */
 /* 爱心容器，定位到右下角 */
 .heart-icon-container {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  cursor: pointer;
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
+	cursor: pointer;
 }
 
 .heart-icon-container .fas.fa-heart {
-  color: #ccc;
+	color: #ccc;
 }
 
 .heart-active {
-  color: #ff0000 !important; /* 切换为红色 */
+	color: #ff0000 !important; /* 切换为红色 */
 }
 /* ===============我的收藏愛心============= */
+
+/* ===============聊天按鈕============= */
+#chat-button {
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	width: 60px;
+	height: 60px;
+	background-color: #007bff;
+	border-radius: 50%;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: white;
+	font-size: 24px;
+	cursor: pointer;
+	z-index: 10; /* 确保浮在页面上方 */
+	transition: transform 0.2s, background-color 0.2s;
+}
+
+/* 悬停效果 */
+#chat-button:hover {
+	background-color: #0056b3;
+	transform: scale(1.1);
+}
+
+/* ===============聊天按鈕============= */
+
+/* ===============聊天視窗============= */
+#chat-box {
+	display: flex;
+	flex-direction: column; /* 垂直排列消息 */
+	position: fixed; /* 固定在屏幕的某个位置 */
+	bottom: 12px; /* 距离底部 20px */
+	right: 12px; /* 距离右侧 20px */
+	width: 300px; /* 宽度 */
+	height: 400px; /* 高度 */
+	border: 1px solid #ccc; /* 边框 */
+	background-color: #f1f1f1; /* 背景颜色 */
+	border-radius: 5px; /* 圆角 */
+	justify-content: center; /* 水平居中 */
+	align-items: center; /* 垂直居中 */
+	cursor: pointer; /* 鼠标悬停时显示手型 */
+	z-index: 20; /* 优先级更高，确保在图标上方 */
+	overflow: hidden; /* 防止内容溢出 */
+	transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+#receiver-name {
+    font-size: 20px; /* 单独设置接收者名称大小 */
+}
+
+#chat-window-container {
+	width: 100%; /* 确保父容器占据足够宽度 */
+    position: relative; /* 确保子元素可以相对于这个容器定位 */
+    height: 100%; /* 或者根据需要设置固定高度 */
+    display: flex;
+    flex-direction: column;
+}
+
+#chat-window {
+	display: flex;
+	flex-direction: column; /* 消息垂直排列 */
+    height: 280px;
+    overflow-y: scroll; /* 让聊天内容区域可滚动 */
+    padding: 10px; /* 内容内边距 */
+    box-sizing: border-box; /* 确保 padding 不影响高度计算 */
+    border: 1px solid #ccc; /* 添加边框 */
+    border-radius: 5px; /* 圆角边框（可选） */
+    background-color: #fff; /* 设置背景颜色（可选） */
+}
+
+#send-button {
+	width:100%;
+    height: 40px; /* 固定发送按钮区域的高度 */
+    display: flex; /* 确保输入框和按钮并排对齐 */
+    align-items: center; /* 垂直居中 */
+    gap: 5px; /* 输入框和按钮之间的间距 */
+    padding: 10px;
+    border-top: 1px solid #ddd; /* 添加顶部边框以分隔聊天内容和输入框 */
+    background: #f9f9f9; /* 背景色 */
+    box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1); /* 可选：增加顶部阴影效果 */
+}
+
+
+.mes {
+    display: inline-block; /* 背景宽度根据内容自适应 */
+    max-width: 80%; /* 限制消息框最大寬度，避免長句影響布局 */
+    margin: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    word-wrap: break-word; /* 確保長詞能自動換行 */
+    word-break: break-word; /* 確保內容不超出背景 */
+}
+
+.mes.right {
+    background-color: #d1f1d1;
+    align-self: flex-end; /* 將右側消息對齊到右邊 */
+    text-align: left; /* 文字內容左對齊 */
+}
+
+.mes.left {
+    background-color: #f1f1f1;
+    align-self: flex-start; /* 將左側消息對齊到左邊 */
+    text-align: left;
+}
+
+#chat-box.hidden {
+    transform: scale(0); /* 缩小到不可见 */
+    opacity: 0; /* 透明度设为0 */
+    pointer-events: none; /* 禁止交互 */
+}
+
+#chat-header {
+    background-color: #f1f1f1;
+    border-bottom: 1px solid #ccc;
+    padding: 5px;
+    font-size: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.fa-paper-plane {
+	align-self: flex-end; 
+    cursor: pointer;
+    font-size: 20px; /* 调整图标大小 */
+    padding-bottom:1.6%;
+}
+
+#message-input {
+	flex: 1; /* 让输入框占满剩余空间 */
+    margin-right: 10px; /* 给图标留点空间 */
+	
+}
+
+.fa-window-minimize{
+	font-size: 20px; /* 调整图标大小 */
+	padding-bottom:1.6%;
+}
+
+#minimize-button {
+	display: flex; /* 使用 Flexbox */
+    align-items: center; /* 垂直置中 */
+    background-color: #f9f9f9; /* 背景色 */
+    border-radius: 5px; /* 圓角 */
+    cursor: pointer; /* 滑鼠變成手型 */
+}
+
+.input-container {
+    display: flex; /* 为输入框和图标创建弹性布局 */
+    align-items: center; /* 垂直居中 */
+    width: 100%; /* 占满父容器宽度 */
+}
+/* ===============聊天視窗============= */

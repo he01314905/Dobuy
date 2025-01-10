@@ -87,7 +87,6 @@ public class counterHome {
 		model.addAttribute("counterVO", counterVO);
 		model.addAttribute("goodsSet", goodsSet);
 		
-		
 		return "/vendor-end/counterHome/counterHomePage"; // 返回 Thymeleaf 模板名
 	}
 

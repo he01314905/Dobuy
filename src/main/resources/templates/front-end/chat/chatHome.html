@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>用户列表</title>
+<!--     <link rel="stylesheet" href="styles.css"> -->
+<link rel="stylesheet" th:href="@{/chat/css/chat.css}">
+
+</head>
+<body>
+	<h1>在線用戶</h1>
+	<div id="container" style="display: flex; gap: 20px;">
+		<!-- 左侧用户列表 -->
+		<div id="user-list-container">
+			<span class="user-name"
+				th:text="'Welcome&nbsp;&nbsp;&nbsp;'+ ${session.memAccount}"></span>
+			<div id="user-list" th:each="member : ${memberList}">
+				<input type="hidden" class="sender" th:value="${session.memAccount}">
+				<input type="hidden" class="receiver"
+					th:value="${member.memAccount}"> <span
+					th:text="${member.memAccount}"></span>
+				<button onclick="startChat(this)">聊天</button>
+			</div>
+		</div>
+
+		<!-- 右侧聊天框 -->
+		<div id="chat-box"
+			style="display: none; flex: 1; border: 1px solid #ccc; padding: 10px;">
+			<!-- 初始为空，点击聊天后动态加载 -->
+		</div>
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/sockjs-client"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
+	<script th:inline="javascript">
+	    window.sender = /*[[${sender}]]*/ [];
+	    window.receiver = /*[[${receiver}]]*/ [];
+	</script>
+
+	<script>
+	    function startChat(button) {
+	        // 找到按钮的父元素
+	        const parent = button.parentElement;
+	
+	        // 从父元素中获取 sender 和 receiver 的值
+	        const sender = parent.querySelector(".sender").value;
+	        const receiver = parent.querySelector(".receiver").value;
+
+	        // 准备发送的数据
+	        const requestBody = {
+	            sender: sender,
+	            receiver: receiver
+	        };
+	
+	        // 使用 fetch 发送 POST 请求
+	        fetch("/C/startChat", {
+	            method: "POST",
+	            headers: {
+	                "Content-Type": "application/json"
+	            },
+	            body: JSON.stringify(requestBody)
+	        })
+	            .then(response => {
+	                if (!response.ok) {
+	                    throw new Error("Network response was not ok");
+	                }
+	                return response.text(); // 解析为 HTML 片段
+	            })
+	            .then(html => {
+	                const chatBox = document.getElementById("chat-box");
+	
+	                // 将聊天框内容加载到 #chat-box
+	                chatBox.innerHTML = html;
+					
+	                const chatWindow = document.getElementById("chat-window");
+	                if (!chatWindow) {
+	                    console.log("chat-window 未加载成功");
+	                    return;
+	                }
+	                // 显示聊天框
+	                chatBox.style.display = "block";
+					
+	             	// 更新全局变量
+	                window.sender = sender;
+	                window.receiver = receiver;
+
+	                // 动态绑定事件监听器
+	                bindSendButton(sender, receiver);
+	            })
+	            .catch(error => console.error("加载错误:", error));
+	    }
+	
+	    function bindSendButton(sender, receiver) {
+	        const sendButton = document.getElementById('send-button');
+	        const messageInput = document.getElementById('message-input');
+	
+	        if (!sendButton || !messageInput) {
+	            console.error("聊天框中的元素未加载，无法绑定事件监听器。");
+	            return;
+	        }
+	
+	        sendButton.addEventListener('click', () => {
+	            const content = messageInput.value;
+	            if (!content.trim()) return; // 如果消息为空，不发送
+	
+	            const message = {
+	                sender: sender,
+	                receiver: receiver,
+	                content: content,
+	                timestamp: new Date().toISOString()
+	            };
+	
+	            stompClient.send('/app/chat', {}, JSON.stringify(message));
+	            messageInput.value = ''; // 清空输入框
+	        });
+	    }
+	
+	    const socket = new SockJS('/ws');
+	    const stompClient = Stomp.over(socket);
+	
+	    // 连接 WebSocket
+	    stompClient.connect({}, () => {
+	        console.log('WebSocket connected');
+	
+	        // 订阅消息
+	        stompClient.subscribe('/topic/messages', (message) => {
+	            const msg = JSON.parse(message.body);
+	            const chatWindow = document.getElementById('chat-window');
+	            
+	            if (!chatWindow) {
+	                console.log("聊天窗口未找到，消息未显示。");
+	                return;
+	            }
+	
+	            if (msg.sender === window.receiver || msg.receiver === window.receiver) {
+	                const msgDiv = document.createElement('div');
+	                msgDiv.className = msg.sender === window.sender ? 'mes right' : 'mes left';
+	                msgDiv.textContent = `${msg.content}`;
+	                chatWindow.appendChild(msgDiv);
+	
+	                // 自动滚动到最新消息
+	                chatWindow.scrollTop = chatWindow.scrollHeight;
+	            }
+	        });
+	    });
+	</script>
+
+
+
+</body>
+</html>

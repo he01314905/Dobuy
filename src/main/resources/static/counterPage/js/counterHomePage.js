@@ -55,42 +55,42 @@ document.addEventListener("DOMContentLoaded", () => {
 	const pageInfo = document.getElementById("pageInfo");
 	const nextPageButton = document.getElementById("nextPage");
 	const prevPageButton = document.getElementById("prevPage");
-	
+
 	// 渲染当前商品列表
 	function renderProducts() {
-	    const parentContainer = document.getElementById("productContainer");
-	    parentContainer.innerHTML = ""; // 清空商品容器
-	
-	    const start = currentPage * itemsPerPage;
-	    const end = start + itemsPerPage;
+		const parentContainer = document.getElementById("productContainer");
+		parentContainer.innerHTML = ""; // 清空商品容器
 
-	    const currentPageItems = filteredProducts.slice(start, end);
-	    currentPageItems.forEach(product => {
-	        parentContainer.appendChild(product); // 按新順序插入商品
-	    });
-		
+		const start = currentPage * itemsPerPage;
+		const end = start + itemsPerPage;
+
+		const currentPageItems = filteredProducts.slice(start, end);
+		currentPageItems.forEach(product => {
+			parentContainer.appendChild(product); // 按新順序插入商品
+		});
+
 		// 計算總頁數
-	    const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+		const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
 
-	    // 更新頁面信息
-	    pageInfo.textContent = `${currentPage + 1} / ${totalPages}`;
+		// 更新頁面信息
+		pageInfo.textContent = `${currentPage + 1} / ${totalPages}`;
 
 
-	    // 確保分頁按鈕的狀態
-	    prevPageButton.disabled = currentPage === 0;
-	    nextPageButton.disabled = currentPage === totalPages - 1 || totalPages === 0;
+		// 確保分頁按鈕的狀態
+		prevPageButton.disabled = currentPage === 0;
+		nextPageButton.disabled = currentPage === totalPages - 1 || totalPages === 0;
 
-	    // 動態插入總頁數到 <span id="pageInfo">
-	    if (totalPages > 0) {
-	        pageInfo.textContent = `${currentPage + 1} / ${totalPages}`;
-	    } else {
-	        pageInfo.textContent = "0 / 0"; // 如果沒有商品
-	    }
-		
+		// 動態插入總頁數到 <span id="pageInfo">
+		if (totalPages > 0) {
+			pageInfo.textContent = `${currentPage + 1} / ${totalPages}`;
+		} else {
+			pageInfo.textContent = "0 / 0"; // 如果沒有商品
+		}
+
 		// 更新愛心圖標狀態
 		updateHeartIcons();
 	}
-	
+
 	// 搜索功能
 	function searchProducts() {
 		const searchValue = searchInput.value.trim().toLowerCase();
@@ -331,22 +331,190 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 /* ===============商品收藏愛心============= */
 
-
-
-
 function updateHeartIcons() {
-    // 遍歷所有的愛心圖標
-    document.querySelectorAll('.heart-icon-container .fas.fa-heart').forEach(icon => {
-        const goodsNo = icon.getAttribute('data-goodsNo'); // 获取商品编号
-        if (window.favoriteGoodsSet.includes(goodsNo)) {
-            // 如果该商品编号在 favoriteGoodsSet 中，将爱心标记为选中
-            icon.classList.add('heart-active');
-        } else {
-            icon.classList.remove('heart-active');
-        }
-    });
+	// 遍歷所有的愛心圖標
+	document.querySelectorAll('.heart-icon-container .fas.fa-heart').forEach(icon => {
+		const goodsNo = icon.getAttribute('data-goodsNo'); // 获取商品编号
+		if (window.favoriteGoodsSet.includes(goodsNo)) {
+			// 如果该商品编号在 favoriteGoodsSet 中，将爱心标记为选中
+			icon.classList.add('heart-active');
+		} else {
+			icon.classList.remove('heart-active');
+		}
+	});
+}
+
+/* ===============商品收藏愛心============= */
+
+/* ===============聊天室============= */
+
+function startChat() {
+
+	// 从父元素中获取 sender 和 receiver 的值	
+	const sender = document.querySelector('.sender')?.value; // 获取 class 为 sender 的元素
+	
+	if(!sender){
+		alert("請先登入");
+		return;
+	}
+	const receiver = document.querySelector('.receiver').value; // 获取 class 为 sender 的元素
+	const chatBox = document.getElementById("chat-box");
+
+	
+	
+	if (chatBox.classList.contains("hidden")) {
+       chatBox.classList.remove("hidden");
+	   return;
+   } 
+	
+	// 准备发送的数据
+	const requestBody = {
+		sender: sender,
+		receiver: receiver
+	};
+
+	// 使用 fetch 发送 POST 请求
+	fetch("/C/startChat", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify(requestBody)
+	})
+		.then(response => {
+			if (!response.ok) {
+				throw new Error("Network response was not ok");
+			}
+			return response.text(); // 解析为 HTML 片段
+		})
+		.then(html => {
+			const chatContent = document.getElementById("chat-content");
+			
+
+			// 将聊天框内容加载到 #chat-box
+			chatContent.innerHTML = html;
+			
+			const chatWindow = document.getElementById('chat-window');
+			if (!chatWindow) {
+				console.log("chat-window 未加载成功");
+				return;
+			}
+			// 显示聊天框
+			chatBox.style.display = "block";
+
+			// 更新全局变量
+			window.sender = sender;
+			window.receiver = receiver;
+
+			// 动态绑定事件监听器
+			bindSendButton(sender, receiver);
+			
+			// 插入完成后调用绑定函数
+			bindMinimizeButton();
+			// 自动滚动到最新消息
+			chatWindow.scrollTop = chatWindow.scrollHeight;
+		})
+		.catch(error => console.error("加载错误:", error));
 }
 
 
+function handleKeyPress(event) {
+	if (event.key === 'Enter') {
+		const messageInput = document.getElementById('message-input');
 
+		if (!messageInput) {
+			console.error("聊天框中的元素未加载，无法绑定事件监听器。");
+			return;
+		}
 
+		const content = messageInput.value;
+		if (!content.trim()) return; // 如果消息为空，不发送
+
+		const message = {
+			sender: sender,
+			receiver: receiver,
+			content: content,
+			timestamp: new Date().toISOString()
+		};
+//		stompClient.send('/app/chat', {}, JSON.stringify(message));
+		// 發送消息到後端的 `/app/sendMessage` 路徑
+		stompClient.send("/app/sendMessage", {}, JSON.stringify(message));
+		messageInput.value = ''; // 清空输入框
+	}
+}
+function bindSendButton(sender, receiver) {
+	const sendButton = document.getElementById('send-button');
+	const messageInput = document.getElementById('message-input');
+
+	if (!sendButton || !messageInput) {
+		console.error("聊天框中的元素未加载，无法绑定事件监听器。");
+		return;
+	}
+
+	sendButton.addEventListener('click', () => {
+		const content = messageInput.value;
+		if (!content.trim()) return; // 如果消息为空，不发送
+
+		const message = {
+			sender: sender,
+			receiver: receiver,
+			content: content,
+			timestamp: new Date().toISOString()
+		};
+
+//		stompClient.send('/app/chat', {}, JSON.stringify(message));
+		// 發送消息到後端的 `/app/sendMessage` 路徑
+		stompClient.send("/app/sendMessage", {}, JSON.stringify(message));
+		messageInput.value = ''; // 清空输入框
+	});
+}
+
+// 创建一个新的 WebSocket 连接
+const username = document.querySelector('.sender').value;
+const socket = new SockJS(`/ws?username=${encodeURIComponent(username)}`); // 将用户名拼接到 URL 中
+const stompClient = Stomp.over(socket);
+// 连接 WebSocket
+stompClient.connect({}, () => {
+	console.log('WebSocket connected');
+
+	// 订阅消息
+	stompClient.subscribe('/user/queue/messages', (message) => {
+		const msg = JSON.parse(message.body);
+		const chatWindow = document.getElementById('chat-window');
+
+		if (!chatWindow) {
+			console.log("聊天窗口未找到，消息未显示。");
+			return;
+		}
+
+		if (msg.sender === window.receiver || msg.receiver === window.receiver) {
+			const msgDiv = document.createElement('div');
+			msgDiv.className = msg.sender === window.sender ? 'mes right' : 'mes left';
+			msgDiv.textContent = `${msg.content}`;
+			chatWindow.appendChild(msgDiv);
+
+			// 自动滚动到最新消息
+			chatWindow.scrollTop = chatWindow.scrollHeight;
+		}
+	});
+});
+
+/* ===============聊天室縮小按鈕============= */
+// 插入 Fragment 后绑定事件监听器
+function bindMinimizeButton() {
+    const chatBox = document.getElementById("chat-box");
+    const minimizeButton = document.getElementById("minimize-button");
+
+    if (!minimizeButton) {
+        console.error("未找到 minimize-button 按钮");
+        return;
+    }
+
+    minimizeButton.addEventListener("click", () => {
+        if (!chatBox.classList.contains("hidden")) {
+            chatBox.classList.add("hidden");
+        } 
+    });
+}
+
+/* ===============聊天室============= */

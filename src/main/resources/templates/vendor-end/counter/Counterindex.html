@@ -17,6 +17,7 @@
     <!-- Style CSS -->
     <link rel="stylesheet" href="/counter/style.css">
     
+    <link th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css}" rel="stylesheet">
 
 
 </head>
@@ -139,19 +140,48 @@
    <span th:if="${counter.counterStatus == 1}" style="font-size: 16px; color: #333;">(審核中)</span>
    <span th:if="${counter.counterStatus == 2}" style="font-size: 16px; color: #333;">(違規)</span>
    <span th:if="${counter.counterStatus == 3}" style="font-size: 16px; color: #333;">(運營)</span>
+   <input type="hidden" class="receiver" th:value="${counter.counterCName}"> 
   <button type="button" onclick="logout()" style="font-size: 14px; padding: 5px 10px; background-color: #f0ad4e; border: none; color: white; cursor: pointer; z-index: 1000; position: relative;">登出</button>
    <form id="logoutForm" th:action="@{/counter/logout}" method="post" style="display: none;"></form>
 </div>
+   
+	<div id="chat-button">
+        <i class="fas fa-comments"></i>
+    </div>
     
-
+    <!-- 主容器 -->
+	<div id="chat-container" >
+	    <!-- 左侧聊天框 -->
+		<div id="chat-list" >
+			<!-- 初始为空，点击聊天后动态加载 -->
+		</div>
+		
+		<!-- 右侧聊天内容区域 -->
+	    <div id="chat-content">
+	        <div id="chat-header-content">
+	            <div id="content-expand-button">
+	            	<i class="fa-solid fa-arrows-left-right"></i>
+	            </div>
+	            <div id="content-minimize-button">
+	            	<i class="fa-solid fa-down-left-and-up-right-to-center"></i>
+	            </div>
+	        </div>
+	        <div id="chat-box" style="text-align: center;">
+	            <p>歡迎使用聊天功能，現在就開始與買家對話吧！
+	            這是一段測試文字這是一段測試文字這是一段測試文字
+	            這是一段測試文字這是一段測試文字這是一段測試文字</p>
+	        </div>
+	    </div>
+	</div>
     <footer style="position: fixed; bottom: 0; width: 100%; text-align: center; background-color: #f8f9fa; padding: 10px;">
         Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">DOBUY</a>
     </footer>
 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 
-    </footer>
     <!-- ##### Footer Area End ##### -->
-
+	
+	<script src="https://cdn.jsdelivr.net/npm/sockjs-client"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
     <!-- jQuery (Necessary for All JavaScript Plugins) -->
     <script src="/counter/js/jquery/jquery-2.2.4.min.js"></script>
     <!-- Popper js -->
@@ -162,6 +192,7 @@
     <script src="/counter/js/plugins.js"></script>
     <!-- Active js -->
     <script src="/counter/js/active.js"></script>
+    <script src="/counter/js/chat.js"></script>
     
  <div id="counterStatusHolder" th:text="${counter.counterStatus}" style="display:none;"></div>
 
@@ -184,6 +215,8 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 });
+
+
 </script>
 </body>
 </html>

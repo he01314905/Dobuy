@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>聊天室</title>
+    <link rel="stylesheet" th:href="@{/chat/css/chat.css}">
+</head>
+<body>
+	<div th:fragment="chat-content">
+		<div id="chat-window-container" >
+		    <div id="chat-window">
+		    	<input type="hidden" class="coustomerName" th:value="${sender}"> 
+		        <!-- 使用 Thymeleaf 渲染历史记录 -->
+		        <div  th:with="currentAccount=${username}" th:each="msg : ${messages}" th:class="${msg.sender == currentAccount ? 'mes right' : 'mes left'}">
+		            <span th:text="${msg.content}"></span>
+		        </div>
+		    </div>
+			
+			<div id="send-button">
+				<div class="input-container">
+				    <input type="text" id="message-input" placeholder="輸入訊息..."  onkeydown="handleKeyPress(event)">
+				     <i id="send-icon" class="fa-solid fa-paper-plane"></i>
+				 </div>    
+			</div>
+		</div>
+	</div>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+	
+	<script th:inline="javascript">
+	    window.sender = /*[[${sender}]]*/ [];
+	    window.receiver = /*[[${receiver}]]*/ [];
+	</script>
+    <script>
+        const socket = new SockJS('/ws');
+        const stompClient = Stomp.over(socket);
+		
+        
+        // 连接 WebSocket
+        stompClient.connect({}, () => {
+            console.log('WebSocket connected');
+
+            // 订阅消息
+            stompClient.subscribe('/topic/messages', (message) => {
+                const msg = JSON.parse(message.body);
+                if (msg.sender === receiver || msg.receiver === receiver) {
+                    const chatWindow = document.getElementById('chat-window');
+                    const msgDiv = document.createElement('div');
+                    msgDiv.className = msg.sender === sender ? 'mes right' : 'mes left';
+                    msgDiv.textContent = `${msg.content}`;
+                    chatWindow.appendChild(msgDiv);
+                    
+                 	// 自動滾動到最新消息
+                    chatWindow.scrollTop = chatWindow.scrollHeight;
+                }
+            });
+        });
+
+        // 发送消息
+        document.getElementById('send-button').addEventListener('click', () => {
+            const content = document.getElementById('message-input').value;
+            const message = {
+                sender: sender,
+                receiver: receiver,
+                content: content,
+                timestamp: new Date().toISOString()
+            }; 
+            console.log(message);
+            stompClient.send('/app/chat', {}, JSON.stringify(message));
+            document.getElementById('message-input').value = '';
+        });
+        
+        
+    </script>
+</body>
+</html>

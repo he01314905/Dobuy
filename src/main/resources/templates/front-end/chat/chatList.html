@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>聊天室</title>
+    <link rel="stylesheet" th:href="@{/chat/css/chat.css}">
+</head>
+<body>
+	<div th:fragment="chat-list">
+		<div id="chat-header-list">
+            <span>聊聊</span>
+            <div id="expand-button">
+            	<i class="fa-solid fa-arrows-left-right"></i>
+            </div>
+            <div id="minimize-button">
+            	<i class="fa-solid fa-down-left-and-up-right-to-center"></i>
+            </div>
+        </div>
+        <div th:data-coustomer ="${coustomer}" th:each="coustomer : ${coustomer}" 
+        	 class="coustomer-item" id="coustomer-item" onclick="getChatContext(this)">
+        	<input type="hidden" class="coustomerReceiver" th:value="${coustomer}"> 
+			<span th:text="${coustomer}" class="customer-name"></span>
+        </div>
+	</div>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+	
+	<script th:inline="javascript">
+	    window.sender = /*[[${sender}]]*/ [];
+	    window.receiver = /*[[${receiver}]]*/ [];
+	</script>
+</body>
+</html>
