@@ -94,54 +94,76 @@ table.update-coupon-table tr:hover {
 			th:object="${couponVO}">
 			<!-- 基本欄位 -->
 			<label>優惠券編號</label> <input type="text" th:field="*{couponNo}"
-				readonly /> <label>櫃位編號</label> <div class="form-field">
-    <label>優惠券名稱</label>
-    <input type="text" 
-           th:field="*{couponTitle}" 
-           class="form-control"
-           th:classappend="${#fields.hasErrors('couponTitle')} ? 'is-invalid'" 
-           required />
-    <div class="invalid-feedback" 
-         th:if="${#fields.hasErrors('couponTitle')}" 
-         th:errors="*{couponTitle}">
-    </div>
-</div>
+				readonly /> <input type="hidden" th:field="*{counter.counterNo}" />
 
-<!-- 優惠券內容欄位 -->
-<div class="form-field">
-    <label>優惠券內容</label>
-    <input type="text" 
-           th:field="*{couponContext}" 
-           class="form-control"
-           th:classappend="${#fields.hasErrors('couponContext')} ? 'is-invalid'" 
-           required />
-    <div class="invalid-feedback" 
-         th:if="${#fields.hasErrors('couponContext')}" 
-         th:errors="*{couponContext}">
-    </div>
-</div>
+			<div class="form-field">
+				<label>優惠券名稱</label> <input type="text" th:field="*{couponTitle}"
+					class="form-control"
+					th:classappend="${#fields.hasErrors('couponTitle')} ? 'is-invalid'" />
+				<div class="invalid-feedback"
+					th:if="${#fields.hasErrors('couponTitle')}"
+					th:errors="*{couponTitle}"></div>
+			</div>
 
-<!-- 日期欄位 -->
-<div class="form-field">
-    <label>起始日期</label>
-    <input type="date" 
-           th:field="*{couponStart}" 
-           class="form-control"
-           th:classappend="${#fields.hasErrors('couponStart')} ? 'is-invalid'" 
-           required />
-    <div class="invalid-feedback" 
-         th:if="${#fields.hasErrors('couponStart')}" 
-         th:errors="*{couponStart}">
-    </div>
-</div>
-			<input type="date" th:field="*{couponStart}" required /> <label>到期日期</label>
-			<input type="date" th:field="*{couponEnd}" required /> <label>優惠券狀態</label>
-			<select th:field="*{couponStatus}">
-				<option value="0">未開放</option>
-				<option value="1">時效內</option>
-				<option value="2">過期</option>
-			</select> <label>領取次數</label> <input type="number" th:field="*{usageLimit}"
-				min="1" required />
+			<!-- 優惠券內容欄位 -->
+			<div class="form-field">
+				<label>優惠券內容</label> <input type="text" th:field="*{couponContext}"
+					class="form-control"
+					th:classappend="${#fields.hasErrors('couponContext')} ? 'is-invalid'" />
+				<div class="invalid-feedback"
+					th:if="${#fields.hasErrors('couponContext')}"
+					th:errors="*{couponContext}"></div>
+			</div>
+
+			<!-- 日期欄位 -->
+			<div class="form-field">
+				<label>起始日期</label> <input type="date" th:field="*{couponStart}"
+					class="form-control"
+					th:classappend="${#fields.hasErrors('couponStart')} ? 'is-invalid'" />
+				<div class="invalid-feedback"
+					th:if="${#fields.hasErrors('couponStart')}"
+					th:errors="*{couponStart}"></div>
+			</div>
+			<!-- 日期欄位補充驗證 -->
+			<div class="form-field">
+				<label>起始日期</label> <input type="date" th:field="*{couponStart}"
+					class="form-control"
+					th:classappend="${#fields.hasErrors('couponStart')} ? 'is-invalid'" />
+				<div class="invalid-feedback"
+					th:if="${#fields.hasErrors('couponStart')}"
+					th:errors="*{couponStart}"></div>
+			</div>
+
+			<div class="form-field">
+				<label>結束日期</label> <input type="date" th:field="*{couponEnd}"
+					class="form-control"
+					th:classappend="${#fields.hasErrors('couponEnd')} ? 'is-invalid'" />
+				<div class="invalid-feedback"
+					th:if="${#fields.hasErrors('couponEnd')}" th:errors="*{couponEnd}"></div>
+			</div>
+
+			<div class="form-field">
+				<label>優惠券狀態</label> <select th:field="*{couponStatus}"
+					class="form-control"
+					th:classappend="${#fields.hasErrors('couponStatus')} ? 'is-invalid'">
+					<option value="0">未開放</option>
+					<option value="1">時效內</option>
+					<option value="2">過期</option>
+				</select>
+				<div class="invalid-feedback"
+					th:if="${#fields.hasErrors('couponStatus')}"
+					th:errors="*{couponStatus}"></div>
+			</div>
+
+			<div class="form-field">
+				<label>領取次數</label> <input type="number" th:field="*{usageLimit}"
+					min="1" class="form-control"
+					th:classappend="${#fields.hasErrors('usageLimit')} ? 'is-invalid'" />
+				<div class="invalid-feedback"
+					th:if="${#fields.hasErrors('usageLimit')}"
+					th:errors="*{usageLimit}"></div>
+			</div>
+
 
 			<!-- 優惠商品明細 -->
 			<h3>優惠商品明細</h3>
@@ -155,37 +177,59 @@ table.update-coupon-table tr:hover {
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="detail, stat : *{couponDetails}">
-
-						<td><select
-							th:field="*{couponDetails[__${stat.index}__].goodsNo}"
-							class="form-control" required>
-								<option value="">請選擇商品</option>
-								<option th:each="goods : ${goodsList}"
-									th:value="${goods.goodsNo}" th:text="${goods.goodsName}"
-									th:selected="${couponDetails != null and goods.goodsNo == couponDetails[__${stat.index}__].goodsNo}"></option>
-						</select> <!-- 												<input type="number"  --> <!-- 													th:field="*{couponDetails[__${stat.index}__].goodsNo}" required /> -->
-						</td>
-						<td><input type="text"
-							th:field="*{couponDetails[__${stat.index}__].counterContext}"
-							required /></td>
-						<td><input type="number"
-							th:field="*{couponDetails[__${stat.index}__].disRate}"
-							step="0.01" min="0.01" max="1.00" required /></td>
-						<td>
-							<button type="button" class="remove-detail-btn"
-								onclick="removeDetail(this)">刪除</button>
-						</td>
-					</tr>
+<tr th:each="detail, stat : *{couponDetails}">
+    <td>
+        <select th:field="*{couponDetails[__${stat.index}__].goodsNo}"
+                class="form-control"
+                th:classappend="${#fields.hasErrors('couponDetails[__${stat.index}__].goodsNo')} ? 'is-invalid'">
+            <option value="">請選擇商品</option>
+            <option th:each="goods : ${goodsList}"
+                    th:value="${goods.goodsNo}"
+                    th:text="${goods.goodsName}"
+                    th:selected="${couponDetails != null and goods.goodsNo == couponDetails[__${stat.index}__].goodsNo}">
+            </option>
+        </select>
+        <div class="invalid-feedback"
+             th:if="${#fields.hasErrors('couponDetails[__${stat.index}__].goodsNo')}"
+             th:errors="*{couponDetails[__${stat.index}__].goodsNo}"></div>
+    </td>
+    <td>
+        <input type="text"
+               th:field="*{couponDetails[__${stat.index}__].counterContext}"
+               class="form-control"
+               th:classappend="${#fields.hasErrors('couponDetails[__${stat.index}__].counterContext')} ? 'is-invalid'" />
+        <div class="invalid-feedback"
+             th:if="${#fields.hasErrors('couponDetails[__${stat.index}__].counterContext')}"
+             th:errors="*{couponDetails[__${stat.index}__].counterContext}"></div>
+    </td>
+    <td>
+        <input type="number"
+               th:field="*{couponDetails[__${stat.index}__].disRate}"
+               step="0.01"
+               min="0.01"
+               max="1.00"
+               class="form-control"
+               th:classappend="${#fields.hasErrors('couponDetails[__${stat.index}__].disRate')} ? 'is-invalid'" />
+        <div class="invalid-feedback"
+             th:if="${#fields.hasErrors('couponDetails[__${stat.index}__].disRate')}"
+             th:errors="*{couponDetails[__${stat.index}__].disRate}"></div>
+    </td>
+    <td>
+        <button type="button" class="remove-detail-btn" onclick="removeDetail(this)">刪除</button>
+    </td>
+</tr>
 				</tbody>
 			</table>
 
 			<!-- 按鈕區塊 -->
 			<div class="button-group">
 				<button type="submit">送出修改</button>
-				<button type="button" onclick="history.back()">返回</button>
+				<!-- 				<button type="button" onclick="history.back()">返回</button> -->
 				<button type="button" id="addDetailBtn" onclick="addDetail()">新增明細</button>
+			</div>
 
+			<div class="text-center mt-4">
+				<a th:href="@{/coupon/listAllCoupon}" class="btn btn-primary">返回列表</a>
 			</div>
 		</form>
 
@@ -195,30 +239,64 @@ table.update-coupon-table tr:hover {
 	<script type="text/javascript">
 // 新增明細到表格
 function addDetail() {
-    const container = document.querySelector('#detailsContainer tbody'); // 選取表格的 tbody
+    const container = document.querySelector('#detailsContainer tbody'); 
     const rowCount = container.rows.length;
 
-    // 新增一行明細
+    // 獲取商品下拉選單選項
+    const goodsListOptions = document.querySelector('select[name^="couponDetails[0].goodsNo"]').innerHTML;
+
     const newRow = `
         <tr>
-            <td><input type="number" name="couponDetails[${rowCount}].goodsNo" required /></td>
-            <td><input type="text" name="couponDetails[${rowCount}].counterContext" required /></td>
-            <td><input type="number" name="couponDetails[${rowCount}].disRate" step="0.01" min="0.01" max="1.00" required /></td>
-            <td><button type="button" class="remove-detail-btn" onclick="removeDetail(this)">刪除</button></td>
+            <td>
+                <select name="couponDetails[${rowCount}].goodsNo" 
+                        class="form-control"
+                        th:classappend="\${#fields.hasErrors('couponDetails[${rowCount}].goodsNo')} ? 'is-invalid'">
+                    ${goodsListOptions}
+                </select>
+                <div class="invalid-feedback"
+                     th:if="\${#fields.hasErrors('couponDetails[${rowCount}].goodsNo')}"
+                     th:errors="*{couponDetails[${rowCount}].goodsNo}">
+                </div>
+            </td>
+            <td>
+                <input type="text" 
+                       name="couponDetails[${rowCount}].counterContext"
+                       class="form-control"
+                       th:classappend="\${#fields.hasErrors('couponDetails[${rowCount}].counterContext')} ? 'is-invalid'" />
+                <div class="invalid-feedback"
+                     th:if="\${#fields.hasErrors('couponDetails[${rowCount}].counterContext')}"
+                     th:errors="*{couponDetails[${rowCount}].counterContext}">
+                </div>
+            </td>
+            <td>
+                <input type="number" 
+                       name="couponDetails[${rowCount}].disRate"
+                       step="0.01" 
+                       min="0.01" 
+                       max="1.00"
+                       class="form-control"
+                       th:classappend="\${#fields.hasErrors('couponDetails[${rowCount}].disRate')} ? 'is-invalid'" />
+                <div class="invalid-feedback"
+                     th:if="\${#fields.hasErrors('couponDetails[${rowCount}].disRate')}"
+                     th:errors="*{couponDetails[${rowCount}].disRate}">
+                </div>
+            </td>
+            <td>
+                <button type="button" class="remove-detail-btn" onclick="removeDetail(this)">刪除</button>
+            </td>
         </tr>
     `;
-
     container.insertAdjacentHTML('beforeend', newRow);
 }
 
 // 刪除明細行
 function removeDetail(button) {
-    const row = button.closest('tr'); // 找到最近的 <tr>
+    const row = button.closest('tr');
     const container = document.querySelector('#detailsContainer tbody');
 
     if (container.rows.length > 1) {
-        row.remove(); // 刪除該行
-        updateDetailIndices(); // 重新更新索引
+        row.remove();
+        updateDetailIndices();
     } else {
         alert('至少需要保留一個明細項目！');
     }
@@ -228,37 +306,30 @@ function removeDetail(button) {
 function updateDetailIndices() {
     const rows = document.querySelectorAll('#detailsContainer tbody tr');
     rows.forEach((row, index) => {
-        row.querySelectorAll('input').forEach(input => {
-            const name = input.getAttribute('name');
-            const newName = name.replace(/\[\d+\]/, `[${index}]`);
-            input.setAttribute('name', newName);
+        // 更新 select 和 input 的 name 屬性
+        row.querySelectorAll('select, input').forEach(element => {
+            const name = element.getAttribute('name');
+            if (name) {
+                const newName = name.replace(/\[\d+\]/, `[${index}]`);
+                element.setAttribute('name', newName);
+            }
+        });
+
+        // 更新錯誤訊息的索引
+        row.querySelectorAll('.invalid-feedback').forEach(div => {
+            const ifAttr = div.getAttribute('th:if');
+            const errorsAttr = div.getAttribute('th:errors');
+            if (ifAttr) {
+                div.setAttribute('th:if', ifAttr.replace(/\[\d+\]/, `[${index}]`));
+            }
+            if (errorsAttr) {
+                div.setAttribute('th:errors', errorsAttr.replace(/\[\d+\]/, `[${index}]`));
+            }
         });
     });
 }
 
 
-function addDetail() {
-    const container = document.querySelector('#detailsContainer tbody'); 
-    const rowCount = container.rows.length;
-
-    const goodsListOptions = document.querySelector('select[name^="couponDetails[0].goodsNo"]').innerHTML;
-
-    const newRow = `
-        <tr>
-            <td>
-                <select name="couponDetails[${rowCount}].goodsNo" required>
-                    ${goodsListOptions}
-                </select>
-            </td>
-            <td><input type="text" name="couponDetails[${rowCount}].counterContext" required /></td>
-            <td><input type="number" name="couponDetails[${rowCount}].disRate" step="0.01" min="0.01" max="1.00" required /></td>
-            <td>
-                <button type="button" class="remove-detail-btn" onclick="removeDetail(this)">刪除</button>
-            </td>
-        </tr>
-    `;
-    container.insertAdjacentHTML('beforeend', newRow);
-}
 
 </script>
 

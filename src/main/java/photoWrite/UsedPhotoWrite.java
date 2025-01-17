@@ -13,11 +13,11 @@ public class UsedPhotoWrite {
     private static final String DB_URL = "jdbc:mysql://localhost:3306/dobuy";
     private static final String DB_USER = "root";
 
-    private static final String DB_PASSWORD = "123456789";
+    private static final String DB_PASSWORD = "e1012125";
 
 
     public static void main(String[] args) {
-        String baseFolder = "C:\\CIA103_WebApp\\eclipse_WTP_workspace4B_To-SpringBootMVC_1-5-8U\\dobuy\\src\\main\\resources\\static\\UsedPictures"; // 根目錄
+        String baseFolder = "C:\\Users\\Winfred\\OneDrive\\Desktop\\柏翔的\\專案\\CIA103_WebApp\\eclipse_WTP_workspace4B_To-SpringBootMVC_1-5-8U\\Dobuy\\src\\main\\resources\\static\\UsedPictures"; // 根目錄
 
         File folder = new File(baseFolder);
         if (!folder.exists() || !folder.isDirectory()) {

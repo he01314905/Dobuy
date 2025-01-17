@@ -215,35 +215,48 @@ public class CouponController {
                          BindingResult result,
                          Model model,
                          HttpSession session) {
-        System.out.println("Received update request for coupon: " + couponVO.getCouponNo());
+        System.out.println("收到優惠券更新請求：" + couponVO.getCouponNo());
         model.addAttribute("msgSvc", msgService);
 
-        // 印出驗證錯誤資訊
+        // 從 session 獲取櫃位信息
+        CounterVO counter = (CounterVO) session.getAttribute("counter");
+        if (counter == null) {
+            return "redirect:/counter/login";
+        }
+        
+        // 設置完整的櫃位對象
+        couponVO.setCounter(counter);
+
+        // 如果有驗證錯誤則輸出
         if (result.hasErrors()) {
-            System.out.println("Validation errors found:");
+            System.out.println("發現驗證錯誤：");
             for (FieldError error : result.getFieldErrors()) {
-                System.out.println("Field: " + error.getField() + ", Error: " + error.getDefaultMessage());
+                System.out.println("欄位：" + error.getField() + "，錯誤：" + error.getDefaultMessage());
             }
 
-            // 返回原頁面並顯示錯誤
+            // 為表單添加必要的屬性
+            List<GoodsVO> goodsList = goodsSvc.findByCounterVO_CounterNo(counter.getCounterNo());
+            model.addAttribute("goodsList", goodsList);
             model.addAttribute("couponVO", couponVO);
-            model.addAttribute("msgSvc", msgService);
             return "vendor-end/coupon/updateCoupon";
         }
 
         try {
-            // 實際執行修改邏輯
+            // 更新優惠券及其詳細信息
             couponSvc.updateCouponWithDetails(couponVO);
             model.addAttribute("success", "修改成功！");
-            return "vendor-end/coupon/listOneCoupon";
-            } catch (Exception e) {
+            return "redirect:/coupon/listAllCoupon";
+        } catch (Exception e) {
             e.printStackTrace();
             model.addAttribute("error", "修改失敗：" + e.getMessage());
             model.addAttribute("couponVO", couponVO);
+            
+            // 重新添加表單所需的屬性
+            List<GoodsVO> goodsList = goodsSvc.findByCounterVO_CounterNo(counter.getCounterNo());
+            model.addAttribute("goodsList", goodsList);
             return "vendor-end/coupon/updateCoupon";
         }
     }
-
 //    @PostMapping("update")
 //    public String update(@Valid CouponVO couponVO, 
 //                         BindingResult result, 

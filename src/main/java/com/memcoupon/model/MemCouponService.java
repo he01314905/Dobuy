@@ -12,6 +12,7 @@ import javax.transaction.Transactional;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 import com.coupon.model.CouponService;
@@ -35,6 +36,7 @@ public class MemCouponService {
 
 //  前台領取櫃位優惠券後顯示在我的優惠券
     @Transactional
+    @CacheEvict(value = "memCouponCache", allEntries = true)
     public MemCouponVO claimCoupon(Integer memberNo, Integer couponNo) {
         // 檢查該會員是否已領取過此優惠券
         long count = memCouponRepository.countByCouponAndMember(couponNo, memberNo);
@@ -79,6 +81,7 @@ public class MemCouponService {
     }
 
     // 更新會員優惠券
+    @CacheEvict(value = "memCouponCache", allEntries = true)
     public void updateMemCoupon(MemCouponVO memCouponVO) {
     	memCouponRepository.save(memCouponVO);
     }
